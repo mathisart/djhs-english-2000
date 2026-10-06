@@ -6,7 +6,7 @@ on:
     paths:
       - "tools/import_gept.py"
       - "tools/ingest_gept.py"
-      - "tools/crosscheck_gept.py"
+      - "tools/crosscheck_gept.py"\n      - "data/official/sources.json"
       - ".github/workflows/gept-official-smoke.yml"
 
 jobs:
