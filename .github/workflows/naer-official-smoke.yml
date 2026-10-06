@@ -64,6 +64,9 @@ jobs:
                   if len(x)>35 or "\\n" in x or "\\f" in x or any(ch.isdigit() for ch in x) or any("\\u4e00"<=ch<="\\u9fff" for ch in x):
                       print("SUSPECT",repr(x))
               print("EXPANDED",expanded,"ALIAS_EXTRA",expanded-len(rows))
+              for x in rows:
+                  if "/" in x or "(" in x or " " in x:
+                      print("FORM",repr(x))
               for x,n in grouped:
                   print("GROUP",n,repr(x))
           PY
