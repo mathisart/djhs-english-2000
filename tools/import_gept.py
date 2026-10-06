@@ -40,7 +40,7 @@ def recover_prefixed_row(line):
     return None,None
 
 def parse(text):
-    out=[]; pending=""; rejected=[]; layout_fragments=[]
+    out=[]; pending=""; rejected=[]; layout_fragments=[]; deferred=None
     for raw in text.splitlines():
         if raw.strip().isdigit():
             continue
