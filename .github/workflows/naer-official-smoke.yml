@@ -149,6 +149,8 @@ jobs:
               sys.exit("NAER official extraction boundary/declared-count invariant failed")
           print({"declaredCounts":declared,"note":"source-entry row counts are diagnostic and are not treated as declared vocabulary counts"})
           PY
+      - name: Diff NAER against current production master
+        run: python tools/diff_official.py /tmp/naer/naer-current.json words.js /tmp/naer/naer-vs-master.json
       - name: Upload normalized smoke artifact
         if: always()
         uses: actions/upload-artifact@v4
@@ -157,4 +159,5 @@ jobs:
           path: |
             /tmp/naer/naer-current.json
             /tmp/naer/english-curriculum.txt
+            /tmp/naer/naer-vs-master.json
           retention-days: 7
