@@ -48,6 +48,11 @@ def parse(text):
         if not line or line.isdigit() or FOOTER.search(line):
             continue
 
+        if out and not re.search(r"[A-Za-z]",line) and not re.search(r"初級|中級|中高級|中高",line):
+            out[-1]["zh"]=(out[-1]["zh"]+" "+line).strip()
+            layout_fragments.append({"fragment":line,"rowWord":out[-1]["word"],"reason":"Chinese continuation appended to previous row"})
+            continue
+
         single=ROW.match(line)
         if single:
             if pending:
