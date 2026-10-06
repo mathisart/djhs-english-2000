@@ -161,6 +161,8 @@ def test_naer_page_number_boundaries():
     assert naer.split_entries("fourteen, 54 fifteen, sixteen")==["fourteen","fifteen","sixteen"]
     assert naer.split_entries("voice 56 W- wait, wake")==["voice","wait","wake"]
     assert naer.split_entries("rush 58 S- safety, sail")==["rush","safety","sail"]
+    assert naer.split_entries("voice W- wait, wake")==["voice","wait","wake"]
+    assert naer.split_entries("rush S- safety, sail")==["rush","safety","sail"]
 
 test_naer_page_number_boundaries()
 
