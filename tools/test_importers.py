@@ -46,7 +46,7 @@ vinegar noun
 醋 初級
 """
 assert gept.clean_line("affect verb 影響 初級 L2 1字彙 詞類 中文 註解 級數 學術字彙")=="affect verb 影響 初級 L2"
-real_entries,real_rejected=gept.parse(real_layout)
+real_entries,real_rejected=gept.parse(real_layout)[:2]
 assert not real_rejected,real_rejected
 assert [(e["word"],e["listId"]) for e in real_entries]==[
     ("iron","gept-elementary"),
