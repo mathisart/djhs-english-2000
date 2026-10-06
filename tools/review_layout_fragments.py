@@ -12,6 +12,7 @@ SAFE_REASONS={
 
 def main():
     p=Path(sys.argv[1])
+    output=Path(sys.argv[2]) if len(sys.argv)>2 else None
     data=json.loads(p.read_text(encoding="utf-8"))
     entries=data.get("entries",[])
     words={e.get("word") for e in entries}
@@ -32,7 +33,10 @@ def main():
         "failures":failures,
         "ok":not failures,
     }
-    print(json.dumps(report,ensure_ascii=False,indent=2))
+    rendered=json.dumps(report,ensure_ascii=False,indent=2)+"\\n"
+    print(rendered,end="")
+    if output:
+        output.write_text(rendered,encoding="utf-8")
     if failures:
         raise SystemExit(1)
 
