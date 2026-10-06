@@ -15,6 +15,10 @@ def norm(s):
     s=display_normalize(s).casefold()
     return re.sub(r"[^a-z0-9]+"," ",s).strip()
 
+def contains_form(normalized_table, value):
+    form=norm(value)
+    return bool(form and (" "+form+" ") in (" "+normalized_table+" "))
+
 def main():
     text=Path(sys.argv[1]).read_text(encoding="utf-8",errors="replace")
     diff=json.loads(Path(sys.argv[2]).read_text(encoding="utf-8"))
@@ -25,7 +29,7 @@ def main():
     hits=[]; misses=[]
     for row in diff.get("masterOutsideOfficialMatches",[]):
         form=norm(row.get("w",""))
-        target=hits if form and (" "+form+" ") in padded else misses
+        target=hits if contains_form(table3,row.get("w","")) else misses
         target.append(row)
     out={"schemaVersion":1,"diagnosticOnly":True,
          "note":"Text-layer occurrence is evidence only; not parsed Table 3 membership.",
