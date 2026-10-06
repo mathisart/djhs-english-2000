@@ -3,8 +3,8 @@ from __future__ import annotations
 import json,re,sys
 from pathlib import Path
 from vocab_identity import canonical_id
-T1_RE=re.compile(r"表一、基本[ \\t]*1[ \\t]*,[ \\t]*200[ \\t]*字[^\\n]*")
-T2_RE=re.compile(r"表二、其他常用[ \\t]*800[ \\t]*字[^\\n]*")
+T1_RE=re.compile(r"表一、基本 *1 *, *200 *字[^\\n]*")
+T2_RE=re.compile(r"表二、其他常用 *800 *字[^\\n]*")
 T3_RE=re.compile(r"表三、[^\\n]*")
 def canon(s): return re.sub(r"\s+"," ",s.strip()).casefold()
 def split_entries(block):
