@@ -2,6 +2,7 @@
 from __future__ import annotations
 import json,re,sys
 from pathlib import Path
+from vocab_identity import canonical_id
 LEVEL_MAP={"初級":"gept-elementary","中級":"gept-intermediate","中高級":"gept-high-intermediate","中高":"gept-high-intermediate"}
 ATOM=r"(?:art\.|adj\.|adv\.|noun|verb|prep\.|conj\.|pron\.|aux\.|interj\.|number|det\.|determiner|modal)"
 POS_RE=rf"{ATOM}(?:/{ATOM})*"
@@ -20,7 +21,7 @@ def parse(text):
             else: rejected.append(candidate); pending=""
             continue
         d=m.groupdict()
-        out.append({"word":d["word"].strip(),"wordId":canonical(d["word"]),"pos":d["pos"],"zh":d["rest"].strip(),
+        out.append({"word":d["word"].strip(),"wordId":canonical_id(d["word"]),"pos":d["pos"],"zh":d["rest"].strip(),
           "level":d["level"],"listId":LEVEL_MAP[d["level"]],"awl":d.get("awl") or None})
         pending=""
     if pending: rejected.append(pending)
