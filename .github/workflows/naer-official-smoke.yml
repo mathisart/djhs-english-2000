@@ -44,6 +44,14 @@ jobs:
                   print(repr(t[max(0,i-100):i+180]))
                   start=i+len(needle)
           PY
+      - name: Show Appendix 5 counting notes
+        run: |
+          python - <<'PY'
+          text=open("/tmp/naer/english-curriculum.txt",encoding="utf-8",errors="replace").read()
+          a=text.find("附錄五")
+          b=text.find("表一、",a)
+          print(text[a:b])
+          PY
       - name: Show Table 3 counting evidence
         run: |
           python - <<'PY'
