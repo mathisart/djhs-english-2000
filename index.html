@@ -14,6 +14,15 @@
 @media(max-width:430px){.trackbtn small{display:block}.trackbtn{min-height:50px}}
 @media(max-width:380px){.wrap{padding-left:9px;padding-right:9px}.brand{font-size:16px}.stat b{font-size:15px}.word{margin-top:13px}.choices button{min-height:48px}.stats{margin:6px 0}}
 @media(max-height:720px) and (max-width:600px){.top{height:50px}.stats{margin:5px 0}.stat{padding:4px 2px}.word{margin-top:10px}.speak{margin:6px auto}.choices{margin-top:8px;gap:6px}.choices button{min-height:46px}.foot{display:none}}
+
+/* Countdown game feel */
+#bar{transition:width .1s linear,background .25s ease;background:#22c55e}
+#bar.time-warn{background:#f59e0b}
+#bar.time-danger{background:#ef4444}
+#time.time-warn{color:#d97706}
+#time.time-danger{color:#dc2626;font-weight:900;animation:timeShake .28s infinite}
+@keyframes timeShake{0%,100%{transform:translateX(0) scale(1)}25%{transform:translateX(-2px) scale(1.08)}75%{transform:translateX(2px) scale(1.08)}}
+@media(prefers-reduced-motion:reduce){#time.time-danger{animation:none}}
 </style></head><body><main class="wrap">
 <div class="top"><div><div class="brand">DJHS English 2000</div><div class="muted">國中英文自主學習・自適應闖關</div></div><button class="reset" id="reset">重設進度</button></div>
 <section class="welcome" id="welcome"><b>不知道選哪個？</b><span>直接使用「自動適性」，系統會依你的答題表現調整難度。</span><button id="dismissWelcome" type="button">知道了</button></section><section class="track"><button class="trackbtn active recommended" data-track="auto">自動適性<small>推薦・依表現自動調整</small></button><button class="trackbtn" data-track="core">基礎 1200<small>先把國中核心字學穩</small></button><button class="trackbtn" data-track="full">完整 2000<small>核心＋常用延伸字</small></button><button class="trackbtn" data-track="gept">GEPT 初級<small>全民英檢初級挑戰</small></button></section><div class="tracknote muted" id="tracknote">已載入 2,055 筆可練習資料；官方 1200／2000／GEPT 標記持續校對。</div><section class="stats"><div class="stat">分數<b id="score">0</b></div><div class="stat">連擊<b id="combo">0</b></div><div class="stat">時間<b id="time">10.0</b></div><div class="stat">已熟悉<b id="known">0</b></div></section>
