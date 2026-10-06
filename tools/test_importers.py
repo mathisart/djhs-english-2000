@@ -56,6 +56,15 @@ assert [(e["word"],e["listId"]) for e in real_entries]==[
 ],real_entries
 
 # Shared canonical identity and POS normalization.
+fragmented="""magic noun 魔法 初級
+magician noun 魔術師 初級
+orphan noun
+heavenly adj. 天上的 中級
+"""
+frag_entries,frag_rejected=gept.parse(fragmented)
+assert [e["word"] for e in frag_entries]==["magic","magician","heavenly"],frag_entries
+assert frag_rejected==["orphan noun"],frag_rejected
+
 assert identity.canonical_id(" Colour ")=="colour"
 assert identity.canonical_id("COLOR")=="color"
 assert identity.canonical_id("color")!=identity.canonical_id("colour")
