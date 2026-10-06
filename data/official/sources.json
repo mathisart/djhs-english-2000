@@ -13,12 +13,17 @@
         "moe-basic-1200",
         "moe-common-2000"
       ],
-      "notes": "表一為基本1,200字；完整參考字彙為2,000字（1,200 + 其他常用800）。",
+      "notes": "附錄五表一標稱基本1,200字、表二標稱其他常用800字，表三為同一2,000字參考字彙的主題／詞性分類呈現。PDF文字層抽取的 source-entry row 數不等同官方標稱 vocabulary count；兩者分開保存與驗證。",
       "releaseDate": "2018-04-16",
       "verifiedAgainst": "NAER official syllabus index and current published PDF",
       "checkedAt": "2026-10-06",
       "active": true,
-      "supersedes": []
+      "supersedes": [],
+      "sha256": "72c6a6a24dbfe843e2c510f12b4d5e3e9ea53d0586396a7b03f4eda6d17490e3",
+      "hashVerifiedAt": "2026-10-06",
+      "documentVersions": {
+        "appendix5": "108課綱現行版"
+      }
     },
     {
       "id": "gept-current-2026-10-06",
