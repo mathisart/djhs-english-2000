@@ -28,6 +28,20 @@ assert len(entries)==4,(entries,rejected)
 assert not rejected,rejected
 assert entries[2]["listId"]=="gept-high-intermediate"
 
+# Real LTTC PDF text-layer patterns: wrapped rows and page header glued to prior row.
+real_layout="""iron noun
+鐵 初級
+affect verb 影響、(疾病)感染 初級 L2 1字彙 詞類 中文 註解 級數 學術字彙
+affection noun 喜愛、鍾愛 中級
+vinegar noun
+醋 初級
+"""
+real_entries,real_rejected=gept.parse(real_layout)
+assert not real_rejected,real_rejected
+assert [(e["word"],e["listId"]) for e in real_entries]==[
+ ("iron","gept-elementary"),("affect","gept-elementary"),
+ ("affection","gept-intermediate"),("vinegar","gept-elementary")],real_entries
+
 assert identity.canonical_id("  Mother’s   Day ")=="mother's day"
 assert identity.canonical_id("well–known")=="well-known"
 assert identity.canonical_id("colour")!=identity.canonical_id("color")
