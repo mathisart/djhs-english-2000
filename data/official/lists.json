@@ -32,7 +32,7 @@
     {
       "id": "gept-elementary",
       "label": "GEPT 初級",
-      "sourceId": "gept-2026-04-29",
+      "sourceId": "gept-current-2026-10-06",
       "visibility": "public",
       "cefr": "A2",
       "parent": null
@@ -40,7 +40,7 @@
     {
       "id": "gept-intermediate",
       "label": "B1 字彙挑戰（GEPT 中級）",
-      "sourceId": "gept-2026-04-29",
+      "sourceId": "gept-current-2026-10-06",
       "visibility": "unlockable",
       "cefr": "B1",
       "parent": "gept-elementary"
@@ -48,7 +48,7 @@
     {
       "id": "gept-high-intermediate",
       "label": "B2 字彙挑戰（GEPT 中高級）",
-      "sourceId": "gept-2026-04-29",
+      "sourceId": "gept-current-2026-10-06",
       "visibility": "unlockable",
       "cefr": "B2",
       "parent": "gept-intermediate"
