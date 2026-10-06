@@ -61,7 +61,7 @@ jobs:
                   n=1+(len([v for v in aa.group(2).split(",") if v.strip()]) if aa else 0)
                   expanded+=n
                   if aa: grouped.append((x,n))
-                  if len(x)>35 or "\\n" in x or "\\f" in x:
+                  if len(x)>35 or "\\n" in x or "\\f" in x or any(ch.isdigit() for ch in x) or any("\\u4e00"<=ch<="\\u9fff" for ch in x):
                       print("SUSPECT",repr(x))
               print("EXPANDED",expanded,"ALIAS_EXTRA",expanded-len(rows))
               for x,n in grouped:
