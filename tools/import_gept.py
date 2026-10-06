@@ -39,8 +39,11 @@ def parse(text):
 
 def main():
     src,out=map(Path,sys.argv[1:3]); entries,rejected=parse(src.read_text(encoding="utf-8",errors="replace"))
-    payload={"schemaVersion":1,"sourceId":SOURCE_ID,"verified":False,"retrievedAt":None,
-      "review":{},"entries":entries,"rejected":rejected}
+    payload={"schemaVersion":1,"sourceId":SOURCE_ID,
+      "sourceDocument":"GEPT_High-Intermediate.pdf",
+      "sourceUrl":"https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_High-Intermediate.pdf",
+      "sourceRevision":"2026-04-29",
+      "verified":False,"retrievedAt":None,"review":{},"entries":entries,"rejected":rejected}
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
     levels={}
