@@ -46,6 +46,54 @@ Deno.serve(async (req) => {
       return Response.json(data, { headers: cors });
     }
 
+    if (action === "batch") {
+      const events = Array.isArray(body.events) ? body.events.slice(0, 20) : [];
+      if (!events.length) throw new Error("Empty event batch");
+
+      const { data: player, error: pe } = await admin.from("players")
+        .select("id,nickname,xp,weekly_xp,mastered_words,best_combo")
+        .eq("device_token", token).single();
+      if (pe) throw pe;
+
+      let totalGain = 0;
+      let masteredAdd = 0;
+      let bestCombo = player.best_combo;
+
+      for (const raw of events) {
+        const eventType = String(raw.eventType || "");
+        const word = String(raw.word || "").trim().slice(0, 80);
+        if (!word || !(eventType in XP)) continue;
+
+        let gain = XP[eventType];
+        const since = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
+        const { count } = await admin.from("learning_events")
+          .select("id", { count: "exact", head: true })
+          .eq("player_id", player.id).eq("word", word)
+          .eq("event_type", eventType).gte("created_at", since);
+        if ((count || 0) >= 3) gain = 0;
+
+        if (gain > 0) {
+          const { error: ee } = await admin.from("learning_events").insert({
+            player_id: player.id, event_type: eventType, word, xp: gain
+          });
+          if (ee) throw ee;
+          totalGain += gain;
+          if (eventType === "mastered") masteredAdd += 1;
+        }
+        bestCombo = Math.max(bestCombo, Math.max(0, Math.min(999, Number(raw.combo) || 0)));
+      }
+
+      const { data, error } = await admin.from("players").update({
+        xp: player.xp + totalGain,
+        weekly_xp: player.weekly_xp + totalGain,
+        mastered_words: player.mastered_words + masteredAdd,
+        best_combo: bestCombo
+      }).eq("id", player.id)
+        .select("id,nickname,xp,weekly_xp,mastered_words,best_combo").single();
+      if (error) throw error;
+      return Response.json({ ...data, gained: totalGain, processed: events.length }, { headers: cors });
+    }
+
     if (action === "event") {
       if (!word || !(eventType in XP)) throw new Error("Invalid learning event");
       const { data: player, error: pe } = await admin.from("players").select("id,xp,weekly_xp,mastered_words,best_combo").eq("device_token", token).single();
