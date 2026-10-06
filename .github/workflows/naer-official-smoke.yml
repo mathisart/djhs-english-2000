@@ -151,6 +151,21 @@ jobs:
           PY
       - name: Diff NAER against current production master
         run: python tools/diff_official.py /tmp/naer/naer-current.json words.js /tmp/naer/naer-vs-master.json
+      - name: Show NAER diff review queue
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open("/tmp/naer/naer-vs-master.json",encoding="utf-8"))
+          print("DIFF_COUNTS",d["counts"])
+          for key in ("missingFromMaster","ambiguous"):
+              print("==",key,len(d[key]),"==")
+              for x in d[key]:
+                  rows=x.get("officialRows",[])
+                  print(key.upper(),repr(x.get("wordId")),[(r.get("listId"),r.get("officialEntry")) for r in rows],x.get("reason",""))
+          print("== masterOutsideOfficialMatches",len(d["masterOutsideOfficialMatches"]),"==")
+          for x in d["masterOutsideOfficialMatches"]:
+              print("MASTER_EXTRA",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
+          PY
       - name: Upload normalized smoke artifact
         if: always()
         uses: actions/upload-artifact@v4
