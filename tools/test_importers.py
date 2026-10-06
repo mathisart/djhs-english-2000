@@ -95,3 +95,26 @@ about prep. 關於 初級
     assert any(x.get("rowWord")=="against" for x in fragments),fragments
 
 test_gept_deferred_row()
+
+
+def test_gept_meaning_wraps_before_and_after_partial_row():
+    text="""again adv. 再一次 初級
+緊貼著、倚靠著；逆著...的方向、迎著；反對、與...相反；以...為
+against prep. 初級
+背景、襯托；防...、抗...
+about prep. 關於 初級
+"""
+    entries,rejected,fragments=gept.parse(text)
+    by_word={e["word"]:e for e in entries}
+    assert by_word["against"]["zh"]=="緊貼著、倚靠著；逆著...的方向、迎著；反對、與...相反；以...為 背景、襯托；防...、抗...",by_word["against"]
+    assert by_word["again"]["zh"]=="再一次",by_word["again"]
+    assert rejected==[],rejected
+
+def test_gept_pos_glossary_is_layout_not_vocabulary():
+    entries,rejected,fragments=gept.parse("adjective noun 形容詞 = adj. 中級\nauxiliary noun 助動詞 = aux. 中級")
+    assert entries==[],entries
+    assert rejected==[],rejected
+    assert len(fragments)==2,fragments
+
+test_gept_meaning_wraps_before_and_after_partial_row()
+test_gept_pos_glossary_is_layout_not_vocabulary()
