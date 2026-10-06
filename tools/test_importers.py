@@ -19,14 +19,14 @@ assert x==["father (dad, daddy)","mother (mom, mommy)","airplane (plane)"],x
 assert "daddy" in naer.aliases(x[0])
 
 sample="""abandon verb 放棄 中級 L8
-numberword number/pron./noun/adj. 測試 初級
+numberword number/pron./noun/adj. 測試 初級\ncompound adj./noun 測試二 中級
 zeal noun 熱忱 中高級
 zipper noun 拉鍊 中級
 """
 entries,rejected=gept.parse(sample)
-assert len(entries)==4,(entries,rejected)
+assert len(entries)==5,(entries,rejected)
 assert not rejected,rejected
-assert entries[2]["listId"]=="gept-high-intermediate"
+assert entries[3]["listId"]=="gept-high-intermediate"\nassert entries[1]["pos"]=="adj./noun"
 
 # Real LTTC PDF text-layer patterns: wrapped rows and page header glued to prior row.
 real_layout="""iron noun\n12
