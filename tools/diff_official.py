@@ -29,7 +29,7 @@ def main():
     by_id=defaultdict(list)
     for w in master: by_id[canonical_id(w["w"])].append(w)
 
-    matched=[]; alias_matched=[]; missing=[]; ambiguous=[]
+    matched=[]; alias_matched=[]; missing=[]; ambiguous=[]; pos_review=[]
     official_ids=set()
     for e in off["entries"]:
         wid=canonical_id(e.get("wordId") or e.get("word") or e.get("officialEntry",""))
@@ -60,8 +60,8 @@ def main():
       "officialUniqueIds":len(official_ids),
       "counts":{"exactMatched":len(matched),"aliasMatched":len(alias_matched),
                 "missingFromMaster":len(missing),"ambiguous":len(ambiguous),
-                "masterOutsideOfficialUniqueIds":len(master_extra)},
-      "missingFromMaster":missing,
+                "masterOutsideOfficialUniqueIds":len(master_extra),"posReview":len(pos_review)},
+      "missingFromMaster":missing,\n      "posReview":pos_review,
       "aliasMatched":alias_matched,
       "ambiguous":ambiguous,
       "masterOutsideOfficialUniqueIds":master_extra
