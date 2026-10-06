@@ -22,5 +22,12 @@ def main():
         "intermediate_highIntermediate":len(words["gept-intermediate"] & words["gept-high-intermediate"])
       }}
     print(json.dumps(report,ensure_ascii=False,indent=2))
-    if exact_dups: raise SystemExit("Validation failed: exact duplicate rows found")
+    failures=[]
+    if exact_dups: failures.append(f"{exact_dups} exact duplicate rows")
+    if data.get("rejected"): failures.append(f"{len(data['rejected'])} rejected blocks")
+    # MOE counts are structural invariants, not targets to manufacture.
+    if data.get("sourceId")=="moe-jh-108":
+        if rows.get("moe-basic-1200")!=1200: failures.append(f"MOE basic rows={rows.get('moe-basic-1200',0)} expected=1200")
+        if rows.get("moe-common-2000-extra")!=800: failures.append(f"MOE extra rows={rows.get('moe-common-2000-extra',0)} expected=800")
+    if failures: raise SystemExit("Validation failed: "+"; ".join(failures))
 if __name__=="__main__": main()
