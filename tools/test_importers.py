@@ -10,7 +10,7 @@ def mod(name,path):
     m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
 
 naer=mod("naer","tools/import_naer.py")
-gept=mod("gept","tools/import_gept.py")
+gept=mod("gept","tools/import_gept.py")\nidentity=mod("identity","tools/vocab_identity.py")
 
 # A comma inside aliases is not an entry delimiter.
 x=naer.split_entries("father (dad, daddy), mother (mom, mommy), airplane (plane)")
@@ -28,4 +28,7 @@ assert len(entries)==4,(entries,rejected)
 assert not rejected,rejected
 assert entries[2]["listId"]=="gept-high-intermediate"
 
-print("parser regression tests: PASS")
+assert identity.canonical_id("  Mother’s   Day ")=="mother's day"
+assert identity.canonical_id("well–known")=="well-known"
+assert identity.canonical_id("colour")!=identity.canonical_id("color")
+print("parser and identity regression tests: PASS")
