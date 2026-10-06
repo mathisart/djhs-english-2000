@@ -41,7 +41,7 @@ def recover_prefixed_row(line):
     return None,None
 
 def parse(text):
-    out=[]; pending=""; rejected=[]; layout_fragments=[]; deferred=None
+    out=[]; pending=""; rejected=[]; layout_fragments=[]; deferred=None; leading_zh=[]
     for raw in text.splitlines():
         if raw.strip().isdigit():
             continue
@@ -65,11 +65,18 @@ def parse(text):
         partial=PARTIAL_ROW.match(line)
         if partial:
             d=partial.groupdict()
-            deferred={"raw":line,"word":d["word"].strip(),"pos":d["pos"],"level":d["level"],"awl":d.get("awl") or None,"zhParts":[]}
+            deferred={"raw":line,"word":d["word"].strip(),"pos":d["pos"],"level":d["level"],"awl":d.get("awl") or None,"zhParts":leading_zh[:]}
+            for frag in leading_zh:
+                layout_fragments.append({"fragment":frag,"rowWord":d["word"].strip(),"reason":"Chinese continuation preceding deferred word/POS/level row"})
+            leading_zh=[]
             continue
 
-        if out and not re.search(r"[A-Za-z]",line) and not re.search(r"初級|中級|中高級|中高",line):
-            layout_fragments.append({"fragment":line,"rowWord":out[-1]["word"],"reason":"Chinese-only PDF layout continuation; preserved separately from semantic row"})
+        if not re.search(r"[A-Za-z]",line) and not re.search(r"初級|中級|中高級|中高",line):
+            leading_zh.append(line)
+            continue
+
+        if re.match(r"^(?:adjective|auxiliary) noun .+ = (?:adj[.]|aux[.]) 中級$",line):
+            layout_fragments.append({"fragment":line,"reason":"GEPT POS glossary row, not vocabulary"})
             continue
 
         single=ROW.match(line)
@@ -117,6 +124,8 @@ def parse(text):
         else:
             rejected.append(candidate)
             pending=""
+    if leading_zh:
+        layout_fragments.extend({"fragment":x,"reason":"unattached Chinese layout continuation"} for x in leading_zh)
     if pending:
         rejected.append(pending)
     return out,rejected,layout_fragments
