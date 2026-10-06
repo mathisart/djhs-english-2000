@@ -7,7 +7,7 @@ from __future__ import annotations
 import json,re,sys
 from pathlib import Path
 from collections import defaultdict
-from vocab_identity import canonical_id
+from vocab_identity import canonical_id,pos_tokens
 
 def load_words_js(path):
     text=Path(path).read_text(encoding="utf-8")
@@ -33,10 +33,12 @@ def main():
         hits=by_id.get(wid,[])
         if len(hits)==1:
             exact.append({"wordId":wid,"officialRows":rows,"master":hits[0]}); consumed.add(wid)
-            official_pos=sorted({canonical_id(e["pos"]) for e in rows if e.get("pos")})
-            mp=hits[0].get("p")
-            if official_pos and mp and canonical_id(mp) not in official_pos:
-                pos_review.append({"wordId":wid,"officialPos":official_pos,"masterPos":mp,
+            official_pos=set()
+            for e in rows:
+                if e.get("pos"): official_pos |= pos_tokens(e["pos"])
+            mp=hits[0].get("p"); master_pos=pos_tokens(mp) if mp else set()
+            if official_pos and master_pos and not (official_pos & master_pos):
+                pos_review.append({"wordId":wid,"officialPos":sorted(official_pos),"masterPos":mp,
                   "officialRows":rows,"masterZh":hits[0].get("z")})
             continue
         if len(hits)>1:
