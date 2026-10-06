@@ -6,19 +6,17 @@ from vocab_identity import canonical_id
 
 SOURCE_ID="gept-current-2026-10-06"
 LEVEL_MAP={"初級":"gept-elementary","中級":"gept-intermediate","中高級":"gept-high-intermediate","中高":"gept-high-intermediate"}
-REVISION_MAP={
-    "GEPT_Elementary.pdf":"2026-04-29",
-    "GEPT_Intermediate.pdf":"2026-08-21",
-    "GEPT_High-Intermediate.pdf":"2026-08-21",
-}
+REVISION_MAP={"GEPT_Elementary.pdf":"2026-04-29","GEPT_Intermediate.pdf":"2026-08-21","GEPT_High-Intermediate.pdf":"2026-08-21"}
 ATOM=r"(?:art[.]?|adj[.]?|adv[.]?|noun[.]?|verb(?:[(]aux[.][)])?[.]?|prep[.]?|conj[.]?|pron[.]?|aux[.]?|interj[.]?|number|det[.]?|determiner|modal|inf[.]?)"
 POS_RE=rf"{ATOM}(?:/{ATOM})*"
-ROW=re.compile(rf"^[ 	]*(?P<word>.+?)[ 	]+(?P<pos>{POS_RE})[ 	]+(?P<rest>.+?)[ 	]+(?P<level>初級|中級|中高級|中高)(?:[ 	]+(?P<awl>L[0-9]+))?(?:[ 	]+[0-9]+)?[ 	]*$")
-HEADER=re.compile(r"字彙[ 	]*詞類[ 	]*中文[ 	]*註解[ 	]*級數[ 	]*學術字彙")
+ROW=re.compile(rf"^[ \t]*(?P<word>.+?)[ \t]+(?P<pos>{POS_RE})[ \t]+(?P<rest>.+?)[ \t]+(?P<level>初級|中級|中高級|中高)(?:[ \t]+(?P<awl>L[0-9]+))?(?:[ \t]+[0-9]+)?[ \t]*$")
+HEADER=re.compile(r"字彙[ \t]*詞類[ \t]*中文[ \t]*註解[ \t]*級數[ \t]*學術字彙")
+FOOTER=re.compile(r"^(?:全民英檢|GEPT).*(?:修訂|版權|LTTC)|^[0-9]{4}/[0-9]{1,2}/[0-9]{1,2}.*修訂")
+WORD_TOKEN=re.compile(r"^[A-Za-z][A-Za-z'./()-]*$")
 
 def clean_line(raw):
     line=HEADER.sub(" ",raw)
-    line=re.sub(r"(?<=[^ 	])[ 	]+[0-9]+[ 	]*$","",line)
+    line=re.sub(r"(?<=[^ \t])[ \t]+[0-9]+[ \t]*$","",line)
     return " ".join(line.split())
 
 def emit(m):
@@ -27,15 +25,29 @@ def emit(m):
       "zh":d["rest"].strip(),"level":d["level"],"listId":LEVEL_MAP[d["level"]],
       "awl":d.get("awl") or None}
 
-def parse(text):
-    out=[]; pending=""; rejected=[]
-    for raw in text.splitlines():
-        if raw.strip().isdigit(): continue
-        line=clean_line(raw)
-        if not line or line.isdigit(): continue
+def recover_prefixed_row(line):
+    tokens=line.split()
+    for i in range(1,len(tokens)-2):
+        if not WORD_TOKEN.fullmatch(tokens[i]):
+            continue
+        candidate=" ".join(tokens[i:])
+        m=ROW.match(candidate)
+        if not m:
+            continue
+        prefix=" ".join(tokens[:i]).strip()
+        if prefix and not re.search(r"[A-Za-z]",prefix):
+            return m,prefix
+    return None,None
 
-        # Prefer a complete row on the current physical line. This prevents a
-        # leftover fragment from the previous PDF row swallowing the next word.
+def parse(text):
+    out=[]; pending=""; rejected=[]; layout_fragments=[]
+    for raw in text.splitlines():
+        if raw.strip().isdigit():
+            continue
+        line=clean_line(raw)
+        if not line or line.isdigit() or FOOTER.search(line):
+            continue
+
         single=ROW.match(line)
         if single:
             if pending:
@@ -63,7 +75,8 @@ def parse(text):
         else:
             rejected.append(candidate)
             pending=""
-    if pending: rejected.append(pending)
+    if pending:
+        rejected.append(pending)
     return out,rejected,layout_fragments
 
 def main():
@@ -76,16 +89,19 @@ def main():
     if not revision:
         raise SystemExit(f"Unknown GEPT source document revision: {source_document}")
     entries,rejected,layout_fragments=parse(src.read_text(encoding="utf-8",errors="replace"))
-    payload={"schemaVersion":1,"sourceId":SOURCE_ID,
-      "sourceDocument":source_document,"sourceUrl":source_url,"sourceRevision":revision,
+    payload={"schemaVersion":1,"sourceId":SOURCE_ID,"sourceDocument":source_document,
+      "sourceUrl":source_url,"sourceRevision":revision,
       "catalogRole":"authoritative" if source_document=="GEPT_High-Intermediate.pdf" else "validation-only",
-      "verified":False,"retrievedAt":None,"review":{},"entries":entries,"rejected":rejected,"layoutFragments":layout_fragments}
+      "verified":False,"retrievedAt":None,"review":{},"entries":entries,
+      "rejected":rejected,"layoutFragments":layout_fragments}
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
     levels={}
-    for e in entries: levels[e["listId"]]=levels.get(e["listId"],0)+1
+    for e in entries:
+        levels[e["listId"]]=levels.get(e["listId"],0)+1
     print(json.dumps({"rows":len(entries),"rowsByLevel":levels,
-      "uniqueWords":len({e["wordId"] for e in entries}),"rejectedBlocks":len(rejected),"layoutFragments":len(layout_fragments)},
+      "uniqueWords":len({e["wordId"] for e in entries}),
+      "rejectedBlocks":len(rejected),"layoutFragments":len(layout_fragments)},
       ensure_ascii=False,indent=2))
 
 if __name__=="__main__":
