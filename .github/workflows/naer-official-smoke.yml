@@ -54,9 +54,18 @@ jobs:
           for lid in ("moe-basic-1200","moe-common-2000-extra"):
               rows=[x["officialEntry"] for x in d["entries"] if x["listId"]==lid]
               print("==",lid,len(rows),"==")
+              expanded=0
+              grouped=[]
               for x in rows:
+                  aa=__import__("re").match(r"^(.*?) *[(](.*)[)]$",x)
+                  n=1+(len([v for v in aa.group(2).split(",") if v.strip()]) if aa else 0)
+                  expanded+=n
+                  if aa: grouped.append((x,n))
                   if len(x)>35 or "\\n" in x or "\\f" in x:
                       print("SUSPECT",repr(x))
+              print("EXPANDED",expanded,"ALIAS_EXTRA",expanded-len(rows))
+              for x,n in grouped:
+                  print("GROUP",n,repr(x))
           PY
       - name: Enforce official table boundaries and counts
         run: |
