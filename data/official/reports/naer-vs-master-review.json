@@ -86,6 +86,8 @@
     "Representation candidates are review-only and do not authorize mastery identity merges.",
     "Abbreviation forms remain unresolved because no safe current-master counterpart was established.",
     "May/may and Miss/miss source rows remain distinct source evidence even where current canonical identity casefolds them.",
-    "Do not activate official lists in production from this report alone."
+    "Do not activate official lists in production from this report alone.",
+    "Current-master-only rows are not invalid by definition; many are multi-word expressions, proper/titlecase forms, or pronoun forms.",
+    "Before classifying current-master-only rows for removal or retention, cross-check them against NAER Appendix 5 Table 3, which is a thematic/POS presentation of the same declared 2,000 vocabulary."
   ]
 }
