@@ -1,0 +1,21 @@
+(()=>{const W=window.WORDS,$=x=>document.querySelector(x),mix=a=>[...a].sort(()=>Math.random()-.5);
+let saved={};try{saved=JSON.parse(localStorage.getItem("djhs2000")||"{}")}catch(e){}
+const state=new Map(W.map(x=>[x.w,Object.assign({r:0,w:0,due:0,status:"新字"},saved[x.w]||{})]));
+let score=0,combo=0,turn=0,cur,mode,left,timer,locked=false;
+function persist(){const o={};state.forEach((v,k)=>o[k]=v);localStorage.setItem("djhs2000",JSON.stringify(o))}
+function stats(){$("#score").textContent=score;$("#combo").textContent=combo;$("#known").textContent=[...state.values()].filter(s=>s.status==="已熟悉"||s.status==="已掌握").length}
+function speak(text){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.82;speechSynthesis.speak(u)}
+function pick(){let due=W.filter(x=>state.get(x.w).due<=turn),weak=due.filter(x=>state.get(x.w).status==="待加強");if(weak.length&&Math.random()<.75)return mix(weak)[0];let fresh=due.filter(x=>state.get(x.w).status==="新字");if(fresh.length)return mix(fresh)[0];return mix(due.length?due:W)[0]}
+function clock(){clearInterval(timer);left=10;paint();timer=setInterval(()=>{left-=.1;paint();if(left<=0)fail(true)},100)}
+function paint(){left=Math.max(0,left);$("#time").textContent=left.toFixed(1);$("#time").classList.toggle("urgent",left<=3);$("#bar").style.width=(left*10)+"%"}
+function opts(field){return mix([cur,...mix(W.filter(x=>x.w!==cur.w)).slice(0,3)]).map(x=>({x,label:x[field]}))}
+function show(){turn++;locked=false;cur=pick();const s=state.get(cur.w);$("#level").textContent=s.status;$("#feedback").textContent="";$("#example").style.display="none";$("#next").style.display="none";mode=s.w>0&&Math.random()<.6?"context":Math.random()<.3?"zh":"en";let os;
+if(mode==="context"){$("#mode").textContent="例句填空";$("#prompt").textContent=cur.e.replace(new RegExp(cur.w,"i"),"_____");$("#prompt").style.fontSize="26px";$("#pos").textContent="選出最適合的單字";os=opts("w")}
+else if(mode==="zh"){$("#mode").textContent="中翻英";$("#prompt").textContent=cur.z;$("#prompt").style.fontSize="46px";$("#pos").textContent=cur.p;os=opts("w")}
+else{$("#mode").textContent="英翻中";$("#prompt").textContent=cur.w;$("#prompt").style.fontSize="46px";$("#pos").textContent=cur.p;os=opts("z");setTimeout(()=>speak(cur.w),250)}
+const c=$("#choices");c.innerHTML="";os.forEach(o=>{let b=document.createElement("button");b.textContent=o.label;b.onclick=()=>answer(o.x);c.appendChild(b)});stats();clock()}
+function update(ok,to=false){const s=state.get(cur.w);if(ok){s.r++;s.w=Math.max(0,s.w-1);s.status=s.r>=4?"已掌握":s.r>=2?"已熟悉":"學習中";s.due=turn+(s.r>=4?14:s.r>=2?7:4)}else{s.w++;s.r=Math.max(0,s.r-1);s.status="待加強";s.due=turn+(s.w>=2?1:to?3:2)}persist()}
+function reveal(msg){$("#feedback").textContent=msg;$("#answer").textContent=cur.w+" "+cur.p+"｜"+cur.z;$("#sentence").innerHTML=cur.e.replace(new RegExp("("+cur.w+")","ig"),"<strong>$1</strong>");$("#translation").textContent=cur.t;$("#example").style.display="block";$("#next").style.display="block"}
+function answer(x){if(locked)return;locked=true;clearInterval(timer);[...$("#choices").children].forEach(b=>b.disabled=true);if(x.w===cur.w){combo++;let bonus=Math.round(left*10);score+=100+bonus+(combo-1)*20;update(true);reveal("答對！速度加分 +"+bonus+(combo>=3?"・"+combo+" 連擊":""))}else{combo=0;update(false);reveal("答錯。正確答案："+cur.w+"｜"+cur.z)}stats()}
+function fail(to){if(locked)return;locked=true;clearInterval(timer);combo=0;update(false,to);[...$("#choices").children].forEach(b=>b.disabled=true);reveal("時間到。正確答案："+cur.w+"｜"+cur.z);stats()}
+$("#next").onclick=show;$("#speak").onclick=()=>speak(cur.w);$("#speakSentence").onclick=()=>speak(cur.e);$("#reset").onclick=()=>{if(confirm("確定要清除這台裝置的學習進度嗎？")){localStorage.removeItem("djhs2000");location.reload()}};show()})();
