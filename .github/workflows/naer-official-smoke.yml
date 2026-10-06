@@ -44,6 +44,21 @@ jobs:
                   print(repr(t[max(0,i-100):i+180]))
                   start=i+len(needle)
           PY
+      - name: Show Table 3 counting evidence
+        run: |
+          python - <<'PY'
+          import re
+          text=open("/tmp/naer/english-curriculum.txt",encoding="utf-8",errors="replace").read()
+          a=text.find("表三、")
+          b=text.find("附錄六",a)
+          t=text[a:b if b>0 else None]
+          print("TABLE3_CHARS",len(t))
+          for term in ["a/an","R.O.C.","U.S.A.","voice","wait","rush","safety","shoe","roller skate"]:
+              hits=[m.start() for m in re.finditer(re.escape(term),t,re.I)]
+              print("T3TERM",term,len(hits))
+              for p in hits[:3]:
+                  print(repr(t[max(0,p-100):p+180].replace("\n"," ")))
+          PY
       - name: Parse official Appendix 5
         run: python tools/import_naer.py /tmp/naer/english-curriculum.txt /tmp/naer/naer-current.json
       - name: Diagnose parsed NAER entries
