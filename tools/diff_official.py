@@ -80,14 +80,17 @@ def main():
             for x in extra_keys[k]:
                 representation_candidates.append({"officialWordId":m["wordId"],"officialRows":m["officialRows"],"master":x})
 
+    representation_word_ids={x["officialWordId"] for x in representation_candidates}
+    unresolved_missing=[x for x in missing if x["wordId"] not in representation_word_ids]
+
     report={"schemaVersion":2,"sourceId":off.get("sourceId"),"masterRows":len(master),
       "masterCanonicalWords":len(by_id),"officialRows":len(off["entries"]),
       "officialCanonicalWords":len(official_by_id),
       "counts":{"exactMatchedWords":len(exact),"aliasMatchedWords":len(alias),
         "missingCanonicalWords":len(missing),"ambiguousCanonicalWords":len(ambiguous),
-        "masterRowsOutsideOfficialMatches":len(master_extra),"posReviewWords":len(pos_review),"representationReviewCandidates":len(representation_candidates)},
+        "masterRowsOutsideOfficialMatches":len(master_extra),"posReviewWords":len(pos_review),"representationReviewCandidates":len(representation_candidates),"representationReviewWords":len(representation_word_ids),"unresolvedMissingWords":len(unresolved_missing)},
       "exactMatched":exact,"aliasMatched":alias,"missingFromMaster":missing,
-      "ambiguous":ambiguous,"posReview":pos_review,"representationReviewCandidates":representation_candidates,"masterOutsideOfficialMatches":master_extra}
+      "ambiguous":ambiguous,"posReview":pos_review,"representationReviewCandidates":representation_candidates,"unresolvedMissing":unresolved_missing,"masterOutsideOfficialMatches":master_extra}
     out_path.parent.mkdir(parents=True,exist_ok=True)
     out_path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report["counts"],ensure_ascii=False,indent=2))
