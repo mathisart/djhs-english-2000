@@ -122,6 +122,17 @@
   .skillprogress{font-size:12px;gap:4px 6px}
   .choices button{min-height:56px}
 }
+
+.skilltitle{display:block;margin-bottom:5px}.skillgrid{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.skillitem{display:inline-flex;gap:5px;align-items:center}.skillitem b{letter-spacing:1px}
+@media(max-width:600px){
+ .skillprogress{display:block!important;max-width:390px!important;margin:7px auto 0!important;text-align:left!important}
+ .skilltitle{font-size:12px;margin-bottom:5px}
+ .skillgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px 7px}
+ .skillitem{display:flex;justify-content:space-between;min-width:0;background:#f6f8fb;border-radius:9px;padding:6px 8px}
+ .skillitem span{white-space:nowrap}.skillitem b{white-space:nowrap;font-size:14px}
+ .example{padding:10px 11px}.example #sentence{line-height:1.35}
+ .shadow{margin-top:8px;padding-top:8px}.shadowtitle{font-size:13px}
+}
 </style></head><body><section class="startscreen" id="startScreen"><div class="startbox"><h1>DJHS English 2000</h1><p>準備好再開始計時。選擇學習模式後，按下開始即可進入第一題。</p><button class="startbtn" id="startGame" type="button">開始學習</button><div class="startlinks"><button id="startLeaderboard" type="button">🏆 排行榜</button><button id="startHelp" type="button">？ 使用說明</button></div></div></section><main class="wrap">
 <div class="top"><div><div class="brand">DJHS English 2000</div><div class="muted">國中英文自主學習・自適應闖關</div></div><div class="topactions"><button class="helpbtn" id="leaderboardBtn" type="button" aria-label="排行榜" title="排行榜">🏆</button><button class="helpbtn" id="help" type="button" aria-label="使用說明" title="使用說明">?</button><button class="reset" id="reset">重設進度</button></div></div>
 <section class="welcome" id="welcome"><b>不知道選哪個？</b><span>直接使用「自動適性」，系統會依你的答題表現調整難度。</span><button id="dismissWelcome" type="button">知道了</button></section><section class="track" id="trackPanel"><button class="trackbtn active recommended" data-track="auto">自動適性<small>推薦・依表現自動調整</small></button><button class="trackbtn" data-track="core">基礎 1200<small>先把國中核心字學穩</small></button><button class="trackbtn" data-track="full">完整 2000<small>核心＋常用延伸字</small></button><button class="trackbtn" data-track="gept">GEPT 初級<small>全民英檢初級挑戰</small></button></section><div class="tracknote muted" id="tracknote">已載入 2,055 筆可練習資料；官方 1200／2000／GEPT 標記持續校對。</div><button class="tracktoggle" id="trackToggle" type="button" aria-expanded="true">收起學習模式 ▲</button><section class="stats"><div class="stat">分數<b id="score">0</b></div><div class="stat">連擊<b id="combo">0</b></div><div class="stat">時間<b id="time">10.0</b></div><div class="stat">已熟悉<b id="known">0</b></div></section>
