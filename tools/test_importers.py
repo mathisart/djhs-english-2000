@@ -27,7 +27,7 @@ compound adj./noun 測試二 中級
 numberword number/pron./noun/adj. 測試 初級
 zeal noun 熱忱 中高級
 """
-entries,rejected=gept.parse(sample)
+entries,rejected=gept.parse(sample)[:2]
 assert not rejected,rejected
 assert len(entries)==4,(entries,rejected)
 assert entries[0]["listId"]=="gept-elementary"
@@ -61,9 +61,15 @@ magician noun 魔術師 初級
 orphan noun
 heavenly adj. 天上的 中級
 """
-frag_entries,frag_rejected=gept.parse(fragmented)
+frag_entries,frag_rejected=gept.parse(fragmented)[:2]
 assert [e["word"] for e in frag_entries]==["magic","magician","heavenly"],frag_entries
 assert frag_rejected==["orphan noun"],frag_rejected
+
+shifted="反對；靠著 against prep. 反對、靠著 初級"
+shift_entries,shift_rejected,shift_fragments=gept.parse(shifted)
+assert len(shift_entries)==1 and shift_entries[0]["word"]=="against",shift_entries
+assert shift_rejected==[],shift_rejected
+assert shift_fragments and shift_fragments[0]["fragment"]=="反對；靠著",shift_fragments
 
 assert identity.canonical_id(" Colour ")=="colour"
 assert identity.canonical_id("COLOR")=="color"
