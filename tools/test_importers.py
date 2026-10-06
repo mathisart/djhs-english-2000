@@ -171,4 +171,10 @@ def test_naer_hyphenated_word_is_not_alphabet_label():
 
 test_naer_hyphenated_word_is_not_alphabet_label()
 
+def test_naer_case_distinct_source_entries_can_share_learning_identity():
+    assert identity.canonical_id("May")==identity.canonical_id("may")
+    assert "May"!="may"
+
+test_naer_case_distinct_source_entries_can_share_learning_identity()
+
 print("IMPORTER TESTS: PASS")
