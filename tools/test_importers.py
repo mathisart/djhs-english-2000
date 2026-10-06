@@ -29,7 +29,7 @@ assert not rejected,rejected
 assert entries[2]["listId"]=="gept-high-intermediate"
 
 # Real LTTC PDF text-layer patterns: wrapped rows and page header glued to prior row.
-real_layout="""iron noun
+real_layout="""iron noun\n12
 鐵 初級
 affect verb 影響、(疾病)感染 初級 L2 1字彙 詞類 中文 註解 級數 學術字彙
 affection noun 喜愛、鍾愛 中級
