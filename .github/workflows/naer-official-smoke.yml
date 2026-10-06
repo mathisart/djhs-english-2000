@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "tools/import_naer.py"
+      - "tools/diff_official.py"
       - "tools/test_importers.py"
       - "data/official/sources.json"
       - ".github/workflows/naer-official-smoke.yml"
