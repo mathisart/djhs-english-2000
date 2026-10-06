@@ -133,4 +133,21 @@ def test_gept_revision_footer_with_layout_counters_is_ignored():
 
 test_gept_revision_footer_with_layout_counters_is_ignored()
 
+def test_naer_real_pdf_heading_spacing():
+    text="""附錄五：參考字彙表（2,000 字）
+  表一、基本 1, 200 字（依字母排列）
+A- a/an, able
+表二、其他常用 800 字（依字母排列）
+A- absent, accept
+表三、參考字彙表（2,000 字），依主題、詞性分類
+1. People
+"""
+    m1=naer.T1_RE.search(text); m2=naer.T2_RE.search(text,m1.end())
+    m3=naer.T3_RE.search(text,m2.end())
+    assert m1 and m2 and m3
+    assert naer.split_entries(text[m1.end():m2.start()])==["a/an","able"]
+    assert naer.split_entries(text[m2.end():m3.start()])==["absent","accept"]
+
+test_naer_real_pdf_heading_spacing()
+
 print("IMPORTER TESTS: PASS")
