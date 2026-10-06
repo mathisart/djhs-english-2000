@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "words.js",
+  "verifiedBy": "GitHub Actions / Python 3.12",
+  "verifiedAt": "2026-10-06",
+  "workflowRun": 37463882646,
+  "rows": 2055,
+  "canonicalWords": 2055,
+  "duplicateCanonicalIds": 0,
+  "missingRequiredFields": {}
+}
