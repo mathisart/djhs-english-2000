@@ -48,6 +48,25 @@ def parse(text):
         if not line or line.isdigit() or FOOTER.search(line):
             continue
 
+        if deferred and not re.search(r"[A-Za-z]",line) and not re.search(r"初級|中級|中高級|中高",line):
+            deferred["zhParts"].append(line)
+            layout_fragments.append({"fragment":line,"rowWord":deferred["word"],"reason":"Chinese continuation attached to deferred word/POS/level row"})
+            continue
+
+        if deferred:
+            if deferred["zhParts"]:
+                out.append({"word":deferred["word"],"wordId":canonical_id(deferred["word"]),"pos":deferred["pos"],
+                    "zh":" ".join(deferred["zhParts"]),"level":deferred["level"],"listId":LEVEL_MAP[deferred["level"]],"awl":deferred["awl"]})
+            else:
+                rejected.append(deferred["raw"])
+            deferred=None
+
+        partial=PARTIAL_ROW.match(line)
+        if partial:
+            d=partial.groupdict()
+            deferred={"raw":line,"word":d["word"].strip(),"pos":d["pos"],"level":d["level"],"awl":d.get("awl") or None,"zhParts":[]}
+            continue
+
         if out and not re.search(r"[A-Za-z]",line) and not re.search(r"初級|中級|中高級|中高",line):
             layout_fragments.append({"fragment":line,"rowWord":out[-1]["word"],"reason":"Chinese-only PDF layout continuation; preserved separately from semantic row"})
             continue
