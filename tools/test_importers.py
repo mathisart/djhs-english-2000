@@ -125,4 +125,12 @@ def test_gept_cjk_wrap_spacing_is_stable():
 
 test_gept_cjk_wrap_spacing_is_stable()
 
+def test_gept_revision_footer_with_layout_counters_is_ignored():
+    entries,rejected,fragments=gept.parse("zoom verb 放大 中高級\n1 1 1 1 2026/08/21修訂")
+    assert len(entries)==1,entries
+    assert rejected==[],rejected
+    assert fragments==[],fragments
+
+test_gept_revision_footer_with_layout_counters_is_ignored()
+
 print("IMPORTER TESTS: PASS")
