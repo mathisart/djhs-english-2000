@@ -11,7 +11,7 @@ REVISION_MAP={
     "GEPT_Intermediate.pdf":"2026-08-21",
     "GEPT_High-Intermediate.pdf":"2026-08-21",
 }
-ATOM=r"(?:art[.]|adj[.]|adv[.]|noun|verb|prep[.]|conj[.]|pron[.]|aux[.]|interj[.]|number|det[.]|determiner|modal)"
+ATOM=r"(?:art[.]?|adj[.]?|adv[.]?|noun[.]?|verb(?:[(]aux[.][)])?[.]?|prep[.]?|conj[.]?|pron[.]?|aux[.]?|interj[.]?|number|det[.]?|determiner|modal|inf[.]?)"
 POS_RE=rf"{ATOM}(?:/{ATOM})*"
 ROW=re.compile(rf"^[ 	]*(?P<word>.+?)[ 	]+(?P<pos>{POS_RE})[ 	]+(?P<rest>.+?)[ 	]+(?P<level>初級|中級|中高級|中高)(?:[ 	]+(?P<awl>L[0-9]+))?(?:[ 	]+[0-9]+)?[ 	]*$")
 HEADER=re.compile(r"字彙[ 	]*詞類[ 	]*中文[ 	]*註解[ 	]*級數[ 	]*學術字彙")
