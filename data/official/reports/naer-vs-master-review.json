@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": {
+    "workflowRun": 37489872831,
+    "commit": "a7600ecfb38e782a35d5b777d9c4d8aef9e93e07",
+    "date": "2026-10-06"
+  },
+  "scope": "NAER normalized source-entry identities compared with current production words.js; production unchanged",
+  "counts": {
+    "officialCanonicalWords": 2003,
+    "exactMatchedWords": 1972,
+    "missingCanonicalWords": 31,
+    "ambiguousCanonicalWords": 0,
+    "masterRowsOutsideOfficialMatches": 83,
+    "representationReviewCandidates": 8,
+    "representationReviewWords": 7,
+    "unresolvedMissingWords": 24
+  },
+  "representationReview": [
+    [
+      "a/an",
+      "a"
+    ],
+    [
+      "airlines",
+      "airline"
+    ],
+    [
+      "baby sitter",
+      "babysitter"
+    ],
+    [
+      "roller skate",
+      "roller-blade"
+    ],
+    [
+      "roller skate",
+      "roller-skate"
+    ],
+    [
+      "soy-sauce",
+      "soy sauce"
+    ],
+    [
+      "sports",
+      "sport"
+    ],
+    [
+      "waterfalls",
+      "waterfall"
+    ]
+  ],
+  "abbreviationIdentityReview": [
+    "a.m",
+    "p.m",
+    "r.o.c./roc",
+    "u.s.a./usa"
+  ],
+  "unresolvedMissing": [
+    "a.m",
+    "could",
+    "mr",
+    "mrs",
+    "ms",
+    "officer",
+    "p.m",
+    "police",
+    "r.o.c./roc",
+    "shoe",
+    "socks",
+    "sore",
+    "u.s.a./usa",
+    "burger",
+    "earrings",
+    "empty",
+    "female",
+    "oneself",
+    "professor",
+    "rubber",
+    "seek",
+    "slippers",
+    "sneakers",
+    "stationery"
+  ],
+  "notes": [
+    "Representation candidates are review-only and do not authorize mastery identity merges.",
+    "Abbreviation forms remain unresolved because no safe current-master counterpart was established.",
+    "May/may and Miss/miss source rows remain distinct source evidence even where current canonical identity casefolds them.",
+    "Do not activate official lists in production from this report alone."
+  ]
+}
