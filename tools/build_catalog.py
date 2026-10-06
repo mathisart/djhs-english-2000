@@ -16,6 +16,8 @@ def main():
     output=Path(sys.argv[-1])
     catalog=defaultdict(lambda:{"memberships":[],"sourceEntries":[]})
     for snap in snapshots:
+        if snap.get("catalogRole")=="validation-only":
+            raise SystemExit(f"Refusing validation-only snapshot as catalog input: {snap.get('sourceDocument')}")
         if snap.get("verified") is not True:
             raise SystemExit(f"Refusing unverified snapshot: {snap.get('sourceId')}")
         if snap.get("rejected"):
