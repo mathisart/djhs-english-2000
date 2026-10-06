@@ -2,6 +2,7 @@
 from __future__ import annotations
 import json,re,sys
 from pathlib import Path
+from vocab_identity import canonical_id,base_and_parenthetical
 T1="表一、基本1,200字"; T2="表二、其他常用800字"
 def canon(s): return re.sub(r"\s+"," ",s.strip()).casefold()
 def split_entries(block):
@@ -20,11 +21,11 @@ def split_entries(block):
     if item: out.append(item)
     return out
 def aliases(entry):
-    vals={canon(entry)}
+    vals={canonical_id(entry)}
     m=re.match(r"^(.*?)\s*\((.*?)\)\s*$",entry)
     if m:
-        vals.add(canon(m.group(1)))
-        vals.update(canon(x) for x in m.group(2).split(",") if x.strip())
+        vals.add(canonical_id(m.group(1)))
+        vals.update(canonical_id(x) for x in m.group(2).split(",") if x.strip())
     return sorted(vals)
 def main():
     src,out=map(Path,sys.argv[1:3]); text=src.read_text(encoding="utf-8",errors="replace")
@@ -33,7 +34,7 @@ def main():
     i3=text.find("表三、",i2); basic=split_entries(text[i1+len(T1):i2]); extra=split_entries(text[i2+len(T2):i3 if i3>0 else None])
     entries=[]
     for raw,lid in [(x,"moe-basic-1200") for x in basic]+[(x,"moe-common-2000-extra") for x in extra]:
-        entries.append({"officialEntry":raw,"wordId":canon(raw.split(" (")[0]),"aliases":aliases(raw),"listId":lid})
+        entries.append({"officialEntry":raw,"wordId":canonical_id(raw.split(" (")[0]),"aliases":aliases(raw),"listId":lid})
     payload={"schemaVersion":1,"sourceId":"moe-jh-108","verified":False,"retrievedAt":None,"review":{},"rejected":[],"entries":entries,
       "derivedLists":{"moe-common-2000":["moe-basic-1200","moe-common-2000-extra"]}}
     out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
