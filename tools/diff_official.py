@@ -80,6 +80,17 @@ def main():
             for x in extra_keys[k]:
                 representation_candidates.append({"officialWordId":m["wordId"],"officialRows":m["officialRows"],"master":x})
 
+    # Descriptive buckets for current-master-only rows. These are not validity judgments.
+    pronoun_forms={"her","hers","herself","him","himself","his","its","itself","me","mine","my","myself","our","ours","ourselves","their","theirs","them","themselves","us","your","yours","yourself","yourselves"}
+    def extra_bucket(word):
+        wid=canonical_id(word["w"])
+        if wid in pronoun_forms: return "pronoun-form"
+        if " " in wid: return "multi-word"
+        if word["w"][:1].isupper(): return "proper-or-titlecase"
+        return "other"
+    master_extra_buckets=defaultdict(list)
+    for x in master_extra: master_extra_buckets[extra_bucket(x)].append(x)
+
     representation_word_ids={x["officialWordId"] for x in representation_candidates}
     unresolved_missing=[x for x in missing if x["wordId"] not in representation_word_ids]
 
@@ -88,9 +99,9 @@ def main():
       "officialCanonicalWords":len(official_by_id),
       "counts":{"exactMatchedWords":len(exact),"aliasMatchedWords":len(alias),
         "missingCanonicalWords":len(missing),"ambiguousCanonicalWords":len(ambiguous),
-        "masterRowsOutsideOfficialMatches":len(master_extra),"posReviewWords":len(pos_review),"representationReviewCandidates":len(representation_candidates),"representationReviewWords":len(representation_word_ids),"unresolvedMissingWords":len(unresolved_missing)},
+        "masterRowsOutsideOfficialMatches":len(master_extra),"posReviewWords":len(pos_review),"representationReviewCandidates":len(representation_candidates),"representationReviewWords":len(representation_word_ids),"unresolvedMissingWords":len(unresolved_missing),"masterOutsideOfficialBuckets":{k:len(v) for k,v in sorted(master_extra_buckets.items())}},
       "exactMatched":exact,"aliasMatched":alias,"missingFromMaster":missing,
-      "ambiguous":ambiguous,"posReview":pos_review,"representationReviewCandidates":representation_candidates,"unresolvedMissing":unresolved_missing,"masterOutsideOfficialMatches":master_extra}
+      "ambiguous":ambiguous,"posReview":pos_review,"representationReviewCandidates":representation_candidates,"unresolvedMissing":unresolved_missing,"masterOutsideOfficialMatches":master_extra,"masterOutsideOfficialBuckets":dict(master_extra_buckets)}
     out_path.parent.mkdir(parents=True,exist_ok=True)
     out_path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report["counts"],ensure_ascii=False,indent=2))
