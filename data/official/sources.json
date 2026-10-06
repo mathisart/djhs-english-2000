@@ -21,36 +21,42 @@
       "supersedes": []
     },
     {
-      "id": "gept-2026-04-29",
+      "id": "gept-current-2026-10-06",
       "publisher": "財團法人語言訓練測驗中心 LTTC",
       "title": "GEPT Word Lists",
       "trust": "official",
-      "version": "2026-04-29",
+      "version": "mixed-current",
       "url": "https://www.lttc.ntu.edu.tw/en/vocabulary",
       "lists": [
         "gept-elementary",
         "gept-intermediate",
         "gept-high-intermediate"
       ],
-      "notes": "Current official LTTC cumulative PDFs inspected on 2026-10-06; PDF footer states 2026/04/29 revised. Earlier 2024-02 revision is historical, not the active snapshot.",
+      "notes": "Current official LTTC downloadable PDFs are not one shared revision: Elementary footer is 2026/04/29; Intermediate and High-Intermediate footers are 2026/08/21. Treat each PDF revision independently; do not claim a single 2026-04-29 cumulative release.",
       "downloadUrls": {
         "elementary": "https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_Elementary.pdf",
         "intermediate": "https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_Intermediate.pdf",
         "highIntermediate": "https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_High-Intermediate.pdf"
       },
-      "releaseDate": "2026-04-29",
-      "verifiedAgainst": "LTTC official vocabulary page and downloadable PDFs",
+      "releaseDate": null,
+      "verifiedAgainst": "LTTC official downloadable PDFs fetched by GitHub Actions; revisions read from PDF text layer",
       "checkedAt": "2026-10-06",
       "active": true,
       "supersedes": [
-        "gept-2024-02"
+        "gept-2024-02",
+        "gept-2026-04-29-metadata-assumption"
       ],
       "sha256": {
         "elementary": "08c591f12bd8c045970c45cd7ce0ac58ed9ec902bdbb9b15f5eb48bf0726f565",
         "intermediate": "9c3cedc899b8dc8748a06e53578d4e47e443316c3ad9350abc6f962a85d852cc",
         "highIntermediate": "a9b99ae3cae681034bee5a7eb6f3d9032ec5e256c7773a8a9b813763ddbb62a7"
       },
-      "hashVerifiedAt": "2026-10-06"
+      "hashVerifiedAt": "2026-10-06",
+      "documentVersions": {
+        "elementary": "2026-04-29",
+        "intermediate": "2026-08-21",
+        "highIntermediate": "2026-08-21"
+      }
     }
   ]
 }
