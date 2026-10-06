@@ -21,7 +21,7 @@ def main():
     def visit(n,stack,done):
         if n in stack: failures.append("derived cycle: "+" -> ".join(stack+[n])); return
         if n in done: return
-        for x in ls[n].get("derivedFrom",[]): visit(x,stack+[n],done)
+        for x in ls[n].get("derivedFrom",[]):\n            if x in ls: visit(x,stack+[n],done)
         done.add(n)
     done=set()
     for n in ls: visit(n,[],done)
