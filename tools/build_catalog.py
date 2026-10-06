@@ -22,6 +22,8 @@ def main():
             raise SystemExit(f"Refusing unverified snapshot: {snap.get('sourceId')}")
         if snap.get("rejected"):
             raise SystemExit(f"Refusing snapshot with rejected blocks: {snap.get('sourceId')}")
+        if snap.get("layoutFragments") and snap.get("review",{}).get("layoutFragments")!="pass":
+            raise SystemExit(f"Refusing snapshot with unreviewed layout fragments: {snap.get('sourceId')}")
         for e in snap["entries"]:
             wid=e["wordId"]
             row=catalog[wid]
