@@ -33,6 +33,13 @@ jobs:
           pdftotext -layout /tmp/gept/high-intermediate.pdf /tmp/gept/high-intermediate.txt
       - name: Parse and cross-check all official cumulative lists
         run: python tools/ingest_gept.py /tmp/gept/elementary.txt /tmp/gept/intermediate.txt /tmp/gept/high-intermediate.txt /tmp/gept/out
+      - name: Upload normalized smoke artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gept-official-smoke
+          path: /tmp/gept/out
+          retention-days: 7
       - name: Show extraction summary
         if: always()
         run: |
