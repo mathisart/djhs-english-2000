@@ -43,7 +43,7 @@ def parse(text:str):
 def main():
     src,out=map(Path,sys.argv[1:3])
     entries,rejected=parse(src.read_text(encoding="utf-8",errors="replace"))
-    payload={"schemaVersion":1,"sourceId":"gept-2024-02","entries":entries,"rejected":rejected}
+    payload={"schemaVersion":1,"sourceId":"gept-2026-04-29","entries":entries,"rejected":rejected}
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
     levels={}
