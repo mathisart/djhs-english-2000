@@ -7,6 +7,7 @@ on:
       - "tools/import_gept.py"
       - "tools/ingest_gept.py"
       - "tools/crosscheck_gept.py"
+      - "tools/test_importers.py"
       - "data/official/sources.json"
       - ".github/workflows/gept-official-smoke.yml"
 
@@ -18,6 +19,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Validate importer before downloading official PDFs
+        run: |
+          python -m py_compile tools/import_gept.py tools/ingest_gept.py tools/crosscheck_gept.py
+          python tools/test_importers.py
       - name: Install PDF text tools
         run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - name: Download official LTTC PDFs
