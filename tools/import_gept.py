@@ -19,6 +19,8 @@ def clean_line(raw):
 def parse(text):
     out=[]; pending=""; rejected=[]
     for raw in text.splitlines():
+        # Standalone PDF page numbers are layout noise, never row continuations.
+        if re.fullmatch(r"\\s*\\d+\\s*",raw): continue
         line=clean_line(raw)
         if not line or re.fullmatch(r"\\d+",line): continue
         candidate=(pending+" "+line).strip() if pending else line
