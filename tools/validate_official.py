@@ -33,8 +33,12 @@ def main():
         bad_lists=[e for e in entries if e.get("listId") not in valid_lists]
         if bad_lists: failures.append(f"{len(bad_lists)} invalid GEPT list IDs")
     if data.get("sourceId")=="moe-jh-108":
-        if rows.get("moe-basic-1200")!=1200: failures.append(f"MOE basic rows={rows.get('moe-basic-1200',0)} expected=1200")
-        if rows.get("moe-common-2000-extra")!=800: failures.append(f"MOE extra rows={rows.get('moe-common-2000-extra',0)} expected=800")
+        declared=data.get("declaredCounts",{})
+        expected={"moe-basic-1200":1200,"moe-common-2000-extra":800,"moe-common-2000":2000}
+        for list_id,count in expected.items():
+            if declared.get(list_id)!=count:
+                failures.append(f"MOE {list_id} declaredCount={declared.get(list_id)} expected={count}")
+        report["declaredCounts"]=declared
     report["failures"]=failures
     print(json.dumps(report,ensure_ascii=False,indent=2))
     if failures: raise SystemExit("Validation failed: "+"; ".join(failures))
