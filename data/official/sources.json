@@ -44,7 +44,13 @@
       "active": true,
       "supersedes": [
         "gept-2024-02"
-      ]
+      ],
+      "sha256": {
+        "elementary": "08c591f12bd8c045970c45cd7ce0ac58ed9ec902bdbb9b15f5eb48bf0726f565",
+        "intermediate": "9c3cedc899b8dc8748a06e53578d4e47e443316c3ad9350abc6f962a85d852cc",
+        "highIntermediate": "a9b99ae3cae681034bee5a7eb6f3d9032ec5e256c7773a8a9b813763ddbb62a7"
+      },
+      "hashVerifiedAt": "2026-10-06"
     }
   ]
 }
