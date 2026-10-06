@@ -66,7 +66,13 @@ def main():
         return s
     missing_keys=defaultdict(list)
     extra_keys=defaultdict(list)
-    for x in missing: missing_keys[review_key(x["wordId"])].append(x)
+    for x in missing:
+        forms={x["wordId"]}
+        for row in x.get("officialRows",[]):
+            forms.update(a for a in row.get("aliases",[]) if a)
+            raw=row.get("officialEntry","")
+            forms.update(part.strip() for part in raw.split("/") if part.strip())
+        for form in forms: missing_keys[review_key(form)].append(x)
     for x in master_extra: extra_keys[review_key(x["w"])].append(x)
     representation_candidates=[]
     for k in sorted(set(missing_keys)&set(extra_keys)):
