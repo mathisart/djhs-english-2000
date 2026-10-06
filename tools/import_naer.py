@@ -41,7 +41,7 @@ def main():
     entries=[]
     for raw,lid in [(x,"moe-basic-1200") for x in basic]+[(x,"moe-common-2000-extra") for x in extra]:
         entries.append({"officialEntry":raw,"wordId":canonical_id(raw.split(" (")[0]),"aliases":aliases(raw),"listId":lid})
-    payload={"schemaVersion":1,"sourceId":"moe-jh-108","verified":False,"retrievedAt":None,"review":{},"rejected":[],"entries":entries,
+    payload={"schemaVersion":1,"sourceId":"moe-jh-108","sourceDocument":"naer-english-curriculum-108","sourceUrl":"https://www.naer.edu.tw/upload/1/16/doc/812/%28%E7%99%BC%E5%B8%83%E7%89%88%29%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E8%AA%9E%E6%96%87%E9%A0%98%E5%9F%9F-%E8%8B%B1%E8%AA%9E%E6%96%87%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81.pdf","sourceRevision":"108課綱現行版","catalogRole":"authoritative","verified":False,"retrievedAt":None,"review":{},"rejected":[],"entries":entries,
       "declaredCounts":{"moe-basic-1200":1200,"moe-common-2000-extra":800,"moe-common-2000":2000},
       "derivedLists":{"moe-common-2000":["moe-basic-1200","moe-common-2000-extra"]}}
     out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
