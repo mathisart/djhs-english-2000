@@ -38,7 +38,12 @@ def parse(text):
     return out,rejected
 
 def main():
-    src,out=map(Path,sys.argv[1:3]); entries,rejected=parse(src.read_text(encoding="utf-8",errors="replace"))
+    if len(sys.argv) not in (3,5):
+        raise SystemExit("usage: import_gept.py INPUT_TEXT OUTPUT_JSON [SOURCE_DOCUMENT SOURCE_URL]")
+    src,out=map(Path,sys.argv[1:3])
+    source_document=sys.argv[3] if len(sys.argv)==5 else "GEPT_High-Intermediate.pdf"
+    source_url=sys.argv[4] if len(sys.argv)==5 else "https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_High-Intermediate.pdf"
+    entries,rejected=parse(src.read_text(encoding="utf-8",errors="replace"))
     payload={"schemaVersion":1,"sourceId":SOURCE_ID,
       "sourceDocument":"GEPT_High-Intermediate.pdf",
       "sourceUrl":"https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_High-Intermediate.pdf",
