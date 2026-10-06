@@ -1,5 +1,5 @@
 (()=>{const W=window.WORDS,$=x=>document.querySelector(x),mix=a=>[...a].sort(()=>Math.random()-.5);
-const SB_URL="https://rkdabaqvzsjurdzcoud.supabase.co";
+const SB_URL="https://rkdabaqvzsjuurdzcoud.supabase.co";
 const SB_KEY="sb_publishable_-gp9exJsx8YWapJ9vtS0AA_wJNMvzMp";
 const DEVICE_KEY="djhs2000-device-token",PLAYER_KEY="djhs2000-player";
 function uuid(){return crypto.randomUUID?crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==="x"?r:(r&3|8);return v.toString(16)})}
