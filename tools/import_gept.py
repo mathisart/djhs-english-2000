@@ -49,8 +49,7 @@ def parse(text):
             continue
 
         if out and not re.search(r"[A-Za-z]",line) and not re.search(r"初級|中級|中高級|中高",line):
-            out[-1]["zh"]=(out[-1]["zh"]+" "+line).strip()
-            layout_fragments.append({"fragment":line,"rowWord":out[-1]["word"],"reason":"Chinese continuation appended to previous row"})
+            layout_fragments.append({"fragment":line,"rowWord":out[-1]["word"],"reason":"Chinese-only PDF layout continuation; preserved separately from semantic row"})
             continue
 
         single=ROW.match(line)
