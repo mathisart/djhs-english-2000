@@ -8,7 +8,7 @@ T2_RE=re.compile(r"表二、其他常用 *800 *字（依字母排列）")
 T3_RE=re.compile(r"表三、")
 def canon(s): return re.sub(r"\s+"," ",s.strip()).casefold()
 def split_entries(block):
-    block=re.sub(r"(?m)^\s*[A-Z]\s*[–-]\s*","",block)
+    block=re.sub(r"(?m)^ *[A-Z] *[–-] *","",block)
     block=re.sub(r"\s+"," ",block)
     out=[]; buf=[]; depth=0
     for ch in block:
