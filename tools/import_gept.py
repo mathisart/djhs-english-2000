@@ -20,6 +20,11 @@ def clean_line(raw):
     line=re.sub(r"(?<=[^ \t])[ \t]+[0-9]+[ \t]*$","",line)
     return " ".join(line.split())
 
+def join_zh(parts):
+    text=" ".join(x.strip() for x in parts if x.strip())
+    text=re.sub(r"(?<=[\u3400-\u9fff，、；：。！？…（）()]) +(?=[\u3400-\u9fff，、；：。！？…（）()])","",text)
+    return text
+
 def emit(m):
     d=m.groupdict()
     return {"word":d["word"].strip(),"wordId":canonical_id(d["word"]),"pos":d["pos"],
@@ -61,7 +66,7 @@ def parse(text):
         if deferred:
             if deferred["zhParts"]:
                 out.append({"word":deferred["word"],"wordId":canonical_id(deferred["word"]),"pos":deferred["pos"],
-                    "zh":" ".join(deferred["zhParts"]),"level":deferred["level"],"listId":LEVEL_MAP[deferred["level"]],"awl":deferred["awl"]})
+                    "zh":join_zh(deferred["zhParts"]),"level":deferred["level"],"listId":LEVEL_MAP[deferred["level"]],"awl":deferred["awl"]})
             else:
                 rejected.append(deferred["raw"])
             deferred=None
