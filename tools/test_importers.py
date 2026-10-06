@@ -166,4 +166,9 @@ def test_naer_page_number_boundaries():
 
 test_naer_page_number_boundaries()
 
+def test_naer_hyphenated_word_is_not_alphabet_label():
+    assert naer.split_entries("town, T-shirt, Tuesday")==["town","T-shirt","Tuesday"]
+
+test_naer_hyphenated_word_is_not_alphabet_label()
+
 print("IMPORTER TESTS: PASS")
