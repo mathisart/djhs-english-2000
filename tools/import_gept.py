@@ -10,7 +10,7 @@ REVISION_MAP={"GEPT_Elementary.pdf":"2026-04-29","GEPT_Intermediate.pdf":"2026-0
 ATOM=r"(?:art[.]?|adj[.]?|adv[.]?|noun[.]?|verb(?:[(]aux[.][)])?[.]?|prep[.]?|conj[.]?|pron[.]?|aux[.]?|interj[.]?|number|det[.]?|determiner|modal|inf[.]?)"
 POS_RE=rf"{ATOM}(?:/{ATOM})*"
 ROW=re.compile(rf"^[ \t]*(?P<word>.+?)[ \t]+(?P<pos>{POS_RE})[ \t]+(?P<rest>.+?)[ \t]+(?P<level>初級|中級|中高級|中高)(?:[ \t]+(?P<awl>L[0-9]+))?(?:[ \t]+[0-9]+)?[ \t]*$")
-HEADER=re.compile(r"字彙[ \t]*詞類[ \t]*中文[ \t]*註解[ \t]*級數[ \t]*學術字彙")
+PARTIAL_ROW=re.compile(rf"^[ \\t]*(?P<word>.+?)[ \\t]+(?P<pos>{POS_RE})[ \\t]+(?P<level>初級|中級|中高級|中高)(?:[ \\t]+(?P<awl>L[0-9]+))?[ \\t]*$")\nHEADER=re.compile(r"字彙[ \t]*詞類[ \t]*中文[ \t]*註解[ \t]*級數[ \t]*學術字彙")
 FOOTER=re.compile(r"^(?:全民英檢|GEPT).*(?:修訂|版權|LTTC)|^[0-9]{4}/[0-9]{1,2}/[0-9]{1,2}.*修訂")
 WORD_TOKEN=re.compile(r"^[A-Za-z][A-Za-z'./()-]*$")
 
