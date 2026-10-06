@@ -6,6 +6,7 @@ on:
     paths:
       - "tools/import_naer.py"
       - "tools/diff_official.py"
+      - "tools/crosscheck_naer_table3.py"
       - "tools/test_importers.py"
       - "data/official/sources.json"
       - ".github/workflows/naer-official-smoke.yml"
@@ -152,6 +153,10 @@ jobs:
           PY
       - name: Diff NAER against current production master
         run: python tools/diff_official.py /tmp/naer/naer-current.json words.js /tmp/naer/naer-vs-master.json
+            /tmp/naer/table3-crosscheck.json
+      - name: Cross-check master-only forms against Table 3 text
+        run: |
+          python tools/crosscheck_naer_table3.py /tmp/naer/naer.txt /tmp/naer/naer-vs-master.json /tmp/naer/table3-crosscheck.json
       - name: Show NAER diff review queue
         run: |
           python - <<'PY'
