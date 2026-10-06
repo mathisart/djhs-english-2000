@@ -33,6 +33,21 @@ jobs:
           pdftotext -layout /tmp/gept/high-intermediate.pdf /tmp/gept/high-intermediate.txt
       - name: Parse and cross-check all official cumulative lists
         run: python tools/ingest_gept.py /tmp/gept/elementary.txt /tmp/gept/intermediate.txt /tmp/gept/high-intermediate.txt /tmp/gept/out
+      - name: Require zero rejected source blocks
+        run: |
+          python - <<'PY'
+          import glob,json,sys
+          bad=[]
+          for path in glob.glob("/tmp/gept/out/gept-current-*.json"):
+              if path.endswith("crosscheck.json"):
+                  continue
+              data=json.load(open(path,encoding="utf-8"))
+              if data.get("rejected"):
+                  bad.append((path,len(data["rejected"])))
+          print("rejected:",bad)
+          if bad:
+              sys.exit("Official GEPT smoke has rejected source blocks")
+          PY
       - name: Upload normalized smoke artifacts
         if: always()
         uses: actions/upload-artifact@v4
