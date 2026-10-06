@@ -1,0 +1,29 @@
+name: Vocabulary QA
+
+on:
+  push:
+    paths:
+      - "tools/**"
+      - "data/official/**"
+      - "words.js"
+      - ".github/workflows/vocabulary-qa.yml"
+  pull_request:
+    paths:
+      - "tools/**"
+      - "data/official/**"
+      - "words.js"
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate manifests
+        run: python tools/validate_manifests.py data/official/sources.json data/official/lists.json
+      - name: Parser regression tests
+        run: python tools/test_importers.py
+      - name: Audit current master
+        run: python tools/audit_master.py words.js /tmp/master-audit.json
