@@ -30,6 +30,16 @@
 .shadowbtn{width:100%;min-height:58px;font-size:18px}
 .shadowresult{width:100%;box-sizing:border-box}
 @media(max-width:600px){.shadowactions{gap:10px}.shadowbtn{min-height:56px;font-size:17px}}
+
+/* Shadow score badge + celebration */
+.shadowresult.scored{position:relative;min-height:150px;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden}
+.scorebadge{width:104px;height:104px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#fff;border:7px solid currentColor;box-shadow:0 8px 24px rgba(0,0,0,.12);animation:badgePop .42s cubic-bezier(.2,.9,.3,1.25)}
+.scorebadge strong{font-size:36px;line-height:1}.scorebadge span{font-size:12px;margin-top:3px}.scorelabel{font-size:22px;font-weight:900;margin-top:10px}.scoreheard{font-size:13px;margin-top:5px;opacity:.75;text-align:center}
+.scorebadge.great,.scorelabel.great{color:#16a34a}.scorebadge.good,.scorelabel.good{color:#2563eb}.scorebadge.try,.scorelabel.try{color:#d97706}
+.stars{position:absolute;inset:0;pointer-events:none}.star{position:absolute;font-size:20px;animation:starBurst .9s ease-out forwards}
+@keyframes badgePop{0%{transform:scale(.45);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
+@keyframes starBurst{0%{transform:translate(0,20px) scale(.4) rotate(0);opacity:0}30%{opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1.15) rotate(160deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.scorebadge,.star{animation:none}.star{display:none}}
 </style></head><body><main class="wrap">
 <div class="top"><div><div class="brand">DJHS English 2000</div><div class="muted">國中英文自主學習・自適應闖關</div></div><button class="reset" id="reset">重設進度</button></div>
 <section class="welcome" id="welcome"><b>不知道選哪個？</b><span>直接使用「自動適性」，系統會依你的答題表現調整難度。</span><button id="dismissWelcome" type="button">知道了</button></section><section class="track"><button class="trackbtn active recommended" data-track="auto">自動適性<small>推薦・依表現自動調整</small></button><button class="trackbtn" data-track="core">基礎 1200<small>先把國中核心字學穩</small></button><button class="trackbtn" data-track="full">完整 2000<small>核心＋常用延伸字</small></button><button class="trackbtn" data-track="gept">GEPT 初級<small>全民英檢初級挑戰</small></button></section><div class="tracknote muted" id="tracknote">已載入 2,055 筆可練習資料；官方 1200／2000／GEPT 標記持續校對。</div><section class="stats"><div class="stat">分數<b id="score">0</b></div><div class="stat">連擊<b id="combo">0</b></div><div class="stat">時間<b id="time">10.0</b></div><div class="stat">已熟悉<b id="known">0</b></div></section>
