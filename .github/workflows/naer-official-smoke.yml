@@ -61,6 +61,9 @@ jobs:
           b=text.find("附錄六",a)
           t=text[a:b if b>0 else None]
           print("TABLE3_CHARS",len(t))
+          tflat=re.sub(r"\\s+"," ",t)
+          for label in ["a/an","a few","R.O.C./ROC","U.S.A./USA","shoe (s)","roller skate (roller blade)"]:
+              print("T3EXACT",label,label.casefold() in tflat.casefold())
           for term in ["a/an","R.O.C.","U.S.A.","voice","wait","rush","safety","shoe","roller skate"]:
               hits=[m.start() for m in re.finditer(re.escape(term),t,re.I)]
               print("T3TERM",term,len(hits))
