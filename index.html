@@ -133,13 +133,38 @@
  .example{padding:10px 11px}.example #sentence{line-height:1.35}
  .shadow{margin-top:8px;padding-top:8px}.shadowtitle{font-size:13px}
 }
+
+/* Mobile final vertical-density polish */
+.sentenceRow{display:flex;align-items:center;gap:8px}.sentenceRow #sentence{flex:1}.sentenceSpeak{border:0;background:#eaf2ff;border-radius:10px;min-width:38px;min-height:38px;padding:6px 8px;font-size:17px;cursor:pointer}
+@media(max-width:600px){
+ .card{padding-top:10px;padding-bottom:72px}
+ .row{margin-top:5px}
+ .word{margin-top:8px;margin-bottom:0;min-height:42px}
+ .pos{line-height:1.2}
+ #speak{margin:7px auto 8px;min-height:42px}
+ .choices{margin-top:10px;gap:8px}
+ .choices button{height:74px;min-height:74px;padding:7px}
+ .feedback{margin-top:8px}
+ .example{margin-top:7px;padding:9px 11px}
+ .sentenceRow{gap:6px;margin-top:3px}
+ .sentenceSpeak{min-width:36px;min-height:36px;padding:4px 7px}
+ .shadow{margin-top:6px;padding-top:7px}
+ .shadowtitle{margin-bottom:5px}
+ .shadowactions{gap:7px}
+ .shadowbtn{min-height:44px}
+ .next{min-height:62px;height:62px;font-size:17px}
+}
+@media(max-width:380px){
+ .choices button{height:70px;min-height:70px}
+ .next{min-height:60px;height:60px}
+}
 </style></head><body><section class="startscreen" id="startScreen"><div class="startbox"><h1>DJHS English 2000</h1><p>準備好再開始計時。選擇學習模式後，按下開始即可進入第一題。</p><button class="startbtn" id="startGame" type="button">開始學習</button><div class="startlinks"><button id="startLeaderboard" type="button">🏆 排行榜</button><button id="startHelp" type="button">？ 使用說明</button></div></div></section><main class="wrap">
 <div class="top"><div><div class="brand">DJHS English 2000</div><div class="muted">國中英文自主學習・自適應闖關</div></div><div class="topactions"><button class="helpbtn" id="leaderboardBtn" type="button" aria-label="排行榜" title="排行榜">🏆</button><button class="helpbtn" id="help" type="button" aria-label="使用說明" title="使用說明">?</button><button class="reset" id="reset">重設進度</button></div></div>
 <section class="welcome" id="welcome"><b>不知道選哪個？</b><span>直接使用「自動適性」，系統會依你的答題表現調整難度。</span><button id="dismissWelcome" type="button">知道了</button></section><section class="track" id="trackPanel"><button class="trackbtn active recommended" data-track="auto">自動適性<small>推薦・依表現自動調整</small></button><button class="trackbtn" data-track="core">基礎 1200<small>先把國中核心字學穩</small></button><button class="trackbtn" data-track="full">完整 2000<small>核心＋常用延伸字</small></button><button class="trackbtn" data-track="gept">GEPT 初級<small>全民英檢初級挑戰</small></button></section><div class="tracknote muted" id="tracknote">已載入 2,055 筆可練習資料；官方 1200／2000／GEPT 標記持續校對。</div><button class="tracktoggle" id="trackToggle" type="button" aria-expanded="true">收起學習模式 ▲</button><section class="stats"><div class="stat">分數<b id="score">0</b></div><div class="stat">連擊<b id="combo">0</b></div><div class="stat">時間<b id="time">10.0</b></div><div class="stat">已熟悉<b id="known">0</b></div></section>
 <section class="mastery"><div class="masteryrow"><b id="progressTitle">學習成果</b><span id="progressText">尚未開始練習</span></div><div class="masterybar"><i id="progressFill"></i></div></section><section class="card"><div class="bar"><i id="bar"></i></div><div class="row muted"><span id="mode">英翻中</span><span id="level">新字</span></div>
 <div class="word" id="prompt"></div><div class="pos" id="pos"></div><button class="speak" id="speak">🔊 聽發音</button>
 <div class="choices" id="choices"></div><div class="feedback" id="feedback"></div>
-<div class="example" id="example"><b id="answer"></b><div class="otherusage" id="otherUsage"></div><div id="sentence"></div><div class="muted" id="translation"></div><button class="speak" id="speakSentence">🔊 聽例句</button><section class="shadow" id="shadow"><div class="shadowtitle">🎙️ 跟讀練習 <span class="muted">選配・不影響分數與 XP</span></div><div class="shadowactions"><button class="shadowbtn" id="shadowWord" type="button">跟讀單字</button><button class="shadowbtn" id="shadowSentence" type="button">挑戰整句</button></div><div class="shadowresult" id="shadowResult" aria-live="polite"></div></section></div>
+<div class="example" id="example"><b id="answer"></b><div class="otherusage" id="otherUsage"></div><div class="sentenceRow"><div id="sentence"></div><button class="sentenceSpeak" id="speakSentence" type="button" aria-label="聽例句" title="聽例句">🔊</button></div><div class="muted" id="translation"></div><section class="shadow" id="shadow"><div class="shadowtitle">🎙️ 跟讀練習 <span class="muted">選配・不影響分數與 XP</span></div><div class="shadowactions"><button class="shadowbtn" id="shadowWord" type="button">跟讀單字</button><button class="shadowbtn" id="shadowSentence" type="button">挑戰整句</button></div><div class="shadowresult" id="shadowResult" aria-live="polite"></div></section></div>
 <button class="next" id="next">下一題</button></section>
 <div class="foot muted">答錯的單字會較快再次出現；連續答對後會逐漸降低出現頻率。進度儲存在這台裝置。</div>
 <dialog class="helpdialog" id="helpDialog"><div class="helpbody"><div class="helphead"><h2>使用說明</h2><button class="helpclose" id="helpClose" type="button" aria-label="關閉">×</button></div><div class="helpgrid"><div class="helpitem"><b>① 選擇學習模式</b>不知道怎麼選，直接使用「自動適性」。系統會依答題表現調整題池與較弱的題型。</div><div class="helpitem"><b>② 四種練習</b>英翻中、中翻英、聽力選字與例句填空。一般題 10 秒，例句填空 13 秒。</div><div class="helpitem"><b>③ 熟練度會自動調整</b>答錯的字會較快再次出現；連續答對後會逐漸降低出現頻率。</div><div class="helpitem"><b>④ 跟讀練習</b>答題後可練習單字或整句。辨識完成度只代表語音辨識的接近程度，不是正式的發音成績，也不影響答題分數。</div><div class="helpitem"><b>⑤ 分數與連擊</b>答得越快可獲得速度加分，連續答對還有連擊獎勵。</div><div class="helpitem"><b>⑥ 學習進度</b>目前進度儲存在這台裝置的瀏覽器中。清除瀏覽資料或按「重設進度」會失去本機紀錄。</div></div><div class="helptip">提示：看到時間條轉橘、轉紅時，代表作答時間快到了。</div></div></dialog>
