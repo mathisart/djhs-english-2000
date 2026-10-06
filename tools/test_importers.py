@@ -78,7 +78,6 @@ assert identity.pos_tokens("noun/verb")=={"noun","verb"}
 assert identity.pos_tokens("n./v.")=={"noun","verb"}
 assert identity.pos_tokens("adjective") & identity.pos_tokens("adj.")
 
-print("IMPORTER TESTS: PASS")
 
 
 def test_gept_deferred_row():
@@ -118,3 +117,5 @@ def test_gept_pos_glossary_is_layout_not_vocabulary():
 
 test_gept_meaning_wraps_before_and_after_partial_row()
 test_gept_pos_glossary_is_layout_not_vocabulary()
+
+print("IMPORTER TESTS: PASS")
