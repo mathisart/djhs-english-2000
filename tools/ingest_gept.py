@@ -19,9 +19,9 @@ def main():
     inputs=sys.argv[1:4]; out=Path(sys.argv[4]); out.mkdir(parents=True,exist_ok=True)
     snapshots=[]
     for src,(slug,doc,url) in zip(inputs,DOCS):
-        dest=out/f"gept-2026-04-29-{slug}.json"
+        dest=out/f"gept-current-{slug}.json"
         run("tools/import_gept.py",src,dest,doc,url); snapshots.append(str(dest))
-    report=out/"gept-2026-04-29-crosscheck.json"
+    report=out/"gept-current-crosscheck.json"
     run("tools/crosscheck_gept.py",*snapshots,report)
     print("GEPT INGEST: PASS")
     print("Catalog source:",snapshots[2])
