@@ -44,6 +44,15 @@ def parse(text):
             out.append(emit(single))
             continue
 
+        recovered,prefix=recover_prefixed_row(line)
+        if recovered:
+            if pending:
+                layout_fragments.append({"fragment":pending,"reason":"preceded recovered row"})
+                pending=""
+            layout_fragments.append({"fragment":prefix,"rowWord":recovered.group("word"),"reason":"prefix before anchored word/POS row"})
+            out.append(emit(recovered))
+            continue
+
         candidate=(pending+" "+line).strip() if pending else line
         joined=ROW.match(candidate)
         if joined:
@@ -55,7 +64,7 @@ def parse(text):
             rejected.append(candidate)
             pending=""
     if pending: rejected.append(pending)
-    return out,rejected
+    return out,rejected,layout_fragments
 
 def main():
     if len(sys.argv) not in (3,5):
@@ -66,17 +75,17 @@ def main():
     revision=REVISION_MAP.get(source_document)
     if not revision:
         raise SystemExit(f"Unknown GEPT source document revision: {source_document}")
-    entries,rejected=parse(src.read_text(encoding="utf-8",errors="replace"))
+    entries,rejected,layout_fragments=parse(src.read_text(encoding="utf-8",errors="replace"))
     payload={"schemaVersion":1,"sourceId":SOURCE_ID,
       "sourceDocument":source_document,"sourceUrl":source_url,"sourceRevision":revision,
       "catalogRole":"authoritative" if source_document=="GEPT_High-Intermediate.pdf" else "validation-only",
-      "verified":False,"retrievedAt":None,"review":{},"entries":entries,"rejected":rejected}
+      "verified":False,"retrievedAt":None,"review":{},"entries":entries,"rejected":rejected,"layoutFragments":layout_fragments}
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
     levels={}
     for e in entries: levels[e["listId"]]=levels.get(e["listId"],0)+1
     print(json.dumps({"rows":len(entries),"rowsByLevel":levels,
-      "uniqueWords":len({e["wordId"] for e in entries}),"rejectedBlocks":len(rejected)},
+      "uniqueWords":len({e["wordId"] for e in entries}),"rejectedBlocks":len(rejected),"layoutFragments":len(layout_fragments)},
       ensure_ascii=False,indent=2))
 
 if __name__=="__main__":
