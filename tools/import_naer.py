@@ -42,6 +42,7 @@ def main():
     for raw,lid in [(x,"moe-basic-1200") for x in basic]+[(x,"moe-common-2000-extra") for x in extra]:
         entries.append({"officialEntry":raw,"wordId":canonical_id(raw.split(" (")[0]),"aliases":aliases(raw),"listId":lid})
     payload={"schemaVersion":1,"sourceId":"moe-jh-108","verified":False,"retrievedAt":None,"review":{},"rejected":[],"entries":entries,
+      "declaredCounts":{"moe-basic-1200":1200,"moe-common-2000-extra":800,"moe-common-2000":2000},
       "derivedLists":{"moe-common-2000":["moe-basic-1200","moe-common-2000-extra"]}}
     out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps({"basicRows":len(basic),"extraRows":len(extra),"combinedRows":len(entries)},ensure_ascii=False))
