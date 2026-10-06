@@ -24,6 +24,7 @@ def main():
     failures=[]
     if exact_dups: failures.append(f"{exact_dups} exact duplicate rows")
     if data.get("rejected"): failures.append(f"{len(data['rejected'])} rejected blocks")
+    if data.get("layoutFragments") and data.get("review",{}).get("layoutFragments")!="pass": failures.append(f"{len(data['layoutFragments'])} layout fragments require review")
     if data.get("sourceId","").startswith("gept-"):
         valid_awl={f"L{i}" for i in range(1,11)}
         bad_awl=[e for e in entries if e.get("awl") and e["awl"] not in valid_awl]
