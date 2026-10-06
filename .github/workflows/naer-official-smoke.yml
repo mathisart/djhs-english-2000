@@ -64,6 +64,17 @@ jobs:
           tflat=re.sub(r"\\s+"," ",t)
           for label in ["a/an","a few","R.O.C./ROC","U.S.A./USA","shoe (s)","roller skate (roller blade)"]:
               print("T3EXACT",label,label.casefold() in tflat.casefold())
+          text_all=open("/tmp/naer/english-curriculum.txt",encoding="utf-8",errors="replace").read()
+          m1=re.search(r"表一、基本 *1 *, *200 *字（依字母排列）",text_all)
+          m2=re.search(r"表二、其他常用 *800 *字（依字母排列）",text_all)
+          m3=re.search(r"表三、",text_all[m2.end():])
+          src=text_all[m1.end():m2.start()]+" "+text_all[m2.end():m2.end()+m3.start()]
+          groups=re.findall(r"([^,\\n]+? *[(][^)]*[)])",src)
+          for g in groups:
+              g=re.sub(r"\\s+"," ",g).strip()
+              main=g.split(" (",1)[0].strip()
+              aliases=g[g.find("(")+1:g.rfind(")")].split(",")
+              print("T3GROUP",repr(g),"FULL",g.casefold() in tflat.casefold(),"MAIN",main.casefold() in tflat.casefold(),"ALIASES",[(a.strip(),a.strip().casefold() in tflat.casefold()) for a in aliases])
           for term in ["a/an","R.O.C.","U.S.A.","voice","wait","rush","safety","shoe","roller skate"]:
               hits=[m.start() for m in re.finditer(re.escape(term),t,re.I)]
               print("T3TERM",term,len(hits))
