@@ -58,14 +58,30 @@ def main():
             missing.append({"wordId":wid,"officialRows":rows})
 
     master_extra=[w for w in master if canonical_id(w["w"]) not in consumed]
+
+    # Conservative review candidates only. These never alter identity automatically.
+    def review_key(value):
+        s=canonical_id(value).replace("-","").replace(" ","").replace(".","").replace("/","")
+        if s.endswith("s") and len(s)>3: s=s[:-1]
+        return s
+    missing_keys=defaultdict(list)
+    extra_keys=defaultdict(list)
+    for x in missing: missing_keys[review_key(x["wordId"])].append(x)
+    for x in master_extra: extra_keys[review_key(x["w"])].append(x)
+    representation_candidates=[]
+    for k in sorted(set(missing_keys)&set(extra_keys)):
+        for m in missing_keys[k]:
+            for x in extra_keys[k]:
+                representation_candidates.append({"officialWordId":m["wordId"],"officialRows":m["officialRows"],"master":x})
+
     report={"schemaVersion":2,"sourceId":off.get("sourceId"),"masterRows":len(master),
       "masterCanonicalWords":len(by_id),"officialRows":len(off["entries"]),
       "officialCanonicalWords":len(official_by_id),
       "counts":{"exactMatchedWords":len(exact),"aliasMatchedWords":len(alias),
         "missingCanonicalWords":len(missing),"ambiguousCanonicalWords":len(ambiguous),
-        "masterRowsOutsideOfficialMatches":len(master_extra),"posReviewWords":len(pos_review)},
+        "masterRowsOutsideOfficialMatches":len(master_extra),"posReviewWords":len(pos_review),"representationReviewCandidates":len(representation_candidates)},
       "exactMatched":exact,"aliasMatched":alias,"missingFromMaster":missing,
-      "ambiguous":ambiguous,"posReview":pos_review,"masterOutsideOfficialMatches":master_extra}
+      "ambiguous":ambiguous,"posReview":pos_review,"representationReviewCandidates":representation_candidates,"masterOutsideOfficialMatches":master_extra}
     out_path.parent.mkdir(parents=True,exist_ok=True)
     out_path.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report["counts"],ensure_ascii=False,indent=2))
