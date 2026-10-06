@@ -30,6 +30,20 @@ jobs:
           sha256sum /tmp/naer/english-curriculum.pdf
       - name: Extract PDF text layer
         run: pdftotext -layout /tmp/naer/english-curriculum.pdf /tmp/naer/english-curriculum.txt
+      - name: Show Appendix 5 heading evidence
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("/tmp/naer/english-curriculum.txt").read_text(encoding="utf-8",errors="replace")
+          for needle in ("1,200","1200","800","表一","表二","表三","參考字彙"):
+              print("==",needle,"==")
+              start=0
+              for _ in range(8):
+                  i=t.find(needle,start)
+                  if i<0: break
+                  print(repr(t[max(0,i-100):i+180]))
+                  start=i+len(needle)
+          PY
       - name: Parse official Appendix 5
         run: python tools/import_naer.py /tmp/naer/english-curriculum.txt /tmp/naer/naer-current.json
       - name: Enforce official table boundaries and counts
