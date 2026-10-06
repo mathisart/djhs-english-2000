@@ -70,7 +70,16 @@ def parse(text):
         if joined:
             out.append(emit(joined))
             pending=""
-        elif len(candidate)<350:
+            continue
+
+        recovered,prefix=recover_prefixed_row(candidate)
+        if recovered:
+            layout_fragments.append({"fragment":prefix,"rowWord":recovered.group("word"),"reason":"prefix before anchored word/POS row in joined PDF block"})
+            out.append(emit(recovered))
+            pending=""
+            continue
+
+        if len(candidate)<350:
             pending=candidate
         else:
             rejected.append(candidate)
