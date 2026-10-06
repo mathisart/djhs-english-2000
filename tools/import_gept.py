@@ -129,6 +129,12 @@ def parse(text):
         else:
             rejected.append(candidate)
             pending=""
+    if deferred:
+        if deferred["zhParts"]:
+            out.append({"word":deferred["word"],"wordId":canonical_id(deferred["word"]),"pos":deferred["pos"],
+                "zh":join_zh(deferred["zhParts"]),"level":deferred["level"],"listId":LEVEL_MAP[deferred["level"]],"awl":deferred["awl"]})
+        else:
+            rejected.append(deferred["raw"])
     if leading_zh:
         layout_fragments.extend({"fragment":x,"reason":"unattached Chinese layout continuation"} for x in leading_zh)
     if pending:
