@@ -105,7 +105,7 @@ about prep. 關於 初級
 """
     entries,rejected,fragments=gept.parse(text)
     by_word={e["word"]:e for e in entries}
-    assert by_word["against"]["zh"]=="緊貼著、倚靠著；逆著...的方向、迎著；反對、與...相反；以...為 背景、襯托；防...、抗...",by_word["against"]
+    assert by_word["against"]["zh"]=="緊貼著、倚靠著；逆著...的方向、迎著；反對、與...相反；以...為背景、襯托；防...、抗...",by_word["against"]
     assert by_word["again"]["zh"]=="再一次",by_word["again"]
     assert rejected==[],rejected
 
