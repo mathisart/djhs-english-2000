@@ -79,3 +79,19 @@ assert identity.pos_tokens("n./v.")=={"noun","verb"}
 assert identity.pos_tokens("adjective") & identity.pos_tokens("adj.")
 
 print("IMPORTER TESTS: PASS")
+
+
+def test_gept_deferred_row():
+    text="""again adv. 再一次 初級
+against prep. 初級
+緊貼著、倚靠著；逆著...的方向、迎著；反對、與...相反
+about prep. 關於 初級
+"""
+    entries,rejected,fragments=gept.parse(text)
+    by_word={e["word"]:e for e in entries}
+    assert by_word["against"]["zh"].startswith("緊貼著"),by_word["against"]
+    assert by_word["again"]["zh"]=="再一次",by_word["again"]
+    assert rejected==[],rejected
+    assert any(x.get("rowWord")=="against" for x in fragments),fragments
+
+test_gept_deferred_row()
