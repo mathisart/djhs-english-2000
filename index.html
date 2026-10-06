@@ -97,6 +97,31 @@
   .card{padding:10px}.word{font-size:38px;margin-top:18px}
   .choices{gap:7px}.choices button{min-height:54px;font-size:15px}
 }
+
+/* Mobile compact answer-state pass */
+@media(max-width:600px){
+  .welcome{padding:9px 11px}
+  .masteryrow{display:grid;grid-template-columns:auto 1fr;align-items:start}
+  #progressTitle{white-space:nowrap}
+  #progressText{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card{padding-bottom:78px;position:relative}
+  .word{margin-top:18px;margin-bottom:2px}
+  .choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:14px}
+  .choices button{min-height:60px;text-align:center;padding:9px 7px}
+  .feedback{margin-top:10px}
+  .feedback>div:first-child{font-size:16px}
+  .skillprogress{display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;text-align:left;margin:7px auto 0;max-width:360px;font-size:13px;line-height:1.35}
+  .example{padding:11px 12px;margin-top:9px;line-height:1.45}
+  .otherusage{margin:5px 0;padding:5px 7px;font-size:11px}
+  .example .speak{min-height:40px;padding:7px 13px;font-size:14px}
+  .shadowtitle{margin-bottom:6px}
+  .shadowbtn{min-height:48px}
+  .next{position:absolute;left:12px;right:12px;bottom:12px;width:auto;margin:0;z-index:3}
+}
+@media(max-width:380px){
+  .skillprogress{font-size:12px;gap:4px 6px}
+  .choices button{min-height:56px}
+}
 </style></head><body><section class="startscreen" id="startScreen"><div class="startbox"><h1>DJHS English 2000</h1><p>準備好再開始計時。選擇學習模式後，按下開始即可進入第一題。</p><button class="startbtn" id="startGame" type="button">開始學習</button><div class="startlinks"><button id="startLeaderboard" type="button">🏆 排行榜</button><button id="startHelp" type="button">？ 使用說明</button></div></div></section><main class="wrap">
 <div class="top"><div><div class="brand">DJHS English 2000</div><div class="muted">國中英文自主學習・自適應闖關</div></div><div class="topactions"><button class="helpbtn" id="leaderboardBtn" type="button" aria-label="排行榜" title="排行榜">🏆</button><button class="helpbtn" id="help" type="button" aria-label="使用說明" title="使用說明">?</button><button class="reset" id="reset">重設進度</button></div></div>
 <section class="welcome" id="welcome"><b>不知道選哪個？</b><span>直接使用「自動適性」，系統會依你的答題表現調整難度。</span><button id="dismissWelcome" type="button">知道了</button></section><section class="track" id="trackPanel"><button class="trackbtn active recommended" data-track="auto">自動適性<small>推薦・依表現自動調整</small></button><button class="trackbtn" data-track="core">基礎 1200<small>先把國中核心字學穩</small></button><button class="trackbtn" data-track="full">完整 2000<small>核心＋常用延伸字</small></button><button class="trackbtn" data-track="gept">GEPT 初級<small>全民英檢初級挑戰</small></button></section><div class="tracknote muted" id="tracknote">已載入 2,055 筆可練習資料；官方 1200／2000／GEPT 標記持續校對。</div><button class="tracktoggle" id="trackToggle" type="button" aria-expanded="true">收起學習模式 ▲</button><section class="stats"><div class="stat">分數<b id="score">0</b></div><div class="stat">連擊<b id="combo">0</b></div><div class="stat">時間<b id="time">10.0</b></div><div class="stat">已熟悉<b id="known">0</b></div></section>
