@@ -3,7 +3,7 @@
 import importlib.util
 from pathlib import Path
 
-ROOT=Path(__file__).resolve().parents[1]
+ROOT=Path(__file__).resolve().parents[1]\nsys.path.insert(0,str(ROOT/"tools"))
 
 def mod(name,path):
     spec=importlib.util.spec_from_file_location(name,ROOT/path)
