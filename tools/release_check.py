@@ -37,6 +37,8 @@ def main():
             failures.append(f"{sid}: snapshot is not verified")
         if snap.get("rejected"):
             failures.append(f"{sid}: {len(snap['rejected'])} rejected blocks remain")
+        if snap.get("layoutFragments") and snap.get("review",{}).get("layoutFragments")!="pass":
+            failures.append(f"{sid}: {len(snap['layoutFragments'])} layout fragments require review")
         review=snap.get("review",{})
         for gate in ("freshness","structure","diff","identity","masteryMigration"):
             if review.get(gate)!="pass":
