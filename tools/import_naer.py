@@ -10,7 +10,8 @@ def canon(s): return re.sub(r"\s+"," ",s.strip()).casefold()
 def split_entries(block):
     block=re.sub(r"(?m)^ *[0-9]+ *$","",block)
     block=re.sub(r"(?m)^ *[A-Z] *[–-] *",", ",block)
-    block=re.sub(r" +[0-9]+ +([A-Z] *[–-] *)?",", ",block)
+    block=re.sub(r" +[0-9]+ +",", ",block)
+    block=re.sub(r" +[A-Z] *[–-] *",", ",block)
     block=re.sub(r"\s+"," ",block)
     out=[]; buf=[]; depth=0
     for ch in block:
