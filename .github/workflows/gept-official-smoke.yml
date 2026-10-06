@@ -42,7 +42,7 @@ jobs:
       - name: Review PDF layout fragments
         run: |
           for f in /tmp/gept/out/gept-current-elementary.json /tmp/gept/out/gept-current-intermediate.json /tmp/gept/out/gept-current-high-intermediate.json; do
-            python tools/review_layout_fragments.py "$f"
+            python tools/review_layout_fragments.py "$f" "$f.layout-review.json"
           done
       - name: Require zero rejected source blocks
         run: |
