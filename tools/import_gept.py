@@ -6,7 +6,7 @@ from vocab_identity import canonical_id
 
 SOURCE_ID="gept-2026-04-29"
 LEVEL_MAP={"初級":"gept-elementary","中級":"gept-intermediate","中高級":"gept-high-intermediate","中高":"gept-high-intermediate"}
-ATOM=r"(?:art\\.|adj\\.|adv\\.|noun|verb|prep\\.|conj\\.|pron\\.|aux\\.|interj\\.|number|det\\.|determiner|modal)"
+ATOM=r"(?:art[.]|adj[.]|adv[.]|noun|verb|prep[.]|conj[.]|pron[.]|aux[.]|interj[.]|number|det[.]|determiner|modal)"
 POS_RE=rf"{ATOM}(?:/{ATOM})*"
 ROW=re.compile(rf"^\\s*(?P<word>.+?)\\s+(?P<pos>{POS_RE})\\s+(?P<rest>.+?)\\s+(?P<level>初級|中級|中高級|中高)(?:\\s+(?P<awl>L\\d+))?(?:\\s+\\d+)?\\s*$")
 HEADER=re.compile(r"字彙\\s*詞類\\s*中文\\s*註解\\s*級數\\s*學術字彙")
