@@ -107,6 +107,19 @@ jobs:
               for x,n in grouped:
                   print("GROUP",n,repr(x))
           PY
+      - name: Show duplicate-source contexts
+        run: |
+          python - <<'PY'
+          import re
+          text=open("/tmp/naer/english-curriculum.txt",encoding="utf-8",errors="replace").read()
+          a=text.find("表一、基本",text.find("附錄五：參考字彙表（2,000 字）",1000))
+          b=text.find("表二、其他常用",a)
+          t=text[a:b]
+          for term in ["may (might)","May","Miss","miss","shirt"]:
+              print("SOURCE_TERM",repr(term))
+              for m in re.finditer(re.escape(term),t):
+                  print(repr(t[max(0,m.start()-100):m.end()+100].replace("\n"," ")))
+          PY
       - name: Diagnose canonical NAER duplicates
         run: |
           python - <<'PY'
