@@ -118,4 +118,11 @@ def test_gept_pos_glossary_is_layout_not_vocabulary():
 test_gept_meaning_wraps_before_and_after_partial_row()
 test_gept_pos_glossary_is_layout_not_vocabulary()
 
+def test_gept_cjk_wrap_spacing_is_stable():
+    a=gept.parse("以...為背景、襯托；\nagainst prep. 初級\n防...、抗...")[0]
+    b=gept.parse("以...為\nagainst prep. 初級\n背景、襯托；防...、抗...")[0]
+    assert a[0]["zh"]==b[0]["zh"],(a[0],b[0])
+
+test_gept_cjk_wrap_spacing_is_stable()
+
 print("IMPORTER TESTS: PASS")
