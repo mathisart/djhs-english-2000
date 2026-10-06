@@ -6,7 +6,8 @@ on:
     paths:
       - "tools/import_gept.py"
       - "tools/ingest_gept.py"
-      - "tools/crosscheck_gept.py"\n      - "data/official/sources.json"
+      - "tools/crosscheck_gept.py"
+      - "data/official/sources.json"
       - ".github/workflows/gept-official-smoke.yml"
 
 jobs:
@@ -17,6 +18,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install PDF text tools
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
       - name: Download official LTTC PDFs
         run: |
           mkdir -p /tmp/gept
@@ -29,8 +32,7 @@ jobs:
           pdftotext -layout /tmp/gept/intermediate.pdf /tmp/gept/intermediate.txt
           pdftotext -layout /tmp/gept/high-intermediate.pdf /tmp/gept/high-intermediate.txt
       - name: Parse and cross-check all official cumulative lists
-        run: |
-          python tools/ingest_gept.py /tmp/gept/elementary.txt /tmp/gept/intermediate.txt /tmp/gept/high-intermediate.txt /tmp/gept/out
+        run: python tools/ingest_gept.py /tmp/gept/elementary.txt /tmp/gept/intermediate.txt /tmp/gept/high-intermediate.txt /tmp/gept/out
       - name: Show extraction summary
         if: always()
         run: |
@@ -38,7 +40,9 @@ jobs:
           sha256sum /tmp/gept/*.pdf || true
           echo "=== OUTPUT FILES ==="
           ls -lh /tmp/gept/out || true
-          for f in /tmp/gept/out/*.json; do
-            echo "=== $f ==="
-            python -c 'import json,sys; d=json.load(open(sys.argv[1])); print({k:d.get(k) for k in ("sourceDocument","catalogRole","verified")}); print("entries",len(d.get("entries",[])),"rejected",len(d.get("rejected",[]))); print("counts",d.get("counts"))' "$f" || true
-          done
+          if compgen -G "/tmp/gept/out/*.json" > /dev/null; then
+            for f in /tmp/gept/out/*.json; do
+              echo "=== $f ==="
+              python -c 'import json,sys; d=json.load(open(sys.argv[1])); print({k:d.get(k) for k in ("sourceDocument","catalogRole","verified")}); print("entries",len(d.get("entries",[])),"rejected",len(d.get("rejected",[]))); print("counts",d.get("counts"))' "$f" || true
+            done
+          fi
