@@ -49,6 +49,10 @@ def parse(text):
         if not line or line.isdigit() or FOOTER.search(line):
             continue
 
+        if re.match(r"^(?:adjective|auxiliary) noun .+ = (?:adj[.]|aux[.]) 中級$",line):
+            layout_fragments.append({"fragment":line,"reason":"GEPT POS glossary row, not vocabulary"})
+            continue
+
         if deferred and not re.search(r"[A-Za-z]",line) and not re.search(r"初級|中級|中高級|中高",line):
             deferred["zhParts"].append(line)
             layout_fragments.append({"fragment":line,"rowWord":deferred["word"],"reason":"Chinese continuation attached to deferred word/POS/level row"})
@@ -73,10 +77,6 @@ def parse(text):
 
         if not re.search(r"[A-Za-z]",line) and not re.search(r"初級|中級|中高級|中高",line):
             leading_zh.append(line)
-            continue
-
-        if re.match(r"^(?:adjective|auxiliary) noun .+ = (?:adj[.]|aux[.]) 中級$",line):
-            layout_fragments.append({"fragment":line,"reason":"GEPT POS glossary row, not vocabulary"})
             continue
 
         single=ROW.match(line)
