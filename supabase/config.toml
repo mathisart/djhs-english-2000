@@ -1,0 +1,6 @@
+project_id = "rkdabaqvzsj…"
+# Project ref is configured by the connected Supabase project.
+# Edge Function verifies its own device token; public JWT verification is disabled for this endpoint.
+
+[functions.learning-event]
+verify_jwt = false
