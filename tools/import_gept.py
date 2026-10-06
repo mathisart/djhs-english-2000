@@ -73,6 +73,15 @@ def parse(text):
             continue
 
         single=ROW.match(line)
+        if single and re.search(r"[^A-Za-z0-9'./() -]",single.group("word")):
+            recovered,prefix=recover_prefixed_row(line)
+            if recovered:
+                if pending:
+                    layout_fragments.append({"fragment":pending,"reason":"preceded recovered row"})
+                    pending=""
+                layout_fragments.append({"fragment":prefix,"rowWord":recovered.group("word"),"reason":"prefix before anchored word/POS row"})
+                out.append(emit(recovered))
+                continue
         if single:
             if pending:
                 rejected.append(pending)
