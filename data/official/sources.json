@@ -18,24 +18,24 @@
       "verifiedAgainst": "NAER official syllabus index and current published PDF"
     },
     {
-      "id": "gept-2024-02",
+      "id": "gept-2026-04-29",
       "publisher": "財團法人語言訓練測驗中心 LTTC",
       "title": "GEPT Word Lists",
       "trust": "official",
-      "version": "2024-02",
+      "version": "2026-04-29",
       "url": "https://www.lttc.ntu.edu.tw/en/vocabulary",
       "lists": [
         "gept-elementary",
         "gept-intermediate",
         "gept-high-intermediate"
       ],
-      "notes": "LTTC states revision began 2023-01 and was completed 2024-02; official downloads are provided for all three levels.",
+      "notes": "Current official LTTC cumulative PDFs inspected on 2026-10-06; PDF footer states 2026/04/29 revised. Earlier 2024-02 revision is historical, not the active snapshot.",
       "downloadUrls": {
         "elementary": "https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_Elementary.pdf",
         "intermediate": "https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_Intermediate.pdf",
         "highIntermediate": "https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_High-Intermediate.pdf"
       },
-      "releaseDate": "2024-02",
+      "releaseDate": "2026-04-29",
       "verifiedAgainst": "LTTC official vocabulary page and downloadable PDFs"
     }
   ]
