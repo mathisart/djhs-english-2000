@@ -93,6 +93,12 @@ Deno.serve(async (req) => {
         if (!word || !(eventType in XP)) continue;
 
         let gain = XP[eventType];
+        if (eventType === "mastered") {
+          const { count: masteredBefore } = await admin.from("learning_events")
+            .select("id", { count: "exact", head: true })
+            .eq("player_id", player.id).eq("word", word).eq("event_type", "mastered");
+          if ((masteredBefore || 0) > 0) gain = 0;
+        }
         const since = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
         const { count } = await admin.from("learning_events")
           .select("id", { count: "exact", head: true })
@@ -132,8 +138,12 @@ Deno.serve(async (req) => {
       const since = new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString();
       const { count } = await admin.from("learning_events").select("id", { count: "exact", head: true }).eq("player_id", player.id).eq("word", word).eq("event_type", eventType).gte("created_at", since);
       if ((count || 0) >= 3) gain = 0;
+      if (eventType === "mastered") {
+        const { count: masteredBefore } = await admin.from("learning_events").select("id", { count: "exact", head: true }).eq("player_id", player.id).eq("word", word).eq("event_type", "mastered");
+        if ((masteredBefore || 0) > 0) gain = 0;
+      }
 
-      const mastered = eventType === "mastered" ? player.mastered_words + 1 : player.mastered_words;
+      const mastered = eventType === "mastered" && gain > 0 ? player.mastered_words + 1 : player.mastered_words;
       const bestCombo = Math.max(player.best_combo, Math.max(0, Math.min(999, Number(body.combo) || 0)));
       if (gain > 0) {
         const { error: ee } = await admin.from("learning_events").insert({ player_id: player.id, event_type: eventType, word, xp: gain });
