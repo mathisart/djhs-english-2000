@@ -9,9 +9,9 @@ This tool never edits production data.
 from __future__ import annotations
 import json,re,sys
 from pathlib import Path
-from collections import defaultdict
+from collections import defaultdict\nfrom vocab_identity import canonical_id
 
-def canon(s):
+def canonical_id(s):
     return re.sub(r"\s+"," ",s.strip()).casefold()
 
 def load_words_js(path):
@@ -27,12 +27,12 @@ def main():
     off=load_official(sys.argv[1]); master=load_words_js(sys.argv[2])
     out_path=Path(sys.argv[3])
     by_id=defaultdict(list)
-    for w in master: by_id[canon(w["w"])].append(w)
+    for w in master: by_id[canonical_id(w["w"])].append(w)
 
     matched=[]; alias_matched=[]; missing=[]; ambiguous=[]
     official_ids=set()
     for e in off["entries"]:
-        wid=canon(e.get("wordId") or e.get("word") or e.get("officialEntry",""))
+        wid=canonical_id(e.get("wordId") or e.get("word") or e.get("officialEntry",""))
         official_ids.add(wid)
         hits=by_id.get(wid,[])
         if len(hits)==1:
@@ -41,17 +41,17 @@ def main():
         if len(hits)>1:
             ambiguous.append({"official":e,"reason":"duplicate-master-id","candidates":hits})
             continue
-        aliases=[canon(a) for a in e.get("aliases",[]) if canon(a)!=wid]
+        aliases=[canonical_id(a) for a in e.get("aliases",[]) if canonical_id(a)!=wid]
         ah=[(a,by_id[a]) for a in aliases if a in by_id]
         flat=[x for _,xs in ah for x in xs]
         if len(flat)==1:
-            alias_matched.append({"official":e,"alias":next(a for a,xs in ah if flat[0] in xs),"master":flat[0]}); consumed_master_ids.add(canon(flat[0]["w"]))
+            alias_matched.append({"official":e,"alias":next(a for a,xs in ah if flat[0] in xs),"master":flat[0]}); consumed_master_ids.add(canonical_id(flat[0]["w"]))
         elif flat:
             ambiguous.append({"official":e,"reason":"multiple-alias-candidates","candidates":flat})
         else:
             missing.append(e)
 
-    master_extra=[w for w in master if canon(w["w"]) not in consumed_master_ids]
+    master_extra=[w for w in master if canonical_id(w["w"]) not in consumed_master_ids]
     report={
       "schemaVersion":1,
       "sourceId":off.get("sourceId"),
