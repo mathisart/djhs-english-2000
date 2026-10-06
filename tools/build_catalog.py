@@ -24,7 +24,12 @@ def main():
             wid=e["wordId"]
             row=catalog[wid]
             row["id"]=wid
-            row["form"]=e.get("word") or e.get("officialEntry") or wid
+            candidate=e.get("word") or e.get("officialEntry") or wid
+            if "form" not in row:
+                row["form"]=candidate
+            else:
+                # Stable regardless of snapshot argument order.
+                row["form"]=min((row["form"],candidate),key=lambda x:(x.casefold(),x))
             list_id=e["listId"]
             if list_id not in row["memberships"]: row["memberships"].append(list_id)
             row["sourceEntries"].append({"sourceId":snap["sourceId"],**e})
@@ -43,6 +48,9 @@ def main():
                 if parents and current & parents and lid not in current:
                     row["memberships"].append(lid); changed=True
         row["memberships"]=sorted(set(row["memberships"]))
+    for row in catalog.values():
+        row["sourceEntries"]=sorted(row["sourceEntries"],key=lambda e:(
+            e.get("sourceId",""),e.get("listId",""),e.get("pos",""),e.get("zh","")))
     payload={"schemaVersion":1,"words":sorted(catalog.values(),key=lambda x:x["id"])}
     output.parent.mkdir(parents=True,exist_ok=True)
     output.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
