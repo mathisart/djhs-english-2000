@@ -1,0 +1,41 @@
+{
+  "word": {
+    "id": "environment",
+    "form": "environment",
+    "content": {
+      "pos": [
+        "noun"
+      ],
+      "zh": [
+        "環境"
+      ],
+      "example": "",
+      "translation": ""
+    }
+  },
+  "memberships": [
+    {
+      "wordId": "environment",
+      "listId": "moe-common-2000",
+      "sourceVersion": "108課綱現行版",
+      "verified": true
+    },
+    {
+      "wordId": "environment",
+      "listId": "gept-elementary",
+      "sourceVersion": "2024-02",
+      "verified": true
+    }
+  ],
+  "sourceEntry": {
+    "wordId": "environment",
+    "sourceId": "gept-2024-02",
+    "pos": [
+      "noun"
+    ],
+    "zh": [
+      "環境"
+    ],
+    "notes": null
+  }
+}
