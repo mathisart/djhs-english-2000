@@ -40,6 +40,16 @@
 @keyframes badgePop{0%{transform:scale(.45);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 @keyframes starBurst{0%{transform:translate(0,20px) scale(.4) rotate(0);opacity:0}30%{opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1.15) rotate(160deg);opacity:0}}
 @media(prefers-reduced-motion:reduce){.scorebadge,.star{animation:none}.star{display:none}}
+
+/* Intense final countdown */
+.card.time-panic{animation:panicPulse .55s infinite}
+.card.time-critical{animation:criticalPulse .24s infinite}
+#time.time-critical{font-size:1.35em;color:#b91c1c;font-weight:1000;animation:criticalShake .16s infinite}
+#bar.time-critical{background:#b91c1c;box-shadow:0 0 12px rgba(185,28,28,.65)}
+@keyframes panicPulse{50%{box-shadow:0 0 0 4px rgba(239,68,68,.12),0 12px 32px rgba(239,68,68,.16)}}
+@keyframes criticalPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.006);box-shadow:0 0 0 6px rgba(239,68,68,.2),0 14px 36px rgba(239,68,68,.22)}}
+@keyframes criticalShake{0%,100%{transform:translate(0) scale(1.05)}25%{transform:translate(-3px,1px) scale(1.13)}75%{transform:translate(3px,-1px) scale(1.13)}}
+@media(prefers-reduced-motion:reduce){.card.time-panic,.card.time-critical,#time.time-critical{animation:none}}
 </style></head><body><main class="wrap">
 <div class="top"><div><div class="brand">DJHS English 2000</div><div class="muted">國中英文自主學習・自適應闖關</div></div><button class="reset" id="reset">重設進度</button></div>
 <section class="welcome" id="welcome"><b>不知道選哪個？</b><span>直接使用「自動適性」，系統會依你的答題表現調整難度。</span><button id="dismissWelcome" type="button">知道了</button></section><section class="track"><button class="trackbtn active recommended" data-track="auto">自動適性<small>推薦・依表現自動調整</small></button><button class="trackbtn" data-track="core">基礎 1200<small>先把國中核心字學穩</small></button><button class="trackbtn" data-track="full">完整 2000<small>核心＋常用延伸字</small></button><button class="trackbtn" data-track="gept">GEPT 初級<small>全民英檢初級挑戰</small></button></section><div class="tracknote muted" id="tracknote">已載入 2,055 筆可練習資料；官方 1200／2000／GEPT 標記持續校對。</div><section class="stats"><div class="stat">分數<b id="score">0</b></div><div class="stat">連擊<b id="combo">0</b></div><div class="stat">時間<b id="time">10.0</b></div><div class="stat">已熟悉<b id="known">0</b></div></section>
