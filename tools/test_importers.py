@@ -150,4 +150,11 @@ A- absent, accept
 
 test_naer_real_pdf_heading_spacing()
 
+def test_naer_alphabet_label_does_not_consume_previous_entry():
+    assert naer.split_entries("husband\nI- I (me, my, mine, myself), ice")==[
+        "husband I (me, my, mine, myself)","ice"
+    ]
+
+test_naer_alphabet_label_does_not_consume_previous_entry()
+
 print("IMPORTER TESTS: PASS")
