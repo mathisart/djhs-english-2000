@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DJHS English 2000</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;color:#18212f;background:#f4f7fb}*{box-sizing:border-box}body{margin:0}.wrap{max-width:760px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:900;font-size:22px}.muted{color:#687386;font-size:13px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}.card,.stat{background:white;border:1px solid #dce3ec;border-radius:18px;box-shadow:0 4px 18px #18212f0b}.stat{text-align:center;padding:10px}.stat b{display:block;font-size:20px}.card{padding:22px}.bar{height:10px;background:#e8edf4;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;width:100%;background:#3567d6;transition:.1s}.row{display:flex;justify-content:space-between;margin-top:10px}.word{text-align:center;font-size:46px;font-weight:900;margin:28px 0 4px}.pos{text-align:center;color:#687386}.speak{display:block;margin:12px auto;border:0;background:#edf3ff;padding:10px 16px;border-radius:12px;font-weight:700}.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}.choices button,.next,.reset{min-height:54px;border:1px solid #d5deea;border-radius:14px;background:white;font-size:16px;font-weight:650;padding:10px}.choices button:hover{background:#f3f6fb}.feedback{text-align:center;font-weight:800;margin-top:18px;min-height:24px}.example{display:none;margin-top:15px;padding:15px;background:#f6f8fb;border-radius:14px;line-height:1.6}.next{display:none;width:100%;margin-top:14px;background:#18212f;color:white}.foot{text-align:center;margin-top:15px}.reset{min-height:42px;padding:6px 14px}.urgent{color:#c52b2b}@media(max-width:560px){.stats{grid-template-columns:repeat(2,1fr)}.choices{grid-template-columns:1fr}.word{font-size:38px}.wrap{padding:12px}}
+</style></head><body><main class="wrap">
+<div class="top"><div><div class="brand">DJHS English 2000</div><div class="muted">國中英文自主學習・自適應闖關</div></div><button class="reset" id="reset">重設進度</button></div>
+<section class="stats"><div class="stat">分數<b id="score">0</b></div><div class="stat">連擊<b id="combo">0</b></div><div class="stat">時間<b id="time">10.0</b></div><div class="stat">已熟悉<b id="known">0</b></div></section>
+<section class="card"><div class="bar"><i id="bar"></i></div><div class="row muted"><span id="mode">英翻中</span><span id="level">新字</span></div>
+<div class="word" id="prompt"></div><div class="pos" id="pos"></div><button class="speak" id="speak">🔊 聽發音</button>
+<div class="choices" id="choices"></div><div class="feedback" id="feedback"></div>
+<div class="example" id="example"><b id="answer"></b><div id="sentence"></div><div class="muted" id="translation"></div><button class="speak" id="speakSentence">🔊 聽例句</button></div>
+<button class="next" id="next">下一題</button></section>
+<div class="foot muted">答錯的單字會較快再次出現；連續答對後會逐漸降低出現頻率。進度儲存在這台裝置。</div>
+</main><script src="words.js"></script><script src="app.js"></script></body></html>
