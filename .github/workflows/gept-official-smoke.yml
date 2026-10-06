@@ -70,6 +70,6 @@ jobs:
           if compgen -G "/tmp/gept/out/*.json" > /dev/null; then
             for f in /tmp/gept/out/*.json; do
               echo "=== $f ==="
-              python -c 'import json,sys; d=json.load(open(sys.argv[1])); print({k:d.get(k) for k in ("sourceDocument","catalogRole","verified")}); print("entries",len(d.get("entries",[])),"rejected",len(d.get("rejected",[]))); print("counts",d.get("counts"))' "$f" || true
+              python -c 'import json,sys; d=json.load(open(sys.argv[1])); print({k:d.get(k) for k in ("sourceDocument","catalogRole","verified")}); print("entries",len(d.get("entries",[])),"rejected",d.get("rejected",[])); print("layoutFragments",d.get("layoutFragments",[])[:30]); print("counts",d.get("counts")); print("checks",d.get("checks"))' "$f" || true
             done
           fi
