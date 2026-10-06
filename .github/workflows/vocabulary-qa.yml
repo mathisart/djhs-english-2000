@@ -23,7 +23,11 @@ jobs:
           python-version: "3.12"
       - name: Validate manifests
         run: python tools/validate_manifests.py data/official/sources.json data/official/lists.json
+      - name: Compile vocabulary tools
+        run: python -m py_compile tools/*.py
       - name: Parser regression tests
         run: python tools/test_importers.py
       - name: Audit current master
-        run: python tools/audit_master.py words.js /tmp/master-audit.json\n      - name: Guard current production master\n        run: python tools/check_master_baseline.py /tmp/master-audit.json data/official/reports/current-master-baseline.json
+        run: python tools/audit_master.py words.js /tmp/master-audit.json
+      - name: Guard current production master
+        run: python tools/check_master_baseline.py /tmp/master-audit.json data/official/reports/current-master-baseline.json
