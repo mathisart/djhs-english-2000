@@ -18,7 +18,7 @@ gept=load("import_gept")
 identity=load("vocab_identity")
 
 # NAER: commas inside parenthetical aliases must not split an entry.
-parts=naer.split_top_level("color (colour, colors), dog, take care of")
+parts=naer.split_entries("color (colour, colors), dog, take care of")
 assert parts==["color (colour, colors)","dog","take care of"],parts
 
 # GEPT: dotted/slashed POS and all three levels.
