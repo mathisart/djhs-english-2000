@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "lists": [
+    {
+      "id": "moe-basic-1200",
+      "label": "教育部基本 1200",
+      "sourceId": "moe-jh-108",
+      "visibility": "public",
+      "cefr": null,
+      "parent": null
+    },
+    {
+      "id": "moe-common-2000",
+      "label": "教育部常用 2000",
+      "sourceId": "moe-jh-108",
+      "visibility": "public",
+      "cefr": null,
+      "parent": null
+    },
+    {
+      "id": "gept-elementary",
+      "label": "GEPT 初級",
+      "sourceId": "gept-2024-02",
+      "visibility": "public",
+      "cefr": "A2",
+      "parent": null
+    },
+    {
+      "id": "gept-intermediate",
+      "label": "B1 字彙挑戰（GEPT 中級）",
+      "sourceId": "gept-2024-02",
+      "visibility": "unlockable",
+      "cefr": "B1",
+      "parent": "gept-elementary"
+    },
+    {
+      "id": "gept-high-intermediate",
+      "label": "B2 字彙挑戰（GEPT 中高級）",
+      "sourceId": "gept-2024-02",
+      "visibility": "unlockable",
+      "cefr": "B2",
+      "parent": "gept-intermediate"
+    }
+  ]
+}
