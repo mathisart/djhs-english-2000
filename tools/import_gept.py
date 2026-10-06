@@ -48,6 +48,7 @@ def main():
       "sourceDocument":"GEPT_High-Intermediate.pdf",
       "sourceUrl":"https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_High-Intermediate.pdf",
       "sourceRevision":"2026-04-29",
+      "catalogRole":"authoritative" if source_document=="GEPT_High-Intermediate.pdf" else "validation-only",
       "verified":False,"retrievedAt":None,"review":{},"entries":entries,"rejected":rejected}
     out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
