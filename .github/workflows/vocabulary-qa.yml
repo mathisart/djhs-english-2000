@@ -26,4 +26,4 @@ jobs:
       - name: Parser regression tests
         run: python tools/test_importers.py
       - name: Audit current master
-        run: python tools/audit_master.py words.js /tmp/master-audit.json
+        run: python tools/audit_master.py words.js /tmp/master-audit.json\n      - name: Guard current production master\n        run: python tools/check_master_baseline.py /tmp/master-audit.json data/official/reports/current-master-baseline.json
