@@ -6,6 +6,18 @@ const cors = {
   "Access-Control-Allow-Methods": "POST, OPTIONS"
 };
 
+async function sha256(text: string) {
+  const bytes = new TextEncoder().encode(text.toUpperCase().replace(/[^A-Z0-9]/g, ""));
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function recoveryCode() {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const bytes = crypto.getRandomValues(new Uint8Array(8));
+  const raw = Array.from(bytes, b => alphabet[b % alphabet.length]).join("");
+  return raw.slice(0,4) + "-" + raw.slice(4);
+}
+
 const XP: Record<string, number> = {
   correct: 2,
   review: 4,
@@ -33,6 +45,20 @@ Deno.serve(async (req) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
     );
 
+    if (action === "recover") {
+      const code = String(body.recoveryCode || "");
+      if (!code) throw new Error("請輸入復原碼");
+      const hash = await sha256(code);
+      const { data: found, error: fe } = await admin.from("players")
+        .select("id,nickname,xp,weekly_xp,mastered_words,best_combo")
+        .eq("recovery_code_hash", hash).maybeSingle();
+      if (fe || !found) throw new Error("找不到這組復原碼");
+      const { data, error } = await admin.from("players").update({ device_token: token })
+        .eq("id", found.id).select("id,nickname,xp,weekly_xp,mastered_words,best_combo").single();
+      if (error) throw error;
+      return Response.json(data, { headers: cors });
+    }
+
     if (action === "register") {
       if (!nickname || nickname.length > 20) throw new Error("Invalid nickname");
       const { data: existing } = await admin.from("players").select("id,nickname,xp,weekly_xp,mastered_words,best_combo").eq("device_token", token).maybeSingle();
@@ -41,9 +67,11 @@ Deno.serve(async (req) => {
         if (error) throw error;
         return Response.json(data, { headers: cors });
       }
-      const { data, error } = await admin.from("players").insert({ device_token: token, nickname }).select("id,nickname,xp,weekly_xp,mastered_words,best_combo").single();
+      const code = recoveryCode();
+      const codeHash = await sha256(code);
+      const { data, error } = await admin.from("players").insert({ device_token: token, nickname, recovery_code_hash: codeHash }).select("id,nickname,xp,weekly_xp,mastered_words,best_combo").single();
       if (error) throw error;
-      return Response.json(data, { headers: cors });
+      return Response.json({ ...data, recoveryCode: code }, { headers: cors });
     }
 
     if (action === "batch") {
