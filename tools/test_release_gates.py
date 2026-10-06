@@ -55,6 +55,22 @@ def main():
         r=run("tools/release_check.py",sources_p,snap)
         assert r.returncode==0,r.stdout+r.stderr
 
+        safe_layout=json.loads(json.dumps(reviewed))
+        safe_layout["layoutFragments"]=[
+            {"fragment":"前半","rowWord":"against","reason":"Chinese continuation preceding deferred word/POS/level row"},
+            {"fragment":"後半","rowWord":"against","reason":"Chinese continuation attached to deferred word/POS/level row"},
+            {"fragment":"adjective noun 形容詞 = adj. 中級","reason":"GEPT POS glossary row, not vocabulary"}
+        ]
+        write(snap,safe_layout)
+        r=run("tools/review_layout_fragments.py",snap)
+        assert r.returncode==0,r.stdout+r.stderr
+
+        unsafe=json.loads(json.dumps(safe_layout))
+        unsafe["layoutFragments"].append({"fragment":"mystery","reason":"unattached Chinese layout continuation"})
+        write(snap,unsafe)
+        r=run("tools/review_layout_fragments.py",snap)
+        assert r.returncode!=0 and "unattached Chinese layout continuation" in (r.stdout+r.stderr),r.stdout+r.stderr
+
         bad=json.loads(json.dumps(reviewed)); bad["sourceRevision"]="2026-04-29"; write(snap,bad)
         r=run("tools/release_check.py",sources_p,snap)
         assert r.returncode!=0 and "expected document revision 2026-08-21" in (r.stdout+r.stderr),r.stdout+r.stderr
