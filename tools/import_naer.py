@@ -2,7 +2,7 @@
 from __future__ import annotations
 import json,re,sys
 from pathlib import Path
-from vocab_identity import canonical_id,base_and_parenthetical
+from vocab_identity import canonical_id
 T1="表一、基本1,200字"; T2="表二、其他常用800字"
 def canon(s): return re.sub(r"\s+"," ",s.strip()).casefold()
 def split_entries(block):
