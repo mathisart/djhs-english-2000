@@ -24,8 +24,13 @@ def main():
         if src.get("trust")!="official":
             failures.append(f"{sid}: source trust is not official")
         revision=snap.get("sourceRevision")
-        if revision is not None and str(revision)!=str(src.get("version")):
-            failures.append(f"{sid}: snapshot revision {revision} != manifest version {src.get('version')}")
+        document_versions=src.get("documentVersions") or {}
+        document_key={"GEPT_Elementary.pdf":"elementary","GEPT_Intermediate.pdf":"intermediate","GEPT_High-Intermediate.pdf":"highIntermediate"}.get(snap.get("sourceDocument"))
+        expected_revision=document_versions.get(document_key) if document_versions else src.get("version")
+        if document_versions and not document_key:
+            failures.append(f"{sid}: sourceDocument {snap.get('sourceDocument')} has no documentVersions mapping")
+        if revision is not None and expected_revision is not None and str(revision)!=str(expected_revision):
+            failures.append(f"{sid}: snapshot revision {revision} != expected document revision {expected_revision}")
         if snap.get("catalogRole")=="validation-only":
             failures.append(f"{sid}: validation-only snapshot cannot be released as catalog source")
         if snap.get("verified") is not True:
