@@ -14,7 +14,7 @@ def main():
     if len(sys.argv)<2:
         raise SystemExit("usage: python tools/preflight.py SNAPSHOT [SNAPSHOT...]")
     snaps=sys.argv[1:]
-    run("tools/test_importers.py")
+    run("tools/test_importers.py")\n    run("tools/audit_master.py","words.js","data/official/generated/master-audit.json")
     for s in snaps: run("tools/validate_official.py",s)
     run("tools/release_check.py","data/official/sources.json",*snaps)
     print("OFFICIAL VOCABULARY PREFLIGHT: PASS")
