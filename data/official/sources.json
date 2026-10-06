@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "lastReviewed": "2026-10-06",
+  "sources": [
+    {
+      "id": "moe-jh-108",
+      "publisher": "教育部／國家教育研究院",
+      "title": "十二年國民基本教育課程綱要－語文領域－英語文 附錄五參考字彙表",
+      "trust": "official",
+      "version": "108課綱現行版",
+      "url": "https://stv.naer.edu.tw/data/course_outline/pta_18518_3555074_59836.pdf",
+      "lists": [
+        "moe-basic-1200",
+        "moe-common-2000"
+      ],
+      "notes": "表一為基本1,200字；完整參考字彙為2,000字（1,200 + 其他常用800）。"
+    },
+    {
+      "id": "gept-2024-02",
+      "publisher": "財團法人語言訓練測驗中心 LTTC",
+      "title": "GEPT Word Lists",
+      "trust": "official",
+      "version": "2024-02",
+      "url": "https://www.lttc.ntu.edu.tw/en/vocabulary",
+      "lists": [
+        "gept-elementary",
+        "gept-intermediate",
+        "gept-high-intermediate"
+      ],
+      "notes": "LTTC states revision began 2023-01 and was completed 2024-02; official downloads are provided for all three levels."
+    }
+  ]
+}
