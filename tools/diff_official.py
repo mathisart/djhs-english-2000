@@ -32,7 +32,7 @@ def main():
     for wid,rows in official_by_id.items():
         hits=by_id.get(wid,[])
         if len(hits)==1:
-            exact.append({"wordId":wid,"officialRows":rows,"master":hits[0]}); consumed.add(wid)
+            exact.append({"wordId":wid,"officialRows":rows,"master":hits[0]}); consumed.add(canonical_id(hits[0]["w"]))
             official_pos=set()
             for e in rows:
                 if e.get("pos"): official_pos |= pos_tokens(e["pos"])
