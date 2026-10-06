@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 """Small parser regression tests using known official-layout edge cases."""
-import importlib.util
+import importlib.util,sys
 from pathlib import Path
 
-ROOT=Path(__file__).resolve().parents[1]\nsys.path.insert(0,str(ROOT/"tools"))
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/"tools"))
 
 def mod(name,path):
     spec=importlib.util.spec_from_file_location(name,ROOT/path)
     m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
 
 naer=mod("naer","tools/import_naer.py")
-gept=mod("gept","tools/import_gept.py")\nidentity=mod("identity","tools/vocab_identity.py")
+gept=mod("gept","tools/import_gept.py")
+identity=mod("identity","tools/vocab_identity.py")
 
-# A comma inside aliases is not an entry delimiter.
 x=naer.split_entries("father (dad, daddy), mother (mom, mommy), airplane (plane)")
 assert x==["father (dad, daddy)","mother (mom, mommy)","airplane (plane)"],x
 assert "daddy" in naer.aliases(x[0])
 
-# Multiple POS components and both high-intermediate labels are accepted.
 sample="""abandon verb 放棄 中級 L8
 numberword number/pron./noun/adj. 測試 初級
 zeal noun 熱忱 中高級
