@@ -45,13 +45,13 @@ def main():
         ah=[(a,by_id[a]) for a in aliases if a in by_id]
         flat=[x for _,xs in ah for x in xs]
         if len(flat)==1:
-            alias_matched.append({"official":e,"alias":next(a for a,xs in ah if flat[0] in xs),"master":flat[0]})
+            alias_matched.append({"official":e,"alias":next(a for a,xs in ah if flat[0] in xs),"master":flat[0]}); consumed_master_ids.add(canon(flat[0]["w"]))
         elif flat:
             ambiguous.append({"official":e,"reason":"multiple-alias-candidates","candidates":flat})
         else:
             missing.append(e)
 
-    master_extra=[w for w in master if canon(w["w"]) not in official_ids]
+    master_extra=[w for w in master if canon(w["w"]) not in consumed_master_ids]
     report={
       "schemaVersion":1,
       "sourceId":off.get("sourceId"),
