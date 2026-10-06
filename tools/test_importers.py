@@ -31,4 +31,7 @@ assert entries[2]["listId"]=="gept-high-intermediate"
 assert identity.canonical_id("  Mother’s   Day ")=="mother's day"
 assert identity.canonical_id("well–known")=="well-known"
 assert identity.canonical_id("colour")!=identity.canonical_id("color")
+assert identity.pos_tokens("noun/verb")=={"noun","verb"}
+assert identity.pos_tokens("n./v.")=={"noun","verb"}
+assert identity.pos_tokens("adjective") & identity.pos_tokens("adj.")
 print("parser and identity regression tests: PASS")
