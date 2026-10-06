@@ -3,7 +3,9 @@ from __future__ import annotations
 import json,re,sys
 from pathlib import Path
 from vocab_identity import canonical_id
-T1="表一、基本1,200字"; T2="表二、其他常用800字"
+T1_RE=re.compile(r"表一、基本[ \\t]*1[ \\t]*,[ \\t]*200[ \\t]*字[^\\n]*")
+T2_RE=re.compile(r"表二、其他常用[ \\t]*800[ \\t]*字[^\\n]*")
+T3_RE=re.compile(r"表三、[^\\n]*")
 def canon(s): return re.sub(r"\s+"," ",s.strip()).casefold()
 def split_entries(block):
     block=re.sub(r"\n\s*[A-Z]\s*[–-]\s*","\n",block)
@@ -29,9 +31,9 @@ def aliases(entry):
     return sorted(vals)
 def main():
     src,out=map(Path,sys.argv[1:3]); text=src.read_text(encoding="utf-8",errors="replace")
-    i1=text.find(T1); i2=text.find(T2)
-    if i1<0 or i2<0 or i2<=i1: raise SystemExit("Could not locate NAER Appendix 5 Table 1/Table 2 headings")
-    i3=text.find("表三、",i2); basic=split_entries(text[i1+len(T1):i2]); extra=split_entries(text[i2+len(T2):i3 if i3>0 else None])
+    m1=T1_RE.search(text); m2=T2_RE.search(text,m1.end() if m1 else 0)
+    if not m1 or not m2 or m2.start()<=m1.start(): raise SystemExit("Could not locate NAER Appendix 5 Table 1/Table 2 headings")
+    m3=T3_RE.search(text,m2.end()); basic=split_entries(text[m1.end():m2.start()]); extra=split_entries(text[m2.end():m3.start() if m3 else None])
     entries=[]
     for raw,lid in [(x,"moe-basic-1200") for x in basic]+[(x,"moe-common-2000-extra") for x in extra]:
         entries.append({"officialEntry":raw,"wordId":canonical_id(raw.split(" (")[0]),"aliases":aliases(raw),"listId":lid})
