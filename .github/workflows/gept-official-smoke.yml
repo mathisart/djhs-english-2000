@@ -1,0 +1,44 @@
+name: GEPT Official Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/import_gept.py"
+      - "tools/ingest_gept.py"
+      - "tools/crosscheck_gept.py"
+      - ".github/workflows/gept-official-smoke.yml"
+
+jobs:
+  official-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download official LTTC PDFs
+        run: |
+          mkdir -p /tmp/gept
+          curl --fail --location --retry 3 -o /tmp/gept/elementary.pdf https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_Elementary.pdf
+          curl --fail --location --retry 3 -o /tmp/gept/intermediate.pdf https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_Intermediate.pdf
+          curl --fail --location --retry 3 -o /tmp/gept/high-intermediate.pdf https://www.lttc.ntu.edu.tw/resources/GEPT/GEPT_High-Intermediate.pdf
+      - name: Extract PDF text layer
+        run: |
+          pdftotext -layout /tmp/gept/elementary.pdf /tmp/gept/elementary.txt
+          pdftotext -layout /tmp/gept/intermediate.pdf /tmp/gept/intermediate.txt
+          pdftotext -layout /tmp/gept/high-intermediate.pdf /tmp/gept/high-intermediate.txt
+      - name: Parse and cross-check all official cumulative lists
+        run: |
+          python tools/ingest_gept.py /tmp/gept/elementary.txt /tmp/gept/intermediate.txt /tmp/gept/high-intermediate.txt /tmp/gept/out
+      - name: Show extraction summary
+        if: always()
+        run: |
+          echo "=== PDF SHA256 ==="
+          sha256sum /tmp/gept/*.pdf || true
+          echo "=== OUTPUT FILES ==="
+          ls -lh /tmp/gept/out || true
+          for f in /tmp/gept/out/*.json; do
+            echo "=== $f ==="
+            python -c 'import json,sys; d=json.load(open(sys.argv[1])); print({k:d.get(k) for k in ("sourceDocument","catalogRole","verified")}); print("entries",len(d.get("entries",[])),"rejected",len(d.get("rejected",[]))); print("counts",d.get("counts"))' "$f" || true
+          done
