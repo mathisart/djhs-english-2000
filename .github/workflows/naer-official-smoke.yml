@@ -46,6 +46,18 @@ jobs:
           PY
       - name: Parse official Appendix 5
         run: python tools/import_naer.py /tmp/naer/english-curriculum.txt /tmp/naer/naer-current.json
+      - name: Diagnose parsed NAER entries
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open("/tmp/naer/naer-current.json",encoding="utf-8"))
+          for lid in ("moe-basic-1200","moe-common-2000-extra"):
+              rows=[x["officialEntry"] for x in d["entries"] if x["listId"]==lid]
+              print("==",lid,len(rows),"==")
+              for x in rows:
+                  if len(x)>35 or "\\n" in x or "\\f" in x:
+                      print("SUSPECT",repr(x))
+          PY
       - name: Enforce official table boundaries and counts
         run: |
           python - <<'PY'
