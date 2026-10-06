@@ -166,6 +166,9 @@ jobs:
           print("== representationReviewCandidates",len(d.get("representationReviewCandidates",[])),"==")
           for x in d.get("representationReviewCandidates",[]):
               print("REPRESENTATION_CANDIDATE",repr(x["officialWordId"]),"<->",repr(x["master"].get("w")))
+          print("== unresolvedMissing",len(d.get("unresolvedMissing",[])),"==")
+          for x in d.get("unresolvedMissing",[]):
+              print("UNRESOLVED_MISSING",repr(x["wordId"]),[(r.get("listId"),r.get("officialEntry")) for r in x.get("officialRows",[])])
           print("== masterOutsideOfficialMatches",len(d["masterOutsideOfficialMatches"]),"==")
           for x in d["masterOutsideOfficialMatches"]:
               print("MASTER_EXTRA",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
