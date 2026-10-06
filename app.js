@@ -1,7 +1,8 @@
 (()=>{const W=window.WORDS,$=x=>document.querySelector(x),mix=a=>[...a].sort(()=>Math.random()-.5);
 let saved={};try{saved=JSON.parse(localStorage.getItem("djhs2000")||"{}")}catch(e){}
 const state=new Map(W.map(x=>[x.w,Object.assign({r:0,w:0,due:0,status:"新字"},saved[x.w]||{})]));
-let score=0,combo=0,turn=0,cur,mode,left,timer,locked=false;
+let score=0,combo=0,turn=0,cur,mode,left,timer,locked=false,track=localStorage.getItem("djhs2000-track")||"core";
+function setTrack(v){track=v;localStorage.setItem("djhs2000-track",v);document.querySelectorAll(".trackbtn").forEach(b=>b.classList.toggle("active",b.dataset.track===v));const notes={core:"基礎 1200｜以國中核心字彙為主，適合打底與弱點補強。",full:"完整 2000｜核心 1200 加常用延伸字，正式題庫持續依國教院清單校對。",gept:"GEPT 初級｜依全民英檢初級範圍設計，適合進階挑戰。"};$("#tracknote").textContent=notes[v];show()}
 function persist(){const o={};state.forEach((v,k)=>o[k]=v);localStorage.setItem("djhs2000",JSON.stringify(o))}
 function stats(){$("#score").textContent=score;$("#combo").textContent=combo;$("#known").textContent=[...state.values()].filter(s=>s.status==="已熟悉"||s.status==="已掌握").length}
 function speak(text){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.82;speechSynthesis.speak(u)}
@@ -18,4 +19,4 @@ function update(ok,to=false){const s=state.get(cur.w);if(ok){s.r++;s.w=Math.max(
 function reveal(msg){$("#feedback").textContent=msg;$("#answer").textContent=cur.w+" "+cur.p+"｜"+cur.z;$("#sentence").innerHTML=cur.e.replace(new RegExp("("+cur.w+")","ig"),"<strong>$1</strong>");$("#translation").textContent=cur.t;$("#example").style.display="block";$("#next").style.display="block"}
 function answer(x){if(locked)return;locked=true;clearInterval(timer);[...$("#choices").children].forEach(b=>b.disabled=true);if(x.w===cur.w){combo++;let bonus=Math.round(left*10);score+=100+bonus+(combo-1)*20;update(true);reveal("答對！速度加分 +"+bonus+(combo>=3?"・"+combo+" 連擊":""))}else{combo=0;update(false);reveal("答錯。正確答案："+cur.w+"｜"+cur.z)}stats()}
 function fail(to){if(locked)return;locked=true;clearInterval(timer);combo=0;update(false,to);[...$("#choices").children].forEach(b=>b.disabled=true);reveal("時間到。正確答案："+cur.w+"｜"+cur.z);stats()}
-$("#next").onclick=show;$("#speak").onclick=()=>speak(cur.w);$("#speakSentence").onclick=()=>speak(cur.e);$("#reset").onclick=()=>{if(confirm("確定要清除這台裝置的學習進度嗎？")){localStorage.removeItem("djhs2000");location.reload()}};show()})();
+document.querySelectorAll(".trackbtn").forEach(b=>b.onclick=()=>setTrack(b.dataset.track));document.querySelectorAll(".trackbtn").forEach(b=>b.classList.toggle("active",b.dataset.track===track));const tn={core:"基礎 1200｜以國中核心字彙為主，適合打底與弱點補強。",full:"完整 2000｜核心 1200 加常用延伸字，正式題庫持續依國教院清單校對。",gept:"GEPT 初級｜依全民英檢初級範圍設計，適合進階挑戰。"};$("#tracknote").textContent=tn[track];$("#next").onclick=show;$("#speak").onclick=()=>speak(cur.w);$("#speakSentence").onclick=()=>speak(cur.e);$("#reset").onclick=()=>{if(confirm("確定要清除這台裝置的學習進度嗎？")){localStorage.removeItem("djhs2000");location.reload()}};show()})();
