@@ -32,10 +32,16 @@ def main():
     defs={x["id"]:x for x in manifest["lists"]}
     for row in catalog.values():
         current=set(row["memberships"])
-        for lid,d in defs.items():
-            parents=set(d.get("derivedFrom",[]))
-            if parents and current & parents:
-                row["memberships"].append(lid)
+        changed=True
+        while changed:
+            changed=False
+            current=set(row["memberships"])
+            for lid,d in defs.items():
+                parents=set(d.get("derivedFrom",[]))
+                # derivedFrom is a union unless a future manifest explicitly
+                # introduces another derivation operator.
+                if parents and current & parents and lid not in current:
+                    row["memberships"].append(lid); changed=True
         row["memberships"]=sorted(set(row["memberships"]))
     payload={"schemaVersion":1,"words":sorted(catalog.values(),key=lambda x:x["id"])}
     output.parent.mkdir(parents=True,exist_ok=True)
