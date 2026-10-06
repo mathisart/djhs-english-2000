@@ -1,0 +1,57 @@
+name: NAER Official Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/import_naer.py"
+      - "tools/test_importers.py"
+      - "data/official/sources.json"
+      - ".github/workflows/naer-official-smoke.yml"
+
+jobs:
+  official-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate importer
+        run: |
+          python -m py_compile tools/import_naer.py
+          python tools/test_importers.py
+      - name: Install PDF text tools
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - name: Download official NAER curriculum PDF
+        run: |
+          mkdir -p /tmp/naer
+          curl --fail --location --retry 3 -o /tmp/naer/english-curriculum.pdf 'https://www.naer.edu.tw/upload/1/16/doc/812/%28%E7%99%BC%E5%B8%83%E7%89%88%29%E5%9C%8B%E6%B0%91%E4%B8%AD%E5%B0%8F%E5%AD%B8%E6%9A%A8%E6%99%AE%E9%80%9A%E5%9E%8B%E9%AB%98%E7%B4%9A%E4%B8%AD%E7%AD%89%E5%AD%B8%E6%A0%A1-%E8%AA%9E%E6%96%87%E9%A0%98%E5%9F%9F-%E8%8B%B1%E8%AA%9E%E6%96%87%E8%AA%B2%E7%A8%8B%E7%B6%B1%E8%A6%81.pdf'
+          sha256sum /tmp/naer/english-curriculum.pdf
+      - name: Extract PDF text layer
+        run: pdftotext -layout /tmp/naer/english-curriculum.pdf /tmp/naer/english-curriculum.txt
+      - name: Parse official Appendix 5
+        run: python tools/import_naer.py /tmp/naer/english-curriculum.txt /tmp/naer/naer-current.json
+      - name: Enforce official table boundaries and counts
+        run: |
+          python - <<'PY'
+          import json,sys
+          p="/tmp/naer/naer-current.json"
+          d=json.load(open(p,encoding="utf-8"))
+          rows=d.get("entries",[])
+          basic=[x for x in rows if x.get("listId")=="moe-basic-1200"]
+          extra=[x for x in rows if x.get("listId")=="moe-common-2000-extra"]
+          unknown=[x for x in rows if x.get("listId") not in {"moe-basic-1200","moe-common-2000-extra"}]
+          print({"basicRows":len(basic),"extraRows":len(extra),"combinedRows":len(rows),"unknownListRows":len(unknown)})
+          if len(basic)!=1200 or len(extra)!=800 or len(rows)!=2000 or unknown:
+              sys.exit("NAER official table count/boundary invariant failed")
+          PY
+      - name: Upload normalized smoke artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: naer-official-smoke
+          path: |
+            /tmp/naer/naer-current.json
+            /tmp/naer/english-curriculum.txt
+          retention-days: 7
