@@ -24,3 +24,14 @@ def base_and_parenthetical(value:str):
     if not m: return s,[]
     aliases=[display_normalize(x) for x in m.group(2).split(",") if x.strip()]
     return display_normalize(m.group(1)),aliases
+
+POS_ALIASES={
+ "n":"noun","n.":"noun","v":"verb","v.":"verb","a":"adj.","adj":"adj.","adjective":"adj.",
+ "adv":"adv.","adverb":"adv.","prep":"prep.","preposition":"prep.","pron":"pron.","pronoun":"pron.",
+ "conj":"conj.","conjunction":"conj.","art":"art.","article":"art.","det":"determiner","det.":"determiner"
+}
+def pos_tokens(value:str):
+    """Return conservative normalized POS tokens from slash/comma/space notation."""
+    s=display_normalize(value).lower()
+    parts=[p.strip() for p in re.split(r"[/,;]+",s) if p.strip()]
+    return {POS_ALIASES.get(p,p) for p in parts}
