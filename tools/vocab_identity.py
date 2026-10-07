@@ -26,7 +26,7 @@ def base_and_parenthetical(value:str):
     return display_normalize(m.group(1)),aliases
 
 POS_ALIASES={
- "n":"noun","n.":"noun","v":"verb","v.":"verb","a":"adj.","adj":"adj.","adjective":"adj.",
+ "n":"noun","n.":"noun","noun.":"noun","v":"verb","v.":"verb","verb.":"verb","a":"adj.","adj":"adj.","adjective":"adj.",
  "adv":"adv.","adverb":"adv.","prep":"prep.","preposition":"prep.","pron":"pron.","pronoun":"pron.",
  "conj":"conj.","conjunction":"conj.","art":"art.","article":"art.","det":"determiner","det.":"determiner"
 }
