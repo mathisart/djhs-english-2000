@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate-plan-only",
+  "productionChanged": false,
+  "masteryChanged": false,
+  "basisReports": [
+    "data/official/reports/naer-vs-master-review.json",
+    "data/official/reports/naer-unresolved-cross-source-review.json",
+    "data/official/reports/naer-lexical-missing-review.json"
+  ],
+  "counts": {
+    "addNewMasterRowExactCrossSource": 12,
+    "reviewRepresentationMapping": 6,
+    "reviewInflectionMapping": 4,
+    "reviewExplicitAlias": 1,
+    "addNaerOnlyCandidate": 1,
+    "total": 24
+  },
+  "addNewMasterRowExactCrossSource": [
+    {
+      "w": "could",
+      "naerList": "moe-basic-1200",
+      "geptList": "gept-elementary",
+      "pos": "aux.",
+      "sourceZh": "can的過去式"
+    },
+    {
+      "w": "shoe",
+      "naerList": "moe-basic-1200",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "sourceZh": "鞋"
+    },
+    {
+      "w": "empty",
+      "naerList": "moe-common-2000-extra",
+      "geptList": "gept-elementary",
+      "pos": "adj./verb",
+      "sourceZh": "空的；使…變空"
+    },
+    {
+      "w": "female",
+      "naerList": "moe-common-2000-extra",
+      "geptList": "gept-elementary",
+      "pos": "adj./noun",
+      "sourceZh": "女性的；女性"
+    },
+    {
+      "w": "oneself",
+      "naerList": "moe-common-2000-extra",
+      "geptList": "gept-intermediate",
+      "pos": "pron.",
+      "sourceZh": "自己"
+    },
+    {
+      "w": "professor",
+      "naerList": "moe-common-2000-extra",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "sourceZh": "教授"
+    },
+    {
+      "w": "rubber",
+      "naerList": "moe-common-2000-extra",
+      "geptList": "gept-elementary",
+      "pos": "adj./noun",
+      "sourceZh": "橡膠的；橡膠"
+    },
+    {
+      "w": "seek",
+      "naerList": "moe-common-2000-extra",
+      "geptList": "gept-elementary",
+      "pos": "verb",
+      "sourceZh": "尋找"
+    },
+    {
+      "w": "officer",
+      "naerList": "moe-basic-1200",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "sourceZh": "官員",
+      "relatedProduction": [
+        "police officer"
+      ]
+    },
+    {
+      "w": "police",
+      "naerList": "moe-basic-1200",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "sourceZh": "警方",
+      "relatedProduction": [
+        "police officer",
+        "police station"
+      ]
+    },
+    {
+      "w": "sore",
+      "naerList": "moe-basic-1200",
+      "geptList": "gept-elementary",
+      "pos": "adj./noun",
+      "sourceZh": "痛的；痛處、瘡",
+      "relatedProduction": [
+        "sore throat"
+      ]
+    },
+    {
+      "w": "stationery",
+      "naerList": "moe-common-2000-extra",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "sourceZh": "文具",
+      "relatedProduction": [
+        "stationery store"
+      ]
+    }
+  ],
+  "reviewRepresentationMapping": [
+    {
+      "naer": "a.m",
+      "gept": "A.M.",
+      "reason": "punctuation/case representation"
+    },
+    {
+      "naer": "p.m",
+      "gept": "P.M.",
+      "reason": "punctuation/case representation"
+    },
+    {
+      "naer": "mr",
+      "gept": "Mr.",
+      "reason": "title punctuation representation"
+    },
+    {
+      "naer": "mrs",
+      "gept": "Mrs.",
+      "reason": "title punctuation representation"
+    },
+    {
+      "naer": "ms",
+      "gept": "Ms.",
+      "reason": "title punctuation representation"
+    },
+    {
+      "naer": "u.s.a./usa",
+      "gept": "USA",
+      "reason": "abbreviation representation"
+    }
+  ],
+  "reviewInflectionMapping": [
+    {
+      "naer": "socks",
+      "gept": "sock",
+      "reason": "plural/singular source representation"
+    },
+    {
+      "naer": "earrings",
+      "gept": "earring",
+      "reason": "plural/singular source representation"
+    },
+    {
+      "naer": "slippers",
+      "gept": "slipper",
+      "reason": "plural/singular source representation"
+    },
+    {
+      "naer": "sneakers",
+      "gept": "sneaker",
+      "reason": "plural/singular source representation"
+    }
+  ],
+  "reviewExplicitAlias": [
+    {
+      "naer": "burger",
+      "gept": "hamburger",
+      "geptSourceZh": "漢堡 = burger",
+      "production": "hamburger",
+      "reason": "GEPT source explicitly exposes burger as equivalent wording; mastery identity still requires reviewed mapping"
+    }
+  ],
+  "addNaerOnlyCandidate": [
+    {
+      "w": "r.o.c./roc",
+      "naerList": "moe-basic-1200",
+      "reason": "Current NAER official entry; no corresponding current GEPT normalized entry found"
+    }
+  ],
+  "safeguards": [
+    "This file is a migration plan only and must not be loaded by production.",
+    "Representation, inflection, and alias rows require explicit reviewed mappings before mastery can transfer.",
+    "Related production compounds do not satisfy missing official single-word membership.",
+    "Learner-facing gloss/example/phonetic content must be curated separately from source evidence."
+  ]
+}
