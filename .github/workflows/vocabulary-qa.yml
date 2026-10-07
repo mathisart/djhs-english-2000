@@ -29,6 +29,8 @@ jobs:
         run: python tools/test_importers.py
       - name: GEPT master cross-check regression
         run: python tools/test_gept_master_crosscheck.py
+      - name: Release report regression
+        run: python tools/test_release_report.py
       - name: Release gate regression tests
         run: python tools/test_release_gates.py
       - name: Audit current master
