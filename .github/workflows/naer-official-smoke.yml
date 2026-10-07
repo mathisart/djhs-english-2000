@@ -7,6 +7,7 @@ on:
       - "tools/import_naer.py"
       - "tools/diff_official.py"
       - "tools/crosscheck_naer_table3.py"
+      - "tools/audit_identity_collisions.py"
       - "tools/test_importers.py"
       - "data/official/sources.json"
       - ".github/workflows/naer-official-smoke.yml"
@@ -151,6 +152,8 @@ jobs:
               sys.exit("NAER official extraction boundary/declared-count invariant failed")
           print({"declaredCounts":declared,"note":"source-entry row counts are diagnostic and are not treated as declared vocabulary counts"})
           PY
+      - name: Audit source identity collisions
+        run: python tools/audit_identity_collisions.py /tmp/naer/naer-current.json words.js /tmp/naer/naer-identity-collisions.json
       - name: Diff NAER against current production master
         run: python tools/diff_official.py /tmp/naer/naer-current.json words.js /tmp/naer/naer-vs-master.json
       - name: Cross-check master-only forms against Table 3 text
@@ -195,4 +198,5 @@ jobs:
             /tmp/naer/english-curriculum.txt
             /tmp/naer/naer-vs-master.json
             /tmp/naer/table3-crosscheck.json
+            /tmp/naer/naer-identity-collisions.json
           retention-days: 7
