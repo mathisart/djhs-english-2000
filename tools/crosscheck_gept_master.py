@@ -13,6 +13,12 @@ from diff_official import load_words_js
 
 LEVEL_ORDER={"gept-elementary":0,"gept-intermediate":1,"gept-high-intermediate":2}
 
+def representation_key(value):
+    s=canonical_id(value)
+    for ch in ("-"," ",".","/"):
+        s=s.replace(ch,"")
+    return s
+
 def build_report(official,master):
     if official.get("catalogRole")!="authoritative":
         raise ValueError("GEPT master cross-check requires authoritative cumulative snapshot")
@@ -39,8 +45,24 @@ def build_report(official,master):
         if master_pos and rows and not pos_rows:
             pos_review.append(item)
 
+    official_by_rep=defaultdict(list)
+    for wid,rows in by_id.items():
+        official_by_rep[representation_key(wid)].append((wid,rows))
+    representation_review=[]
+    residual_unmatched=[]
+    for w in unmatched:
+        wid=canonical_id(w["w"])
+        candidates=[]
+        for candidate_id,rows in official_by_rep.get(representation_key(wid),[]):
+            if candidate_id!=wid:
+                candidates.append({"wordId":candidate_id,"officialRows":rows})
+        if candidates:
+            representation_review.append({"master":w,"candidates":candidates})
+        else:
+            residual_unmatched.append(w)
+
     report={
-      "schemaVersion":1,
+      "schemaVersion":2,
       "diagnosticOnly":True,
       "sourceId":official.get("sourceId"),
       "sourceDocument":official.get("sourceDocument"),
@@ -52,12 +74,16 @@ def build_report(official,master):
         "unmatchedMasterWords":len(unmatched),
         "multiLevelMatchedWords":len(multi_level),
         "posReviewWords":len(pos_review),
+        "representationReviewWords":len(representation_review),
+        "residualUnmatchedWords":len(residual_unmatched),
         "matchedMasterWordsByLevel":dict(sorted(by_level.items(),key=lambda kv:LEVEL_ORDER.get(kv[0],99)))
       },
       "matched":matched,
       "unmatched":unmatched,
       "multiLevelReview":multi_level,
-      "posReview":pos_review
+      "posReview":pos_review,
+      "representationReview":representation_review,
+      "residualUnmatched":residual_unmatched
     }
     return report
 
