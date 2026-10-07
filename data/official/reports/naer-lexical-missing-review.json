@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "status": "reviewed-production-gap-candidates",
+  "productionChanged": false,
+  "basis": {
+    "naer": "Current official NAER Appendix 5 normalized snapshot",
+    "gept": "Current official LTTC GEPT normalized snapshots from workflow run 37637223132"
+  },
+  "summary": {
+    "lexicalMissing": 12,
+    "geptExactSupport": 8,
+    "geptInflectionSupport": 4,
+    "unsupportedBySecondOfficialSource": 0
+  },
+  "geptExactSupport": [
+    {
+      "naer": "could",
+      "gept": "could",
+      "geptList": "gept-elementary",
+      "pos": "aux.",
+      "zh": "can的過去式"
+    },
+    {
+      "naer": "shoe",
+      "gept": "shoe",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "zh": "鞋"
+    },
+    {
+      "naer": "empty",
+      "gept": "empty",
+      "geptList": "gept-elementary",
+      "pos": "adj./verb",
+      "zh": "空的；使…變空"
+    },
+    {
+      "naer": "female",
+      "gept": "female",
+      "geptList": "gept-elementary",
+      "pos": "adj./noun",
+      "zh": "女性的；女性"
+    },
+    {
+      "naer": "oneself",
+      "gept": "oneself",
+      "geptList": "gept-intermediate",
+      "pos": "pron.",
+      "zh": "自己"
+    },
+    {
+      "naer": "professor",
+      "gept": "professor",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "zh": "教授"
+    },
+    {
+      "naer": "rubber",
+      "gept": "rubber",
+      "geptList": "gept-elementary",
+      "pos": "adj./noun",
+      "zh": "橡膠的；橡膠"
+    },
+    {
+      "naer": "seek",
+      "gept": "seek",
+      "geptList": "gept-elementary",
+      "pos": "verb",
+      "zh": "尋找"
+    }
+  ],
+  "geptInflectionSupport": [
+    {
+      "naer": "socks",
+      "gept": "sock",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "zh": "襪子",
+      "identityDecision": "review-required"
+    },
+    {
+      "naer": "earrings",
+      "gept": "earring",
+      "geptList": "gept-intermediate",
+      "pos": "noun",
+      "zh": "耳環",
+      "identityDecision": "review-required"
+    },
+    {
+      "naer": "slippers",
+      "gept": "slipper",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "zh": "拖鞋",
+      "identityDecision": "review-required"
+    },
+    {
+      "naer": "sneakers",
+      "gept": "sneaker",
+      "geptList": "gept-elementary",
+      "pos": "noun",
+      "zh": "球鞋",
+      "identityDecision": "review-required"
+    }
+  ],
+  "policy": [
+    "Exact cross-source matches are strong evidence that the current production master is missing a vocabulary item.",
+    "Singular/plural pairs are source-representation relationships, not automatic identity merges.",
+    "Do not change production or learner mastery until candidate content and migration mappings are reviewed.",
+    "NAER and GEPT source memberships must remain source-specific even if a reviewed master identity later links forms."
+  ]
+}
