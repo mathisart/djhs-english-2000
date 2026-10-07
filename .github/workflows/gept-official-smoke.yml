@@ -8,6 +8,7 @@ on:
       - "tools/ingest_gept.py"
       - "tools/crosscheck_gept.py"
       - "tools/crosscheck_gept_master.py"
+      - "tools/audit_identity_collisions.py"
       - "tools/diff_official.py"
       - "tools/vocab_identity.py"
       - "tools/test_importers.py"
@@ -42,6 +43,8 @@ jobs:
           pdftotext -layout /tmp/gept/high-intermediate.pdf /tmp/gept/high-intermediate.txt
       - name: Parse and cross-check all official cumulative lists
         run: python tools/ingest_gept.py /tmp/gept/elementary.txt /tmp/gept/intermediate.txt /tmp/gept/high-intermediate.txt /tmp/gept/out
+      - name: Audit authoritative GEPT identity collisions
+        run: python tools/audit_identity_collisions.py /tmp/gept/out/gept-current-high-intermediate.json words.js /tmp/gept/out/gept-identity-collisions.json
       - name: Cross-check authoritative GEPT rows against current production master
         run: |
           python tools/crosscheck_gept_master.py /tmp/gept/out/gept-current-high-intermediate.json words.js /tmp/gept/out/gept-vs-master.json
