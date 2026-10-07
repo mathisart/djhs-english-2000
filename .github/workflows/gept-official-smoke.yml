@@ -67,14 +67,17 @@ jobs:
       - name: Require zero rejected source blocks
         run: |
           python - <<'PY'
-          import glob,json,sys
+          import json,sys
           bad=[]
-          for path in glob.glob("/tmp/gept/out/gept-current-*.json"):
-              if path.endswith("crosscheck.json"):
-                  continue
+          paths=[
+              "/tmp/gept/out/gept-current-elementary.json",
+              "/tmp/gept/out/gept-current-intermediate.json",
+              "/tmp/gept/out/gept-current-high-intermediate.json",
+          ]
+          for path in paths:
               data=json.load(open(path,encoding="utf-8"))
               if data.get("rejected"):
-                  bad.append((path,len(data["rejected"])))
+                  bad.append((path,len(data["rejected"])) )
           print("rejected:",bad)
           if bad:
               sys.exit("Official GEPT smoke has rejected source blocks")
@@ -95,6 +98,7 @@ jobs:
           ls -lh /tmp/gept/out || true
           if compgen -G "/tmp/gept/out/*.json" > /dev/null; then
             for f in /tmp/gept/out/*.json; do
+              case "$f" in *.layout-review.json) continue ;; esac
               echo "=== $f ==="
               python -c 'import json,sys; d=json.load(open(sys.argv[1])); print({k:d.get(k) for k in ("sourceDocument","catalogRole","verified")}); print("entries",len(d.get("entries",[])),"rejected",d.get("rejected",[])); print("layoutFragments",d.get("layoutFragments",[])[:30]); print("counts",d.get("counts")); print("checks",d.get("checks"))' "$f" || true
             done
