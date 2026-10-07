@@ -58,6 +58,11 @@ def main():
     print(json.dumps(report["counts"],ensure_ascii=False))
     for x in report["collisions"]:
         print("IDENTITY_COLLISION",repr(x["wordId"]),x["sourceForms"])
+        for row in x["sourceRows"]:
+            print("IDENTITY_COLLISION_ROW",
+                  repr(row.get("word") or row.get("officialEntry")),
+                  repr(row.get("pos")),repr(row.get("zh")),
+                  repr(row.get("level")),repr(row.get("listId")))
 
 if __name__=="__main__":
     main()
