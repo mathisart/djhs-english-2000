@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": {
+    "naerWorkflowRun": 37635944483,
+    "geptWorkflowRun": 37635979639,
+    "date": "2026-10-07"
+  },
+  "policy": "Canonical identity remains casefolded for current production until each collision is explicitly reviewed; this file does not authorize ID changes.",
+  "collisions": [
+    {
+      "wordId": "china",
+      "sourceForms": [
+        "China",
+        "china"
+      ],
+      "sources": [
+        "gept-current-2026-10-06"
+      ],
+      "masterForms": [
+        "China"
+      ],
+      "status": "pending"
+    },
+    {
+      "wordId": "march",
+      "sourceForms": [
+        "March",
+        "march"
+      ],
+      "sources": [
+        "gept-current-2026-10-06"
+      ],
+      "masterForms": [
+        "March"
+      ],
+      "status": "pending"
+    },
+    {
+      "wordId": "may",
+      "sourceForms": [
+        "May",
+        "may"
+      ],
+      "sources": [
+        "moe-jh-108",
+        "gept-current-2026-10-06"
+      ],
+      "masterForms": [
+        "may"
+      ],
+      "status": "pending"
+    },
+    {
+      "wordId": "miss",
+      "sourceForms": [
+        "Miss",
+        "miss"
+      ],
+      "sources": [
+        "moe-jh-108",
+        "gept-current-2026-10-06"
+      ],
+      "masterForms": [
+        "miss"
+      ],
+      "status": "pending"
+    },
+    {
+      "wordId": "orient",
+      "sourceForms": [
+        "Orient",
+        "orient"
+      ],
+      "sources": [
+        "gept-current-2026-10-06"
+      ],
+      "masterForms": [],
+      "status": "pending"
+    },
+    {
+      "wordId": "oriental",
+      "sourceForms": [
+        "Oriental",
+        "oriental"
+      ],
+      "sources": [
+        "gept-current-2026-10-06"
+      ],
+      "masterForms": [],
+      "status": "pending"
+    }
+  ],
+  "counts": {
+    "collisionCanonicalIds": 6,
+    "pending": 6,
+    "approved": 0
+  },
+  "releaseRule": "Identity review must not be marked pass while any collision remains pending.",
+  "notes": [
+    "Same-spelling repeated GEPT senses are not collisions; only distinct case-preserving source forms collapsing to the same canonical ID are listed.",
+    "Current production has no duplicate canonical IDs and is unchanged.",
+    "Any future split must include an explicit mastery migration decision for existing wordIds."
+  ]
+}
