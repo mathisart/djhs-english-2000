@@ -13,13 +13,9 @@ from diff_official import load_words_js
 
 LEVEL_ORDER={"gept-elementary":0,"gept-intermediate":1,"gept-high-intermediate":2}
 
-def main():
-    if len(sys.argv)!=4:
-        raise SystemExit("usage: crosscheck_gept_master.py GEPT_HIGH_SNAPSHOT.json words.js OUTPUT.json")
-    official=json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+def build_report(official,master):
     if official.get("catalogRole")!="authoritative":
-        raise SystemExit("GEPT master cross-check requires authoritative cumulative snapshot")
-    master=load_words_js(sys.argv[2])
+        raise ValueError("GEPT master cross-check requires authoritative cumulative snapshot")
 
     by_id=defaultdict(list)
     for row in official.get("entries",[]):
@@ -63,6 +59,17 @@ def main():
       "multiLevelReview":multi_level,
       "posReview":pos_review
     }
+    return report
+
+def main():
+    if len(sys.argv)!=4:
+        raise SystemExit("usage: crosscheck_gept_master.py GEPT_HIGH_SNAPSHOT.json words.js OUTPUT.json")
+    official=json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+    master=load_words_js(sys.argv[2])
+    try:
+        report=build_report(official,master)
+    except ValueError as e:
+        raise SystemExit(str(e))
     out=Path(sys.argv[3]); out.parent.mkdir(parents=True,exist_ok=True)
     out.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(report["counts"],ensure_ascii=False,indent=2))
