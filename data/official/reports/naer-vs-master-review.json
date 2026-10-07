@@ -92,10 +92,36 @@
     "Table 3 diagnostic found normalized text-layer evidence for 74 of 83 current-master-only rows; only 9 remained text misses."
   ],
   "table3Diagnostic": {
-    "workflowRun": 37490678578,
+    "workflowRun": 37633963754,
     "masterOnly": 83,
     "textHits": 74,
     "textMisses": 9,
-    "interpretation": "Text-layer hits are supporting evidence only; they do not independently establish parsed membership or mastery identity."
+    "representationExplainedMisses": [
+      "airline",
+      "babysitter",
+      "sport",
+      "waterfall"
+    ],
+    "residualMisses": [
+      "as if",
+      "as soon as",
+      "as well as",
+      "even if",
+      "stopwatch"
+    ],
+    "interpretation": "Text-layer hits are supporting evidence only; representation-explained misses remain review-only; residual misses are not automatically invalid."
+  },
+  "legacyResidualReview": {
+    "introducedInCommit": "7cf9f21e01cd2ad24772cfc10984b1b02dd6add6",
+    "commitTitle": "Expand playable vocabulary bank to 2055 entries",
+    "status": "unverified-legacy-candidates",
+    "entries": [
+      "as if",
+      "as soon as",
+      "as well as",
+      "even if",
+      "stopwatch"
+    ],
+    "action": "retain production unchanged until provenance or product-retention decision is reviewed"
   }
 }
