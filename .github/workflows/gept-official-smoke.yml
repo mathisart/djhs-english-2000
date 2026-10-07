@@ -52,6 +52,12 @@ jobs:
           print("== unmatched master",len(d["unmatched"]),"==")
           for x in d["unmatched"][:120]:
               print("GEPT_MASTER_UNMATCHED",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
+          print("== representation review",len(d.get("representationReview",[])),"==")
+          for x in d.get("representationReview",[]):
+              print("GEPT_REPRESENTATION_REVIEW",repr(x["master"].get("w")),"<->",[c.get("wordId") for c in x["candidates"]])
+          print("== residual unmatched",len(d.get("residualUnmatched",[])),"==")
+          for x in d.get("residualUnmatched",[]):
+              print("GEPT_RESIDUAL_UNMATCHED",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
           print("== multi-level review",len(d["multiLevelReview"]),"==")
           for x in d["multiLevelReview"][:80]:
               print("GEPT_MULTI_LEVEL",repr(x["master"].get("w")),x["levels"])
