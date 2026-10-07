@@ -7,6 +7,7 @@ on:
       - "tools/import_naer.py"
       - "tools/diff_official.py"
       - "tools/crosscheck_naer_table3.py"
+      - "tools/classify_naer_unresolved.py"
       - "tools/audit_identity_collisions.py"
       - "tools/test_importers.py"
       - "data/official/sources.json"
