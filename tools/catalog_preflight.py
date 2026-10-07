@@ -13,6 +13,7 @@ def run(*args):
 def main():
     if len(sys.argv)<2: raise SystemExit("usage: catalog_preflight.py SNAPSHOT [SNAPSHOT...]")
     snaps=sys.argv[1:]
+    run("tools/check_identity_review.py","data/official/reports/identity-collision-review.json","--release")
     catalog="data/official/generated/catalog.json"
     migration="data/official/generated/mastery-migration.json"
     run("tools/build_catalog.py","data/official/lists.json",*snaps,catalog)
