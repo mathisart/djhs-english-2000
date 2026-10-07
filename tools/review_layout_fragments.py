@@ -33,7 +33,7 @@ def main():
         "failures":failures,
         "ok":not failures,
     }
-    rendered=json.dumps(report,ensure_ascii=False,indent=2)+"\\n"
+    rendered=json.dumps(report,ensure_ascii=False,indent=2)+"\n"
     print(rendered,end="")
     if output:
         output.write_text(rendered,encoding="utf-8")
