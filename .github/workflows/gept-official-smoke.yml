@@ -7,6 +7,9 @@ on:
       - "tools/import_gept.py"
       - "tools/ingest_gept.py"
       - "tools/crosscheck_gept.py"
+      - "tools/crosscheck_gept_master.py"
+      - "tools/diff_official.py"
+      - "tools/vocab_identity.py"
       - "tools/test_importers.py"
       - "tools/review_layout_fragments.py"
       - "data/official/sources.json"
@@ -22,7 +25,7 @@ jobs:
           python-version: "3.12"
       - name: Validate importer before downloading official PDFs
         run: |
-          python -m py_compile tools/import_gept.py tools/ingest_gept.py tools/crosscheck_gept.py
+          python -m py_compile tools/import_gept.py tools/ingest_gept.py tools/crosscheck_gept.py tools/crosscheck_gept_master.py
           python tools/test_importers.py
       - name: Install PDF text tools
         run: sudo apt-get update && sudo apt-get install -y poppler-utils
@@ -39,6 +42,23 @@ jobs:
           pdftotext -layout /tmp/gept/high-intermediate.pdf /tmp/gept/high-intermediate.txt
       - name: Parse and cross-check all official cumulative lists
         run: python tools/ingest_gept.py /tmp/gept/elementary.txt /tmp/gept/intermediate.txt /tmp/gept/high-intermediate.txt /tmp/gept/out
+      - name: Cross-check authoritative GEPT rows against current production master
+        run: |
+          python tools/crosscheck_gept_master.py /tmp/gept/out/gept-current-high-intermediate.json words.js /tmp/gept/out/gept-vs-master.json
+          python - <<'PY'
+          import json
+          d=json.load(open("/tmp/gept/out/gept-vs-master.json",encoding="utf-8"))
+          print("GEPT_MASTER_COUNTS",d["counts"])
+          print("== unmatched master",len(d["unmatched"]),"==")
+          for x in d["unmatched"][:120]:
+              print("GEPT_MASTER_UNMATCHED",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
+          print("== multi-level review",len(d["multiLevelReview"]),"==")
+          for x in d["multiLevelReview"][:80]:
+              print("GEPT_MULTI_LEVEL",repr(x["master"].get("w")),x["levels"])
+          print("== pos review",len(d["posReview"]),"==")
+          for x in d["posReview"][:80]:
+              print("GEPT_POS_REVIEW",repr(x["master"].get("w")),repr(x["master"].get("p")),[(r.get("pos"),r.get("level"),r.get("zh")) for r in x["officialRows"]])
+          PY
       - name: Review PDF layout fragments
         run: |
           for f in /tmp/gept/out/gept-current-elementary.json /tmp/gept/out/gept-current-intermediate.json /tmp/gept/out/gept-current-high-intermediate.json; do
