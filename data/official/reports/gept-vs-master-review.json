@@ -1,0 +1,550 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": {
+    "workflowRun": 37635495827,
+    "commit": "6d074c05e67c567f6429b414dabb150ad07245e0",
+    "date": "2026-10-07"
+  },
+  "scope": "Authoritative cumulative GEPT High-Intermediate snapshot compared with current production words.js; official rows preserved because GEPT level can be sense/POS-specific; production unchanged",
+  "source": {
+    "sourceId": "gept-current-2026-10-06",
+    "sourceDocument": "GEPT_High-Intermediate.pdf",
+    "sourceRevision": "2026-08-21",
+    "verified": false
+  },
+  "counts": {
+    "masterRows": 2055,
+    "matchedMasterWords": 1988,
+    "unmatchedMasterWords": 67,
+    "multiLevelMatchedWords": 40,
+    "posReviewWords": 12,
+    "representationReviewWords": 9,
+    "residualUnmatchedWords": 58,
+    "matchedMasterWordsByLevel": {
+      "gept-elementary": 1941,
+      "gept-intermediate": 76,
+      "gept-high-intermediate": 12
+    }
+  },
+  "representationReview": [
+    [
+      "e-mail",
+      "email"
+    ],
+    [
+      "good-bye",
+      "goodbye"
+    ],
+    [
+      "hair dresser",
+      "hairdresser"
+    ],
+    [
+      "hard-working",
+      "hardworking"
+    ],
+    [
+      "milk shake",
+      "milkshake"
+    ],
+    [
+      "over-weight",
+      "overweight"
+    ],
+    [
+      "roller-blade",
+      "roller blade"
+    ],
+    [
+      "roller-skate",
+      "roller skate"
+    ],
+    [
+      "under-weight",
+      "underweight"
+    ]
+  ],
+  "residualUnmatched": [
+    "a few",
+    "a little",
+    "a lot",
+    "alarm clock",
+    "as if",
+    "as soon as",
+    "as well as",
+    "bus stop",
+    "businessman",
+    "cheerleader",
+    "Chinese New Year",
+    "chopsticks",
+    "class leader",
+    "computer game",
+    "culture center",
+    "even if",
+    "excited",
+    "exciting",
+    "fast food",
+    "fast food restaurant",
+    "Father's Day",
+    "finally",
+    "fire station",
+    "flower shop",
+    "fries",
+    "hippo",
+    "impolite",
+    "impossible",
+    "in back of",
+    "in front of",
+    "instant noodle",
+    "interested",
+    "interesting",
+    "mailman",
+    "married",
+    "moon cake",
+    "Moon Festival",
+    "movie theater",
+    "next to",
+    "out of",
+    "pencil box",
+    "police officer",
+    "police station",
+    "railway",
+    "salesman",
+    "scared",
+    "social science",
+    "sore throat",
+    "stairs",
+    "stationery store",
+    "stopwatch",
+    "surprised",
+    "tired",
+    "train station",
+    "trash can",
+    "unhappy",
+    "woods",
+    "yourselves"
+  ],
+  "multiLevelReview": [
+    [
+      "address",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "bow",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "China",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "even",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "fit",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "grade",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "jam",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "last",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "lead",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "live",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "long",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "March",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "master",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "mean",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "meter",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "minute",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "part",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "perfect",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "pound",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "present",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "primary",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "principal",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "produce",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "project",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "refuse",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "row",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "season",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "shape",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "skirt",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "sound",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "spell",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "spring",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "station",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "still",
+      [
+        "gept-elementary",
+        "gept-intermediate",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "subject",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "swallow",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "up",
+      [
+        "gept-elementary",
+        "gept-high-intermediate"
+      ]
+    ],
+    [
+      "way",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "well",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ],
+    [
+      "will",
+      [
+        "gept-elementary",
+        "gept-intermediate"
+      ]
+    ]
+  ],
+  "posReview": [
+    {
+      "word": "her",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "determiner",
+          "初級",
+          "她、她的"
+        ]
+      ]
+    },
+    {
+      "word": "his",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "determiner",
+          "初級",
+          "他的"
+        ]
+      ]
+    },
+    {
+      "word": "its",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "determiner",
+          "初級",
+          "它的"
+        ]
+      ]
+    },
+    {
+      "word": "mine",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "noun",
+          "中級",
+          "採礦、礦（坑）"
+        ]
+      ]
+    },
+    {
+      "word": "minus",
+      "masterPos": "prep.",
+      "official": [
+        [
+          "pron./conj./adj./noun",
+          "初級",
+          "減；減號；負的"
+        ]
+      ]
+    },
+    {
+      "word": "my",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "determiner",
+          "初級",
+          "我的"
+        ]
+      ]
+    },
+    {
+      "word": "o'clock",
+      "masterPos": "n.",
+      "official": [
+        [
+          "adv.",
+          "初級",
+          "…點鐘"
+        ]
+      ]
+    },
+    {
+      "word": "our",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "determiner",
+          "初級",
+          "我們的"
+        ]
+      ]
+    },
+    {
+      "word": "their",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "determiner",
+          "初級",
+          "他們的"
+        ]
+      ]
+    },
+    {
+      "word": "third",
+      "masterPos": "number",
+      "official": [
+        [
+          "adj./adv./noun",
+          "初級",
+          "第三的；居第三位；第三位"
+        ]
+      ]
+    },
+    {
+      "word": "whose",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "determiner/conj.",
+          "初級",
+          "誰的"
+        ]
+      ]
+    },
+    {
+      "word": "your",
+      "masterPos": "pron.",
+      "official": [
+        [
+          "determiner",
+          "初級",
+          "你的"
+        ]
+      ]
+    }
+  ],
+  "notes": [
+    "Representation candidates are review-only and do not authorize automatic mastery identity merges.",
+    "Residual unmatched production words are not invalid by definition; many are phrases, inflections, or local/legacy curriculum vocabulary.",
+    "Multi-level words must retain sense/POS-specific GEPT rows; do not flatten them to a single GEPT level.",
+    "GEPT snapshots remain verified=false; this report does not authorize production activation."
+  ]
+}
