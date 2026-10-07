@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "generatedFrom": {
     "workflowRun": 37489872831,
     "commit": "a7600ecfb38e782a35d5b777d9c4d8aef9e93e07",
@@ -89,10 +89,12 @@
     "Do not activate official lists in production from this report alone.",
     "Current-master-only rows are not invalid by definition; many are multi-word expressions, proper/titlecase forms, or pronoun forms.",
     "Before classifying current-master-only rows for removal or retention, cross-check them against NAER Appendix 5 Table 3, which is a thematic/POS presentation of the same declared 2,000 vocabulary.",
-    "Table 3 diagnostic found normalized text-layer evidence for 74 of 83 current-master-only rows; only 9 remained text misses."
+    "Latest Table 3 diagnostic: 74 direct text hits, 5 representation-explained misses, and 4 residual phrases.",
+    "The four residual phrases were introduced together in the 2055-entry expansion and are not evidenced by current official NAER Appendix 5 or current official GEPT normalized snapshots."
   ],
   "table3Diagnostic": {
-    "workflowRun": 37633963754,
+    "workflowRun": 37646800512,
+    "commit": "bab77b6aa4cd4f02cf59b83b543e83d8a39e10b2",
     "masterOnly": 83,
     "textHits": 74,
     "textMisses": 9,
@@ -100,28 +102,38 @@
       "airline",
       "babysitter",
       "sport",
+      "stopwatch",
       "waterfall"
+    ],
+    "sourceRepresentationExplainedMisses": [
+      "babysitter",
+      "stopwatch"
     ],
     "residualMisses": [
       "as if",
       "as soon as",
       "as well as",
-      "even if",
-      "stopwatch"
+      "even if"
     ],
-    "interpretation": "Text-layer hits are supporting evidence only; representation-explained misses remain review-only; residual misses are not automatically invalid."
+    "interpretation": "Text-layer hits are supporting evidence only. Five misses are explained by conservative representation evidence; four residual phrases have no NAER Table 3 text-layer evidence."
   },
   "legacyResidualReview": {
     "introducedInCommit": "7cf9f21e01cd2ad24772cfc10984b1b02dd6add6",
     "commitTitle": "Expand playable vocabulary bank to 2055 entries",
-    "status": "unverified-legacy-candidates",
+    "historicalSourceLabel": "NAER-crosscheck",
+    "historicalLabelAssessment": "batch-level provisional label; not sufficient evidence of official NAER membership",
+    "status": "legacy-content-candidates-not-officially-evidenced",
     "entries": [
       "as if",
       "as soon as",
       "as well as",
-      "even if",
-      "stopwatch"
+      "even if"
     ],
-    "action": "retain production unchanged until provenance or product-retention decision is reviewed"
+    "officialCrossChecks": {
+      "naerAppendix5": "no exact or normalized Table 3 evidence in official current PDF text layer",
+      "geptCurrent": "absent from normalized Elementary, Intermediate, and High-Intermediate official LTTC snapshots; appears only as current-master-only rows in GEPT diff",
+      "geptWorkflowRun": 37637223132
+    },
+    "action": "retain production unchanged; do not attach NAER or GEPT official membership unless new source evidence is found. A later product decision may retain these as legacy/content vocabulary without official-list membership."
   }
 }
