@@ -6,7 +6,9 @@ ROOT=Path(__file__).resolve().parents[1]
 with tempfile.TemporaryDirectory() as td:
     d=Path(td)
     sources={"sources":[{"id":"moe","active":True,"version":"v1","checkedAt":"2026-10-07","publisher":"NAER"}]}
-    catalog={"words":[{"wordId":"a","memberships":["moe-basic-1200"]},{"wordId":"b","memberships":["gept-elementary"]}]}
+    catalog={"schemaVersion":2,"words":[{"id":"a","form":"a"},{"id":"b","form":"b"}],
+             "memberships":[{"wordId":"a","listId":"moe-basic-1200"},{"wordId":"b","listId":"gept-elementary"}],
+             "sourceEntries":[]}
     audit={"rows":2,"canonicalWords":2,"duplicateCanonicalIds":0,"missingRequiredFields":{}}
     naer={"sourceId":"moe","counts":{"exactMatchedWords":2}}
     gept={"sourceId":"gept","sourceDocument":"GEPT_High-Intermediate.pdf","diagnosticOnly":True,"counts":{"matchedMasterWords":2}}
@@ -18,6 +20,9 @@ with tempfile.TemporaryDirectory() as td:
     subprocess.run([sys.executable,str(ROOT/"tools/release_report.py"),str(d/"sources.json"),str(d/"catalog.json"),str(d/"audit.json"),str(d/"naer.json"),str(d/"gept.json"),str(d/"migration.json"),str(out)],check=True,capture_output=True,text=True)
     report=json.loads(out.read_text(encoding="utf-8"))
     assert report["schemaVersion"]==2,report
+    assert report["catalog"]["schemaVersion"]==2,report
+    assert report["catalog"]["membershipRows"]==2,report
+    assert report["catalog"]["memberships"]=={"moe-basic-1200":1,"gept-elementary":1},report
     assert len(report["officialDiffs"])==2,report
     assert [x["sourceId"] for x in report["officialDiffs"]]==["moe","gept"],report
     assert "officialDiff" not in report,report
