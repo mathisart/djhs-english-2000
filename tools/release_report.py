@@ -16,8 +16,13 @@ def main():
     active=[{"id":s["id"],"version":s.get("version"),"checkedAt":s.get("checkedAt"),
              "publisher":s.get("publisher")} for s in sources["sources"] if s.get("active")]
     memberships={}
-    for w in catalog["words"]:
-        for lid in w.get("memberships",[]): memberships[lid]=memberships.get(lid,0)+1
+    if isinstance(catalog.get("memberships"),list):
+        for m in catalog["memberships"]:
+            lid=m.get("listId")
+            if lid: memberships[lid]=memberships.get(lid,0)+1
+    else:
+        for w in catalog["words"]:
+            for lid in w.get("memberships",[]): memberships[lid]=memberships.get(lid,0)+1
     official_diffs=[]
     for d in diffs:
         official_diffs.append({
@@ -31,7 +36,7 @@ def main():
       "schemaVersion":2,
       "generatedAt":datetime.now(timezone.utc).isoformat(),
       "activeSources":active,
-      "catalog":{"canonicalWords":len(catalog["words"]),"memberships":memberships},
+      "catalog":{"schemaVersion":catalog.get("schemaVersion"),"canonicalWords":len(catalog["words"]),"membershipRows":len(catalog.get("memberships",[])) if isinstance(catalog.get("memberships"),list) else sum(len(w.get("memberships",[])) for w in catalog["words"]),"memberships":memberships},
       "currentMaster":{"rows":audit.get("rows"),"canonicalWords":audit.get("canonicalWords"),
                        "duplicateCanonicalIds":audit.get("duplicateCanonicalIds"),
                        "missingRequiredFields":audit.get("missingRequiredFields")},
