@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "generatedFrom": {
-    "naerWorkflowRun": 37635944483,
-    "geptWorkflowRun": 37635979639,
+    "naerWorkflowRun": 37637223296,
+    "geptWorkflowRun": 37637223132,
     "date": "2026-10-07"
   },
   "policy": "Canonical identity remains casefolded for current production until each collision is explicitly reviewed; this file does not authorize ID changes.",
@@ -19,7 +19,36 @@
       "masterForms": [
         "China"
       ],
-      "status": "pending"
+      "status": "pending",
+      "sourceEvidence": [
+        [
+          "China",
+          "noun",
+          "中國",
+          "初級"
+        ],
+        [
+          "china",
+          "noun",
+          "瓷、瓷器",
+          "中級"
+        ]
+      ],
+      "resolution": {
+        "strategy": "preserve-existing-master-id-and-split-distinct-source-lexeme",
+        "mappings": [
+          {
+            "sourceForm": "China",
+            "resolvedWordId": "china",
+            "note": "preserve current production mastery"
+          },
+          {
+            "sourceForm": "china",
+            "resolvedWordId": "china::porcelain",
+            "note": "new lower-case noun lexeme"
+          }
+        ]
+      }
     },
     {
       "wordId": "march",
@@ -33,7 +62,36 @@
       "masterForms": [
         "March"
       ],
-      "status": "pending"
+      "status": "pending",
+      "sourceEvidence": [
+        [
+          "March",
+          "noun",
+          "三月 = Mar.",
+          "初級"
+        ],
+        [
+          "march",
+          "verb/noun",
+          "行進、行軍；示威遊行、持續的發展",
+          "中級"
+        ]
+      ],
+      "resolution": {
+        "strategy": "preserve-existing-master-id-and-split-distinct-source-lexeme",
+        "mappings": [
+          {
+            "sourceForm": "March",
+            "resolvedWordId": "march",
+            "note": "preserve current production mastery"
+          },
+          {
+            "sourceForm": "march",
+            "resolvedWordId": "march::movement",
+            "note": "new movement/procession lexeme"
+          }
+        ]
+      }
     },
     {
       "wordId": "may",
@@ -48,7 +106,36 @@
       "masterForms": [
         "may"
       ],
-      "status": "pending"
+      "status": "pending",
+      "sourceEvidence": [
+        [
+          "may",
+          "aux.",
+          "可能",
+          "初級"
+        ],
+        [
+          "May",
+          "noun",
+          "五月",
+          "初級"
+        ]
+      ],
+      "resolution": {
+        "strategy": "preserve-existing-master-id-and-split-distinct-source-lexeme",
+        "mappings": [
+          {
+            "sourceForm": "may",
+            "resolvedWordId": "may",
+            "note": "preserve current production mastery"
+          },
+          {
+            "sourceForm": "May",
+            "resolvedWordId": "may::month",
+            "note": "new month lexeme"
+          }
+        ]
+      }
     },
     {
       "wordId": "miss",
@@ -63,7 +150,36 @@
       "masterForms": [
         "miss"
       ],
-      "status": "pending"
+      "status": "pending",
+      "sourceEvidence": [
+        [
+          "miss",
+          "verb",
+          "錯過；想念",
+          "初級"
+        ],
+        [
+          "Miss",
+          "noun",
+          "小姐",
+          "初級"
+        ]
+      ],
+      "resolution": {
+        "strategy": "preserve-existing-master-id-and-split-distinct-source-lexeme",
+        "mappings": [
+          {
+            "sourceForm": "miss",
+            "resolvedWordId": "miss",
+            "note": "preserve current production mastery"
+          },
+          {
+            "sourceForm": "Miss",
+            "resolvedWordId": "miss::title",
+            "note": "new title lexeme"
+          }
+        ]
+      }
     },
     {
       "wordId": "orient",
@@ -75,7 +191,36 @@
         "gept-current-2026-10-06"
       ],
       "masterForms": [],
-      "status": "pending"
+      "status": "pending",
+      "sourceEvidence": [
+        [
+          "orient",
+          "verb",
+          "朝向、確定方位、熟悉 = orientate",
+          "中高級"
+        ],
+        [
+          "Orient",
+          "noun",
+          "東方(尤指中國和日本) = East",
+          "中高級"
+        ]
+      ],
+      "resolution": {
+        "strategy": "preserve-existing-master-id-and-split-distinct-source-lexeme",
+        "mappings": [
+          {
+            "sourceForm": "orient",
+            "resolvedWordId": "orient",
+            "note": "base common verb; no current mastery"
+          },
+          {
+            "sourceForm": "Orient",
+            "resolvedWordId": "orient::east",
+            "note": "capitalized East noun lexeme"
+          }
+        ]
+      }
     },
     {
       "wordId": "oriental",
@@ -87,7 +232,36 @@
         "gept-current-2026-10-06"
       ],
       "masterForms": [],
-      "status": "pending"
+      "status": "pending",
+      "sourceEvidence": [
+        [
+          "oriental",
+          "adj.",
+          "東方的、東方人的 = eastern",
+          "中高級"
+        ],
+        [
+          "Oriental",
+          "noun",
+          "東方人、東亞國家的人",
+          "中高級"
+        ]
+      ],
+      "resolution": {
+        "strategy": "preserve-existing-master-id-and-split-distinct-source-lexeme",
+        "mappings": [
+          {
+            "sourceForm": "oriental",
+            "resolvedWordId": "oriental",
+            "note": "base adjective; no current mastery"
+          },
+          {
+            "sourceForm": "Oriental",
+            "resolvedWordId": "oriental::noun",
+            "note": "capitalized noun lexeme"
+          }
+        ]
+      }
     }
   ],
   "counts": {
@@ -99,6 +273,8 @@
   "notes": [
     "Same-spelling repeated GEPT senses are not collisions; only distinct case-preserving source forms collapsing to the same canonical ID are listed.",
     "Current production has no duplicate canonical IDs and is unchanged.",
-    "Any future split must include an explicit mastery migration decision for existing wordIds."
+    "Any future split must include an explicit mastery migration decision for existing wordIds.",
+    "Source-row POS/meaning evidence confirms all six case collisions represent distinct lexemes or source senses, not casing-only duplicates.",
+    "Pending resolution proposal preserves every existing production wordId and assigns a new disambiguated ID only to the additional colliding lexeme."
   ]
 }
