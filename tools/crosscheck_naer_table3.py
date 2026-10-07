@@ -31,10 +31,14 @@ def main():
         form=norm(row.get("w",""))
         target=hits if contains_form(table3,row.get("w","")) else misses
         target.append(row)
-    out={"schemaVersion":1,"diagnosticOnly":True,
-         "note":"Text-layer occurrence is evidence only; not parsed Table 3 membership.",
-         "counts":{"masterOnly":len(hits)+len(misses),"table3TextHits":len(hits),"table3TextMisses":len(misses)},
-         "hits":hits,"misses":misses}
+    explained_master_ids={m.get("master",{}).get("w") for m in diff.get("representationReviewCandidates",[])}
+    explained=[x for x in misses if x.get("w") in explained_master_ids]
+    residual=[x for x in misses if x.get("w") not in explained_master_ids]
+    out={"schemaVersion":2,"diagnosticOnly":True,
+         "note":"Text-layer occurrence is evidence only; not parsed Table 3 membership. Representation-explained misses remain review-only.",
+         "counts":{"masterOnly":len(hits)+len(misses),"table3TextHits":len(hits),"table3TextMisses":len(misses),
+                   "representationExplainedMisses":len(explained),"residualMisses":len(residual)},
+         "hits":hits,"misses":misses,"representationExplainedMisses":explained,"residualMisses":residual}
     Path(sys.argv[3]).write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding="utf-8")
     print(json.dumps(out["counts"],ensure_ascii=False))
 if __name__=="__main__": main()
