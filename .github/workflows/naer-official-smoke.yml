@@ -166,6 +166,15 @@ jobs:
               print("TABLE3_REPRESENTATION_EXPLAINED",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
           for x in d.get("residualMisses",[]):
               print("TABLE3_RESIDUAL_MISS",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
+          text=open("/tmp/naer/english-curriculum.txt",encoding="utf-8",errors="replace").read()
+          a=text.find("表三、")
+          b=text.find("附錄六",a)
+          t=text[a:b if b>0 else None]
+          import re
+          for term in ["as if","as soon as","as well as","even if","stopwatch","stop watch","stop-watch"]:
+              print("TABLE3_CONTEXT_TERM",repr(term))
+              for m in list(re.finditer(re.escape(term),t,re.I))[:5]:
+                  print("TABLE3_CONTEXT",repr(t[max(0,m.start()-140):m.end()+180].replace("\n"," ")))
           PY
       - name: Show NAER diff review queue
         run: |
