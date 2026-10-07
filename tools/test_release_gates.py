@@ -16,7 +16,7 @@ def write(path,obj):
 def main():
     with tempfile.TemporaryDirectory() as td:
         td=Path(td)
-        lists={"schemaVersion":1,"lists":[{"id":"gept-high-intermediate"}]}
+        lists={"schemaVersion":1,"lists":[{"id":"gept-elementary"},{"id":"gept-intermediate"},{"id":"gept-high-intermediate"}]}
         lists_p=td/"lists.json"; write(lists_p,lists)
         sources={"schemaVersion":1,"sources":[{
             "id":"gept-current-2026-10-06","publisher":"LTTC","title":"GEPT Word Lists",
@@ -52,6 +52,33 @@ def main():
         assert r.returncode==0,r.stdout+r.stderr
         r=run("tools/build_catalog.py",lists_p,snap,out)
         assert r.returncode==0,r.stdout+r.stderr
+        built=json.loads(out.read_text(encoding="utf-8"))
+        assert built["schemaVersion"]==2,built
+        assert len(built["words"])==1,built
+        assert len(built["memberships"])==1,built
+        assert built["memberships"][0]["wordId"]=="against",built
+        assert built["memberships"][0]["listId"]=="gept-elementary",built
+        assert len(built["memberships"][0]["sourceEntryIds"])==1,built
+        assert len(built["sourceEntries"])==1,built
+
+        sense=json.loads(json.dumps(reviewed))
+        sense["layoutFragments"]=[]
+        sense["entries"]=[
+            {"word":"record","wordId":"record","pos":"noun","zh":"紀錄","level":"初級","listId":"gept-elementary","awl":None},
+            {"word":"record","wordId":"record","pos":"verb","zh":"記錄","level":"中級","listId":"gept-intermediate","awl":None},
+        ]
+        sense_p=td/"sense.json"; write(sense_p,sense)
+        sense_out=td/"sense-catalog.json"
+        r=run("tools/build_catalog.py",lists_p,sense_p,sense_out)
+        assert r.returncode==0,r.stdout+r.stderr
+        sense_catalog=json.loads(sense_out.read_text(encoding="utf-8"))
+        assert len(sense_catalog["words"])==1,sense_catalog
+        assert [(m["wordId"],m["listId"]) for m in sense_catalog["memberships"]]==[
+            ("record","gept-elementary"),("record","gept-intermediate")
+        ],sense_catalog
+        assert all(len(m["sourceEntryIds"])==1 for m in sense_catalog["memberships"]),sense_catalog
+        assert len(sense_catalog["sourceEntries"])==2,sense_catalog
+
         r=run("tools/release_check.py",sources_p,snap)
         assert r.returncode==0,r.stdout+r.stderr
 
