@@ -159,8 +159,10 @@ jobs:
           python - <<'PY'
           import json
           d=json.load(open("/tmp/naer/table3-crosscheck.json",encoding="utf-8"))
-          for x in d["misses"]:
-              print("TABLE3_MISS",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
+          for x in d.get("representationExplainedMisses",[]):
+              print("TABLE3_REPRESENTATION_EXPLAINED",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
+          for x in d.get("residualMisses",[]):
+              print("TABLE3_RESIDUAL_MISS",repr(x.get("w")),repr(x.get("p")),repr(x.get("z")))
           PY
       - name: Show NAER diff review queue
         run: |
