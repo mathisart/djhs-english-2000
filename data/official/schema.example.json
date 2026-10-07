@@ -1,41 +1,56 @@
 {
-  "word": {
-    "id": "environment",
-    "form": "environment",
-    "content": {
-      "pos": [
-        "noun"
-      ],
-      "zh": [
-        "環境"
-      ],
-      "example": "",
-      "translation": ""
-    }
-  },
-  "memberships": [
+  "schemaVersion": 2,
+  "words": [
     {
-      "wordId": "environment",
-      "listId": "moe-common-2000",
-      "sourceVersion": "108課綱現行版",
-      "verified": true
-    },
-    {
-      "wordId": "environment",
-      "listId": "gept-elementary",
-      "sourceVersion": "2024-02",
-      "verified": true
+      "id": "record",
+      "form": "record"
     }
   ],
-  "sourceEntry": {
-    "wordId": "environment",
-    "sourceId": "gept-2024-02",
-    "pos": [
-      "noun"
-    ],
-    "zh": [
-      "環境"
-    ],
-    "notes": null
-  }
+  "memberships": [
+    {
+      "wordId": "record",
+      "listId": "gept-elementary",
+      "scope": "source-entry",
+      "sourceEntryIds": [
+        "src-example-noun"
+      ]
+    },
+    {
+      "wordId": "record",
+      "listId": "gept-intermediate",
+      "scope": "source-entry",
+      "sourceEntryIds": [
+        "src-example-verb"
+      ]
+    }
+  ],
+  "sourceEntries": [
+    {
+      "id": "src-example-noun",
+      "wordId": "record",
+      "sourceId": "gept-current-2026-10-06",
+      "sourceDocument": "GEPT_High-Intermediate.pdf",
+      "sourceRevision": "2026-08-21",
+      "word": "record",
+      "pos": "noun",
+      "zh": "紀錄",
+      "level": "初級",
+      "listId": "gept-elementary",
+      "awl": null
+    },
+    {
+      "id": "src-example-verb",
+      "wordId": "record",
+      "sourceId": "gept-current-2026-10-06",
+      "sourceDocument": "GEPT_High-Intermediate.pdf",
+      "sourceRevision": "2026-08-21",
+      "word": "record",
+      "pos": "verb",
+      "zh": "記錄",
+      "level": "中級",
+      "listId": "gept-intermediate",
+      "awl": null
+    }
+  ],
+  "note": "One canonical WORD can have multiple WORD-LIST memberships backed by different SOURCE ENTRY senses/POS. Consumers must not flatten GEPT level to one value on the word."
 }
