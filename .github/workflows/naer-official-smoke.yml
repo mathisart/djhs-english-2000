@@ -176,6 +176,17 @@ jobs:
               for m in list(re.finditer(re.escape(term),t,re.I))[:5]:
                   print("TABLE3_CONTEXT",repr(t[max(0,m.start()-140):m.end()+180].replace("\n"," ")))
           PY
+      - name: Classify unresolved NAER misses
+        run: |
+          python tools/classify_naer_unresolved.py /tmp/naer/naer-vs-master.json words.js /tmp/naer/naer-unresolved-classification.json
+          python - <<'PY'
+          import json
+          d=json.load(open("/tmp/naer/naer-unresolved-classification.json",encoding="utf-8"))
+          print("UNRESOLVED_CLASS_COUNTS",d["counts"])
+          for key in ("abbreviationOrTitle","relatedProductionCompound","lexicalMissing"):
+              for x in d.get(key,[]):
+                  print("UNRESOLVED_CLASS",key,repr(x.get("wordId")),x.get("relatedProductionForms",[]))
+          PY
       - name: Show NAER diff review queue
         run: |
           python - <<'PY'
@@ -208,4 +219,5 @@ jobs:
             /tmp/naer/naer-vs-master.json
             /tmp/naer/table3-crosscheck.json
             /tmp/naer/naer-identity-collisions.json
+            /tmp/naer/naer-unresolved-classification.json
           retention-days: 7
