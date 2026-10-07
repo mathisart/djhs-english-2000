@@ -43,3 +43,23 @@ review additions/removals/changed senses, then switch the active version.
 
 CEFR alignment and exam-list membership are separate concepts. Passing an app vocabulary
 challenge must never be described as certification of the student's overall CEFR level.
+
+
+## Legacy/content vocabulary outside current official lists
+
+Production vocabulary may contain useful learning items that are not evidenced by the current official NAER or GEPT snapshots.
+
+Rules:
+- Do not assign official NAER/GEPT membership from a historical batch label such as `NAER-crosscheck` alone.
+- Current-master-only items with no official-source evidence may remain playable as legacy/content vocabulary.
+- Retaining a legacy/content item must not imply that it belongs to an official 1,200 / 2,000 / GEPT list.
+- Removing or reclassifying such an item is a product/content decision and must not silently delete learner mastery.
+- Record provenance conclusions in a review artifact before changing production membership.
+
+Current reviewed legacy/content candidates:
+- `as if`
+- `as soon as`
+- `as well as`
+- `even if`
+
+These four were introduced in commit `7cf9f21e01cd2ad24772cfc10984b1b02dd6add6`, are not evidenced by the current NAER Appendix 5 Table 3 text layer, and are absent from the current normalized official GEPT snapshots. Production remains unchanged.
