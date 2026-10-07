@@ -1,0 +1,196 @@
+{
+  "schemaVersion": 1,
+  "status": "cross-source-reviewed",
+  "productionChanged": false,
+  "sourceRuns": {
+    "naer": 37648178947,
+    "gept": 37637223132
+  },
+  "totalNaerUnresolved": 24,
+  "geptCorroborated": 23,
+  "naerOnly": 1,
+  "categories": {
+    "abbreviationOrTitle": {
+      "geptRepresentationSupport": [
+        {
+          "naer": "a.m",
+          "gept": "A.M.",
+          "pos": "adv.",
+          "zh": "上午 = a.m.= AM"
+        },
+        {
+          "naer": "p.m",
+          "gept": "P.M.",
+          "pos": "adv.",
+          "zh": "下午 = p.m.= PM"
+        },
+        {
+          "naer": "mr",
+          "gept": "Mr.",
+          "pos": "noun",
+          "zh": "先生 = Mr"
+        },
+        {
+          "naer": "mrs",
+          "gept": "Mrs.",
+          "pos": "noun",
+          "zh": "太太 = Mrs"
+        },
+        {
+          "naer": "ms",
+          "gept": "Ms.",
+          "pos": "noun",
+          "zh": "女士 =Ms"
+        },
+        {
+          "naer": "u.s.a./usa",
+          "gept": "USA",
+          "pos": "noun",
+          "zh": "美國 = United States (of America)"
+        }
+      ],
+      "naerOnly": [
+        {
+          "naer": "r.o.c./roc",
+          "note": "No corresponding current GEPT normalized entry found."
+        }
+      ]
+    },
+    "relatedProductionCompound": {
+      "geptExactSupport": [
+        {
+          "naer": "officer",
+          "gept": "officer",
+          "pos": "noun",
+          "zh": "官員",
+          "productionRelated": [
+            "police officer"
+          ]
+        },
+        {
+          "naer": "police",
+          "gept": "police",
+          "pos": "noun",
+          "zh": "警方",
+          "productionRelated": [
+            "police officer",
+            "police station"
+          ]
+        },
+        {
+          "naer": "sore",
+          "gept": "sore",
+          "pos": "adj./noun",
+          "zh": "痛的；痛處、瘡",
+          "productionRelated": [
+            "sore throat"
+          ]
+        },
+        {
+          "naer": "stationery",
+          "gept": "stationery",
+          "pos": "noun",
+          "zh": "文具",
+          "productionRelated": [
+            "stationery store"
+          ]
+        }
+      ],
+      "geptExplicitAliasSupport": [
+        {
+          "naer": "burger",
+          "gept": "hamburger",
+          "pos": "noun",
+          "zh": "漢堡 = burger",
+          "productionRelated": [
+            "hamburger"
+          ]
+        }
+      ]
+    },
+    "lexicalMissing": {
+      "geptExactSupport": [
+        {
+          "naer": "could",
+          "gept": "could",
+          "pos": "aux.",
+          "zh": "can的過去式"
+        },
+        {
+          "naer": "shoe",
+          "gept": "shoe",
+          "pos": "noun",
+          "zh": "鞋"
+        },
+        {
+          "naer": "empty",
+          "gept": "empty",
+          "pos": "adj./verb",
+          "zh": "空的；使…變空"
+        },
+        {
+          "naer": "female",
+          "gept": "female",
+          "pos": "adj./noun",
+          "zh": "女性的；女性"
+        },
+        {
+          "naer": "oneself",
+          "gept": "oneself",
+          "pos": "pron.",
+          "zh": "自己"
+        },
+        {
+          "naer": "professor",
+          "gept": "professor",
+          "pos": "noun",
+          "zh": "教授"
+        },
+        {
+          "naer": "rubber",
+          "gept": "rubber",
+          "pos": "adj./noun",
+          "zh": "橡膠的；橡膠"
+        },
+        {
+          "naer": "seek",
+          "gept": "seek",
+          "pos": "verb",
+          "zh": "尋找"
+        }
+      ],
+      "geptInflectionSupport": [
+        {
+          "naer": "socks",
+          "gept": "sock",
+          "pos": "noun",
+          "zh": "襪子"
+        },
+        {
+          "naer": "earrings",
+          "gept": "earring",
+          "pos": "noun",
+          "zh": "耳環"
+        },
+        {
+          "naer": "slippers",
+          "gept": "slipper",
+          "pos": "noun",
+          "zh": "拖鞋"
+        },
+        {
+          "naer": "sneakers",
+          "gept": "sneaker",
+          "pos": "noun",
+          "zh": "球鞋"
+        }
+      ]
+    }
+  },
+  "interpretation": [
+    "23 of 24 unresolved NAER entries are independently corroborated by current LTTC GEPT official data through exact, representation, inflection, or explicit-alias evidence.",
+    "R.O.C./ROC is currently supported by NAER only; lack of GEPT corroboration is not evidence against NAER membership.",
+    "Production compound coverage does not replace missing official single-word identity.",
+    "No production or learner-mastery mutation is authorized by this review artifact alone."
+  ]
+}
