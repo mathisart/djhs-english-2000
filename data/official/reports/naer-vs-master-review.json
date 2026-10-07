@@ -90,7 +90,8 @@
     "Current-master-only rows are not invalid by definition; many are multi-word expressions, proper/titlecase forms, or pronoun forms.",
     "Before classifying current-master-only rows for removal or retention, cross-check them against NAER Appendix 5 Table 3, which is a thematic/POS presentation of the same declared 2,000 vocabulary.",
     "Latest Table 3 diagnostic: 74 direct text hits, 5 representation-explained misses, and 4 residual phrases.",
-    "The four residual phrases were introduced together in the 2055-entry expansion and are not evidenced by current official NAER Appendix 5 or current official GEPT normalized snapshots."
+    "The four residual phrases were introduced together in the 2055-entry expansion and are not evidenced by current official NAER Appendix 5 or current official GEPT normalized snapshots.",
+    "The 24 unresolved official NAER entries are now triaged into 7 abbreviation/title forms, 5 related-production-compound cases, and 12 lexical misses; production remains unchanged."
   ],
   "table3Diagnostic": {
     "workflowRun": 37646800512,
@@ -135,5 +136,66 @@
       "geptWorkflowRun": 37637223132
     },
     "action": "retain production unchanged; do not attach NAER or GEPT official membership unless new source evidence is found. A later product decision may retain these as legacy/content vocabulary without official-list membership."
+  },
+  "unresolvedClassification": {
+    "status": "diagnostic-review-only",
+    "total": 24,
+    "abbreviationOrTitle": [
+      "a.m",
+      "p.m",
+      "r.o.c./roc",
+      "u.s.a./usa",
+      "mr",
+      "mrs",
+      "ms"
+    ],
+    "relatedProductionCompound": [
+      {
+        "wordId": "officer",
+        "relatedProductionForms": [
+          "police officer"
+        ]
+      },
+      {
+        "wordId": "police",
+        "relatedProductionForms": [
+          "police officer",
+          "police station"
+        ]
+      },
+      {
+        "wordId": "sore",
+        "relatedProductionForms": [
+          "sore throat"
+        ]
+      },
+      {
+        "wordId": "burger",
+        "relatedProductionForms": [
+          "hamburger"
+        ]
+      },
+      {
+        "wordId": "stationery",
+        "relatedProductionForms": [
+          "stationery store"
+        ]
+      }
+    ],
+    "lexicalMissing": [
+      "could",
+      "shoe",
+      "socks",
+      "earrings",
+      "empty",
+      "female",
+      "oneself",
+      "professor",
+      "rubber",
+      "seek",
+      "slippers",
+      "sneakers"
+    ],
+    "interpretation": "Abbreviation/title and related-compound buckets are review aids only; they do not count as official identity matches. lexicalMissing is the smallest current set with no exact master row and no reviewed compound relationship."
   }
 }
