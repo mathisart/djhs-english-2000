@@ -88,6 +88,14 @@
     "May/may and Miss/miss source rows remain distinct source evidence even where current canonical identity casefolds them.",
     "Do not activate official lists in production from this report alone.",
     "Current-master-only rows are not invalid by definition; many are multi-word expressions, proper/titlecase forms, or pronoun forms.",
-    "Before classifying current-master-only rows for removal or retention, cross-check them against NAER Appendix 5 Table 3, which is a thematic/POS presentation of the same declared 2,000 vocabulary."
-  ]
+    "Before classifying current-master-only rows for removal or retention, cross-check them against NAER Appendix 5 Table 3, which is a thematic/POS presentation of the same declared 2,000 vocabulary.",
+    "Table 3 diagnostic found normalized text-layer evidence for 74 of 83 current-master-only rows; only 9 remained text misses."
+  ],
+  "table3Diagnostic": {
+    "workflowRun": 37490678578,
+    "masterOnly": 83,
+    "textHits": 74,
+    "textMisses": 9,
+    "interpretation": "Text-layer hits are supporting evidence only; they do not independently establish parsed membership or mastery identity."
+  }
 }
