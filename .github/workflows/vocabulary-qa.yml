@@ -29,6 +29,8 @@ jobs:
         run: python tools/test_importers.py
       - name: GEPT master cross-check regression
         run: python tools/test_gept_master_crosscheck.py
+      - name: Validate identity review registry
+        run: python tools/check_identity_review.py data/official/reports/identity-collision-review.json
       - name: Identity collision regression
         run: python tools/test_identity_collisions.py
       - name: Release report regression
